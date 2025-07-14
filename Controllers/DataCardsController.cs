@@ -153,7 +153,7 @@ namespace SMARTV3.Controllers
 
             if (dataCard != null)
             {
-                ViewData["CommandOverideStatusId"] = new SelectList(_context.CommandOverideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.CommandOverideStatusId);
+                ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.CommandOverrideStatusId);
                 ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.DeployedStatusId);
                 ViewData["EquipmentCombatVehicleStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.EquipmentCombatVehicleStatusId);
                 ViewData["EquipmentCommunicationsEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.EquipmentCommunicationsEquipmentStatusId);
@@ -292,7 +292,7 @@ namespace SMARTV3.Controllers
             }
             if (selectedOverallStatus != 0)
             {
-                dataCards = dataCards.Where(f => (f.CommandOverideStatusId != null && f.CommandOverideStatusId == selectedOverallStatus) || (f.CommandOverideStatusId == null && f.SrStatusId == selectedOverallStatus));
+                dataCards = dataCards.Where(f => (f.CommandOverrideStatusId != null && f.CommandOverrideStatusId == selectedOverallStatus) || (f.CommandOverrideStatusId == null && f.SrStatusId == selectedOverallStatus));
             }
             if (selectedStatus == "False" || selectedStatus == "True")
             {
@@ -341,11 +341,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "commandOverrideReadinessStatus_asc":
-                    dataCards = dataCards.OrderBy(d => d.CommandOverideStatusId);
+                    dataCards = dataCards.OrderBy(d => d.CommandOverrideStatusId);
                     break;
 
                 case "commandOverrideReadinessStatus_desc":
-                    dataCards = dataCards.OrderByDescending(d => d.CommandOverideStatusId);
+                    dataCards = dataCards.OrderByDescending(d => d.CommandOverrideStatusId);
                     break;
 
                 case "deployed_asc":
@@ -511,7 +511,7 @@ namespace SMARTV3.Controllers
         [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = Admin + "," + SuperUser + "," + FGPlanner + "," + ReportingUser)]
         public async Task<IActionResult> Edit(int id, [Bind("Id,DataCardComplete,ForceElementId,Division,Brigade,Unit,Subunit,ForceElementDesc,SrStatusId," +
-            "CommandOverideStatusId,CommandOverrideAuthority,CommandOverrideComments,ReadinessFromDate,ReadinessToDate,Validitydate,DeployedStatusId,DesignationId,NatoAssetsDeclared,ServiceId,EchelonId," +
+            "CommandOverrideStatusId,CommandOverrideAuthority,CommandOverrideComments,ReadinessFromDate,ReadinessToDate,Validitydate,DeployedStatusId,DesignationId,NatoAssetsDeclared,ServiceId,EchelonId," +
             "CapabilityId,CategoryId,NoticeToMoveId,Ntmdetails,NatoNoticeToEffect,NatoActive,FwdNato,NFMActive,Rds,NatoLocation,NatoCoordinates,NatoMajorEquipmentComments,NatoCavets,NatoGeneralComments,NatoRequirementName,NatoNationalName," +
             "NatoStratLiftCapacityId,NatoStratLiftCapacity,NatoStratLiftCapacityComments,NatoNationalDeployId,NatoNationalDeploy,NatoNationalDeployComments,NatoFphyesNoBlank,NatoAfstrainingPercentage," +
             "NatoEvalCompleted,NatoPlannedEvalDate,NatoCertProgramCoord,NatoCertCompleted,NatoNationalTrainingRemarks,NatoNationalAssesmentComments," +
@@ -555,7 +555,7 @@ namespace SMARTV3.Controllers
                     {
                         ForceElementId = dataCard.ForceElementId,
                         SrStatusId = dataCard.SrStatusId,
-                        CommandOverideStatusId = dataCard.CommandOverideStatusId,
+                        CommandOverrideStatusId = dataCard.CommandOverrideStatusId,
                         CommandOverrideComments = dataCard.CommandOverrideComments,
                         NatoGeneralComments = dataCard.NatoGeneralComments,
                         NatoMajorEquipmentComments = dataCard.NatoMajorEquipmentComments,
@@ -636,7 +636,7 @@ namespace SMARTV3.Controllers
                         dataCard.NatoStratLiftCapacityId = null;
                     }
 
-                    if (dataCard.CommandOverideStatusId == null)
+                    if (dataCard.CommandOverrideStatusId == null)
                     {
                         dataCard.CommandOverrideComments = null;
                         dataCard.CommandOverrideAuthority = null;

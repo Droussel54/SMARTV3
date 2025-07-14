@@ -8,7 +8,7 @@ namespace SMARTV3.Models
         public int Id { get; set; }
         public int? ForceElementId { get; set; }
         public int? SrStatusId { get; set; }
-        public int? CommandOverideStatusId { get; set; }
+        public int? CommandOverrideStatusId { get; set; }
         public string? CommandOverrideAuthority { get; set; }
         public string? CommandOverrideComments { get; set; }
         public int? DeployedStatusId { get; set; }

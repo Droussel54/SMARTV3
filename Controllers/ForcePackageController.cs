@@ -400,11 +400,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "commandOverride_asc":
-                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "commandOverride_desc":
-                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "personnel_asc":

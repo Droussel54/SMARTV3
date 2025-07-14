@@ -274,7 +274,7 @@ namespace SMARTV3.Models
 
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.ChangeLogs)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
                     .HasConstraintName("FK_ChangeLog_CommandOverideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
@@ -536,7 +536,7 @@ namespace SMARTV3.Models
 
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
                     .HasConstraintName("FK_DataCard_CommandOverideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
@@ -1028,7 +1028,7 @@ namespace SMARTV3.Models
 
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DataCardHistories)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
                     .HasConstraintName("FK_DataCardHistory_CommandOverideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
@@ -1366,7 +1366,7 @@ namespace SMARTV3.Models
 
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DummyDataCards)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
                     .HasConstraintName("FK_DummyDataCard_CommandOverideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)

@@ -13,7 +13,7 @@ namespace SMARTV3.Models
         public string? Unit { get; set; }
         public string? Subunit { get; set; }
         public int? SrStatusId { get; set; }
-        public int? CommandOverideStatusId { get; set; }
+        public int? CommandOverrideStatusId { get; set; }
         public string? CommandOverrideAuthority { get; set; }
         public string? CommandOverrideComments { get; set; }
         public DateTime? ReadinessFromDate { get; set; }

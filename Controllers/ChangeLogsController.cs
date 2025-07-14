@@ -32,7 +32,7 @@ namespace SMARTV3.Controllers
             ViewData["deployedStatusListNonSelect"] = _context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
 
             IQueryable<ChangeLog>? sMARTV3DbContext = from d in _context.ChangeLogs
-                .Include(c => c.CommandOverideStatus)
+                .Include(c => c.CommandOverrideStatus)
                 .Include(c => c.DeployedStatus)
                 .Include(c => c.EquipmentStatus)
                 .Include(c => c.ForceElement)
@@ -119,7 +119,7 @@ namespace SMARTV3.Controllers
             ViewData["deployedStatusListNonSelect"] = _context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
 
             ChangeLog? changeLog = await _context.ChangeLogs
-                .Include(c => c.CommandOverideStatus)
+                .Include(c => c.CommandOverrideStatus)
                 .Include(c => c.DeployedStatus)
                 .Include(c => c.EquipmentStatus)
                 .Include(c => c.ForceElement)

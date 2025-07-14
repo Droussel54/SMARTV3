@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace SMARTV3.Models
 {
-    public partial class CommandOverideStatus
+    public partial class CommandOverrideStatus
     {
-        public CommandOverideStatus()
+        public CommandOverrideStatus()
         {
             ChangeLogs = new HashSet<ChangeLog>();
             DataCardHistories = new HashSet<DataCardHistory>();

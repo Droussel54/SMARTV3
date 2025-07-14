@@ -91,9 +91,9 @@ else
             <b>
                 @localizer["CommandOverrideStatus"]
             </b>
-            @if (Model.CommandOverideStatus is not null)
+            @if (Model.CommandOverrideStatus is not null)
             {
-                <div class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour"> </div>
+                <div class="rounddiv" style="background-color:@Model.CommandOverrideStatus.StausDisplayColour"> </div>
             }
         </li>
         <li class="data"><b>@localizer["CommandOverrideComments"]</b> @Html.DisplayFor(model => model.CommandOverrideComments)</li>

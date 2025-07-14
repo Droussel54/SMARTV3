@@ -106,7 +106,7 @@ namespace SMARTV3.Models
         public int? LastEditUser { get; set; }
         public DateTime? LastEditDate { get; set; }
         public bool? Concurrency { get; set; }
-        public string? ConcurrencyCommnets { get; set; }
+        public string? ConcurrencyComments { get; set; }
         public int? NatoAssetsDeclared { get; set; }
         public bool? Rds { get; set; }
         public bool? EquipmentSensorsReadinessFactor { get; set; }
@@ -114,7 +114,7 @@ namespace SMARTV3.Models
 
         public virtual Capability? Capability { get; set; }
         public virtual Category? Category { get; set; }
-        public virtual CommandOverideStatus? CommandOverideStatus { get; set; }
+        public virtual CommandOverrideStatus? CommandOverrideStatus { get; set; }
         public virtual DeployedStatus? DeployedStatus { get; set; }
         public virtual Designation? Designation { get; set; }
         public virtual DummyForceElement DummyForceElement { get; set; } = null!;

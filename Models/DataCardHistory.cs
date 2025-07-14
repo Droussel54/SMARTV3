@@ -108,7 +108,7 @@ namespace SMARTV3.Models
         public int? HistoryYear { get; set; }
         public int? HistoryMonth { get; set; }
         public bool Concurrency { get; set; }
-        public string? ConcurrencyCommnets { get; set; }
+        public string? ConcurrencyComments { get; set; }
         public bool Rds { get; set; }
         public bool EquipmentSensorsReadinessFactor { get; set; }
         public bool PersonnelTradeInsufficienciesReadinessFactor { get; set; }
@@ -131,7 +131,7 @@ namespace SMARTV3.Models
 
         public virtual Capability? Capability { get; set; }
         public virtual Category? Category { get; set; }
-        public virtual CommandOverideStatus? CommandOverideStatus { get; set; }
+        public virtual CommandOverrideStatus? CommandOverrideStatus { get; set; }
         public virtual DeployedStatus? DeployedStatus { get; set; }
         public virtual Designation? Designation { get; set; }
         public virtual Echelon? Echelon { get; set; }

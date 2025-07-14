@@ -204,7 +204,7 @@ namespace SMARTV3.Controllers
         {
             return _context.DataCards.Include(d => d.Capability)
                                      .Include(d => d.Category)
-                                     .Include(d => d.CommandOverideStatus)
+                                     .Include(d => d.CommandOverrideStatus)
                                      .Include(d => d.Conplans)
                                      .Include(d => d.DeployedStatus)
                                      .Include(d => d.Designation)
@@ -524,7 +524,7 @@ namespace SMARTV3.Controllers
             "TrainingRangeAvailabilityReadinessFactor,TrainingCtreadinessFactor,TrainingSpecialQuals,TrainingTrgFleets,TrainingComments,TrainingCollectiveTrainingStatusId,TrainingIndividualTrainingStatusId,SustainmentStatusId," +
             "SustainmentCombatRationsStatusId,SustainmentPersonalEquipmentStatusId,SustainmentPetrolStatusId,SustainmentAmmunitionStatusId,SustainmentSparesStatusId, SustainmentOtherStatusId," +
             "SustainmentRationsReadinessFactor,SustainmentUniformsReadinessFactor,SustainmentPpereadinessFactor,SustainmentFuelReadinessFactor,SustainmentAmmunitionReadinessFactor," +
-            "SustainmentSparePartsReadinessFactor,SustainmentOtherReadinessFactor,SustainmentComments,LastEditUser,LastEditDate,Concurrency,ConcurrencyCommnets")] DataCard dataCard, IFormCollection formCollection,
+            "SustainmentSparePartsReadinessFactor,SustainmentOtherReadinessFactor,SustainmentComments,LastEditUser,LastEditDate,Concurrency,ConcurrencyComments")] DataCard dataCard, IFormCollection formCollection,
              string? selectedOrganization, string? selectedConPlan, string? selectedOperation, string? selectedNato, string? selectedStatus, string? selectedDeployedStatus, string? selectedPageSize, int? pageNumber, string? sortOrder, int selectedOverallStatus)
         {
             if (id != dataCard.Id)
@@ -652,7 +652,7 @@ namespace SMARTV3.Controllers
                     else
                     {
                         dataCard.Concurrency = false;
-                        dataCard.ConcurrencyCommnets = null;
+                        dataCard.ConcurrencyComments = null;
                     }
 
                     _context.Update(dataCard);

@@ -13,7 +13,7 @@
     IEnumerable<PetsoverallStatus>? petsStatus = ViewData["petsStatus"] as IEnumerable<PetsoverallStatus>;
     IEnumerable<PetspercentStatus>? percentStatus = ViewData["percentStatus"] as IEnumerable<PetspercentStatus>;
     IEnumerable<DeployedStatus>? deployStatus = ViewData["deployStatus"] as IEnumerable<DeployedStatus>;
-    IEnumerable<CommandOverideStatus>? commandOverideStatus = ViewData["commandOverideStatus"] as IEnumerable<CommandOverideStatus>;
+    IEnumerable<CommandOverrideStatus>? commandOverideStatus = ViewData["commandOverideStatus"] as IEnumerable<CommandOverrideStatus>;
 
     CultureHelper cultureHelper = new CultureHelper();
     string lang = cultureHelper.GetCurrentCulture();
@@ -328,7 +328,7 @@
         <div class="col">
             <div id="concurrencySection">
                 <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["Concurrency"]</span>
-                <input asp-for="ConcurrencyCommnets" id="ConcurrencyCommnets" class="form-control" maxlength="500" title="@localizer["ConcurrencyCommnets"]" />
+                <input asp-for="ConcurrencyComments" id="ConcurrencyComments" class="form-control" maxlength="500" title="@localizer["ConcurrencyComments"]" />
             </div>
         </div>
     </div>
@@ -353,9 +353,9 @@
                 {
                     @foreach (var obj in commandOverideStatus)
                     {
-                        @if (Model.CommandOverideStatus != null)
+                        @if (Model.CommandOverrideStatus != null)
                         {
-                            @if (obj.Id == Model.CommandOverideStatus.Id)
+                            @if (obj.Id == Model.CommandOverrideStatus.Id)
                             {
                                 <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
                                 @if(lang =="en")
@@ -398,9 +398,9 @@
                     }
                 }
             </select>
-            @if (Model.CommandOverideStatus != null)
+            @if (Model.CommandOverrideStatus != null)
             {
-                <div id="CommandOverideStatusDisplay" class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour"> </div>
+                <div id="CommandOverideStatusDisplay" class="rounddiv" style="background-color:@Model.CommandOverrideStatus.StausDisplayColour"> </div>
             }
             else
             {
@@ -1558,7 +1558,7 @@
         $(document).ready(function () {
             setInputValidation("#Division");
             setInputValidation("#Unit");
-            setInputValidation("#ConcurrencyCommnets");
+            setInputValidation("#ConcurrencyComments");
             setInputValidation("#Brigade");
             setInputValidation("#Subunit");
             setInputValidation("#CategoryId");
@@ -1666,7 +1666,7 @@
         // Checks fields below and puts red border if missing
         $("#Division").change(function () { setInputValidation("#Division"); });
         $("#Unit").change(function () { setInputValidation("#Unit"); });
-        $("#ConcurrencyCommnets").change(function () { setInputValidation("#ConcurrencyCommnets"); });
+        $("#ConcurrencyComments").change(function () { setInputValidation("#ConcurrencyComments"); });
         $("#Brigade").change(function () { setInputValidation("#Brigade"); });
         $("#Subunit").change(function () { setInputValidation("#Subunit"); });
         $("#CategoryId").change(function () { setInputValidation("#CategoryId"); });
@@ -1731,7 +1731,7 @@
             if (conplanArray.length > 1 || operationArray.length > 1) {
                 $('#concurrencySection').show();
             } else {
-                $('#ConcurrencyCommnets').val("");
+                $('#ConcurrencyComments').val("");
                 $('#concurrencySection').hide();
             }
         }
@@ -1862,7 +1862,7 @@
             let brigade = $('#Brigade').val();
             let unit = $('#Unit').val();
             let subunit = $('#Subunit').val();
-            let concurrencyComments = $('#ConcurrencyCommnets').val();
+            let concurrencyComments = $('#ConcurrencyComments').val();
             let commandOverideStatus = $('#CommandOverideStatusDrpDwn').val();
             let commandOverrideComments = $('#CommandOverrideComments').val();
             let commandOverrideAuthority = $('#CommandOverrideAuthority').val();

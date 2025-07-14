@@ -29,7 +29,7 @@ namespace SMARTV3.Models
         public DateTime? ChangedDate { get; set; }
         public int? LastEditUser { get; set; }
 
-        public virtual CommandOverideStatus? CommandOverideStatus { get; set; }
+        public virtual CommandOverrideStatus? CommandOverrideStatus { get; set; }
         public virtual DeployedStatus? DeployedStatus { get; set; }
         public virtual PetsoverallStatus? EquipmentStatus { get; set; }
         public virtual ForceElement? ForceElement { get; set; }

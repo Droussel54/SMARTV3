@@ -223,9 +223,9 @@
         </div>
         <div class="col">
             <b>@localizer["ConcurrencyComments"] </b>
-            @if (Model.ConcurrencyCommnets != null & Model.ConcurrencyCommnets != "")
+            @if (Model.ConcurrencyComments != null & Model.ConcurrencyComments != "")
             {
-                @Html.DisplayFor(model => model.ConcurrencyCommnets)
+                @Html.DisplayFor(model => model.ConcurrencyComments)
             }
             else
             {
@@ -242,9 +242,9 @@
         </div>
         <div class="col">
             <b>@localizer["CommandOverrideReadinessStatus"] </b>
-            @if (Model.CommandOverideStatus != null)
+            @if (Model.CommandOverrideStatus != null)
             {
-                <div class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour; text-align:left"></div>
+                <div class="rounddiv" style="background-color:@Model.CommandOverrideStatus.StausDisplayColour; text-align:left"></div>
             }
             else
             {

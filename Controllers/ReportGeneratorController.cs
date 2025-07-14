@@ -657,7 +657,7 @@ namespace SMARTV3.Controllers
                 {
                     dataCard = dataCardQuery.Include(d => d.Capability)
                                             .Include(d => d.Category)
-                                            .Include(d => d.CommandOverideStatus)
+                                            .Include(d => d.CommandOverrideStatus)
                                             .Include(d => d.Conplans)
                                             .Include(d => d.DeployedStatus)
                                             .Include(d => d.Designation)

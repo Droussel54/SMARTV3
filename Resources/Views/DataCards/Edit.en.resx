@@ -216,7 +216,7 @@
   <data name="Concurrency" xml:space="preserve">
     <value>Concurrency</value>
   </data>
-  <data name="ConcurrencyCommnets" xml:space="preserve">
+  <data name="ConcurrencyComments" xml:space="preserve">
     <value>It is possible that a FElm is associated to more than one CONPLAN and can be partially deployed on an Operation.  In this case there is a potential SSE Concurrency of Operation conflict which poses a potential risk and that must be identified in this field.</value>
   </data>
   <data name="ConcurrencyDetails" xml:space="preserve">

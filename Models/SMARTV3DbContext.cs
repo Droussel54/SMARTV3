@@ -19,7 +19,7 @@ namespace SMARTV3.Models
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<CategoryArchiveComment> CategoryArchiveComments { get; set; } = null!;
         public virtual DbSet<ChangeLog> ChangeLogs { get; set; } = null!;
-        public virtual DbSet<CommandOverideStatus> CommandOverideStatuses { get; set; } = null!;
+        public virtual DbSet<CommandOverrideStatus> CommandOverrideStatuses { get; set; } = null!;
         public virtual DbSet<Conplan> Conplans { get; set; } = null!;
         public virtual DbSet<ConplanArchiveComment> ConplanArchiveComments { get; set; } = null!;
         public virtual DbSet<Creval> Crevals { get; set; } = null!;
@@ -247,10 +247,10 @@ namespace SMARTV3.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.CommandOverideStatus)
+                entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.ChangeLogs)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
-                    .HasConstraintName("FK_ChangeLog_CommandOverideStatuses");
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
+                    .HasConstraintName("FK_ChangeLog_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.ChangeLogs)
@@ -293,7 +293,7 @@ namespace SMARTV3.Models
                     .HasConstraintName("FK_ChangeLog_PETSOverallStatuses2");
             });
 
-            modelBuilder.Entity<CommandOverideStatus>(entity =>
+            modelBuilder.Entity<CommandOverrideStatus>(entity =>
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
@@ -305,7 +305,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StausDisplayColour)
+                entity.Property(e => e.StatusDisplayColour)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -375,7 +375,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ConcurrencyCommnets)
+                entity.Property(e => e.ConcurrencyComments)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
@@ -507,10 +507,10 @@ namespace SMARTV3.Models
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_DataCard_Categories");
 
-                entity.HasOne(d => d.CommandOverideStatus)
+                entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
-                    .HasConstraintName("FK_DataCard_CommandOverideStatuses");
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
+                    .HasConstraintName("FK_DataCard_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.DataCards)
@@ -761,7 +761,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ConcurrencyCommnets)
+                entity.Property(e => e.ConcurrencyComments)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
@@ -891,10 +891,10 @@ namespace SMARTV3.Models
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_DataCardHistory_Categories");
 
-                entity.HasOne(d => d.CommandOverideStatus)
+                entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DataCardHistories)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
-                    .HasConstraintName("FK_DataCardHistory_CommandOverideStatuses");
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
+                    .HasConstraintName("FK_DataCardHistory_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.DataCardHistories)
@@ -1078,7 +1078,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StausDisplayColour)
+                entity.Property(e => e.StatusDisplayColour)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -1127,7 +1127,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ConcurrencyCommnets)
+                entity.Property(e => e.ConcurrencyComments)
                     .HasMaxLength(500)
                     .IsUnicode(false);
 
@@ -1229,10 +1229,10 @@ namespace SMARTV3.Models
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_DummyDataCard_Categories");
 
-                entity.HasOne(d => d.CommandOverideStatus)
+                entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DummyDataCards)
-                    .HasForeignKey(d => d.CommandOverideStatusId)
-                    .HasConstraintName("FK_DummyDataCard_CommandOverideStatuses");
+                    .HasForeignKey(d => d.CommandOverrideStatusId)
+                    .HasConstraintName("FK_DummyDataCard_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.DummyDataCards)

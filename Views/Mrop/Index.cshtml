@@ -169,9 +169,9 @@
     <!-- Buttons -->
     <div class="btn-group me-2" role="group">
         <!-- Exports -->
-        <button class="btn btn-outline-secondary d-flex align-items-center justify-content-center"
-                onclick="exportToPNG()" title="Export to PNG" style="height: 40px;">
-            <img src='@Url.Content("~/images/download.png")' alt="Download image" width="20" height="20" />
+        @* <button class="btn btn-outline-secondary" onclick="exportToCSV()">Export CSV</button> *@
+        <button class="btn btn-outline-secondary" onclick="exportToPNG()" title="Export to PNG">
+            <img class="exportImage" src='@Url.Content("~/images/download.png")' alt="Download image" />
         </button>
         <!-- exportToPDF & exportToCSV also available -->
 
@@ -403,9 +403,10 @@
         });
         // Priority Clear Btn click function
         $("#btnClearPriority").on("click", function() {
-            $("#searchPRIBox").val('', applyFilters());
-            $(this).addClass("visually-hidden");
-        });
+             $("#searchPRIBox").val('');
+             applyFilters();
+             $(this).addClass("visually-hidden");
+         });
 
         // SearchBox Clear Btn
         $("#searchBox").on("input", function () {
@@ -418,7 +419,8 @@
         });
         // SearchBox Clear Btn click function
         $("#btnClearSearchBox").on("click", function () {
-            $("#searchBox").val('', applyFilters());
+            $("#searchBox").val('');
+            applyFilters();
             $(this).addClass("visually-hidden");
         });
 

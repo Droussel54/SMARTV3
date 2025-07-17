@@ -337,9 +337,14 @@
             stack: true,
             groupOrder: 'id',
             margin: { item: 10, axis: 5 },
-            orientation: 'top',
-            zoomMin: 1000 * 60 * 60 * 24 * 7,
+            orientation: {
+                axis: 'both',
+                item: 'top'
+            },
+            zoomable: true,
+            zoomKey: 'ctrlKey',
             zoomMax: 1000 * 60 * 60 * 24 * 365 * 3,
+            zoomMin: 1000 * 60 * 60 * 24 * 7,
             editable: false,
             start: moment().subtract(136, 'days').toDate(), // Default view
             end: moment().add(952, "days").toDate(),

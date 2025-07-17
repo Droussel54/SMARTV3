@@ -14,7 +14,7 @@ namespace SMARTV3.Models
         }
 
         public int Id { get; set; }
-        public string? StausDisplayColour { get; set; }
+        public string? StatusDisplayColour { get; set; }
         public string? StatusDisplayValue { get; set; }
         public string? StatusDisplayValueFre { get; set; }
         public int? StatusValue { get; set; }

@@ -10,6 +10,7 @@ namespace SMARTV3.Models
             CapabilityArchiveComments = new HashSet<CapabilityArchiveComment>();
             DataCardHistories = new HashSet<DataCardHistory>();
             DataCards = new HashSet<DataCard>();
+            DataCardPETS = new HashSet<DataCardPETS>();
             DummyDataCards = new HashSet<DummyDataCard>();
         }
 
@@ -41,6 +42,7 @@ namespace SMARTV3.Models
         public virtual ICollection<CapabilityArchiveComment> CapabilityArchiveComments { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistories { get; set; }
         public virtual ICollection<DataCard> DataCards { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardPETS { get; set; }
         public virtual ICollection<DummyDataCard> DummyDataCards { get; set; }
         public virtual ICollection<OutputTask> OutputTasks { get; set; }
     }

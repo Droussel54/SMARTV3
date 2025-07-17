@@ -61,23 +61,23 @@ else
         </tr>
         <tr>
             <th width="200px" height="30px">@localizer["Deployed"]</th>
-            <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Deployed")?.StausDisplayColour"> </div></td>
+            <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Deployed")?.StatusDisplayColour"> </div></td>
         </tr>
         <tr>
             <th width="200px" height="30px">@localizer["PartiallyDeployed"]</th>
-            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Partially Deployed")?.StausDisplayColour"> </div></td>
+            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Partially Deployed")?.StatusDisplayColour"> </div></td>
         </tr>
         <tr>
             <th width="200px" height="30px">@localizer["HighAlertImmediateReadiness"]</th>
-            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "High Alert/Immediate Reachback")?.StausDisplayColour"> </div></td>
+            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "High Alert/Immediate Reachback")?.StatusDisplayColour"> </div></td>
         </tr>
         <tr>
             <th width="200px" height="30px">@localizer["ForceGenerating"]</th>
-            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Force Generating")?.StausDisplayColour"> </div></td>
+            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Force Generating")?.StatusDisplayColour"> </div></td>
         </tr>
         <tr>
             <th width="200px" height="30px">@localizer["InDevelopment"]</th>
-            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "In Development")?.StausDisplayColour"> </div></td>
+            <td> <div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "In Development")?.StatusDisplayColour"> </div></td>
         </tr>
     </table>
     <br />
@@ -91,9 +91,9 @@ else
             <b>
                 @localizer["CommandOverrideStatus"]
             </b>
-            @if (Model.CommandOverideStatus is not null)
+            @if (Model.CommandOverrideStatus is not null)
             {
-                <div class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour"> </div>
+                <div class="rounddiv" style="background-color:@Model.CommandOverrideStatus.StatusDisplayColour"> </div>
             }
         </li>
         <li class="data"><b>@localizer["CommandOverrideComments"]</b> @Html.DisplayFor(model => model.CommandOverrideComments)</li>
@@ -104,7 +104,7 @@ else
             </b>
             @if (Model.DeployedStatus is not null)
             {
-                <div class="rounddiv" style="background-color:@Model.DeployedStatus.StausDisplayColour"> </div>
+                <div class="rounddiv" style="background-color:@Model.DeployedStatus.StatusDisplayColour"> </div>
             }
         </li>
         <li class="data">

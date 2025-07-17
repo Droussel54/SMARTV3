@@ -12,29 +12,29 @@ namespace SMARTV3.Models
             ChangeLogSrStatuses = new HashSet<ChangeLog>();
             ChangeLogSustainmentStatuses = new HashSet<ChangeLog>();
             ChangeLogTrainingStatuses = new HashSet<ChangeLog>();
-            DataCardEquipmentCombatVehicleStatuses = new HashSet<DataCard>();
-            DataCardEquipmentCommunicationsEquipmentStatuses = new HashSet<DataCard>();
-            DataCardEquipmentSpecialEquipmentStatuses = new HashSet<DataCard>();
-            DataCardEquipmentStatuses = new HashSet<DataCard>();
-            DataCardEquipmentSupportVehicleStatuses = new HashSet<DataCard>();
-            DataCardEquipmentWeaponsServiceRateStatuses = new HashSet<DataCard>();
+            DataCardEquipmentCombatVehicleStatuses = new HashSet<DataCardPETS>();
+            DataCardEquipmentCommunicationsEquipmentStatuses = new HashSet<DataCardPETS>();
+            DataCardEquipmentSpecialEquipmentStatuses = new HashSet<DataCardPETS>();
+            DataCardEquipmentStatuses = new HashSet<DataCardPETS>();
+            DataCardEquipmentSupportVehicleStatuses = new HashSet<DataCardPETS>();
+            DataCardEquipmentWeaponsServiceRateStatuses = new HashSet<DataCardPETS>();
             DataCardHistoryEquipmentStatuses = new HashSet<DataCardHistory>();
             DataCardHistoryPersonnelStatuses = new HashSet<DataCardHistory>();
             DataCardHistorySrStatuses = new HashSet<DataCardHistory>();
             DataCardHistorySustainmentStatuses = new HashSet<DataCardHistory>();
             DataCardHistoryTrainingStatuses = new HashSet<DataCardHistory>();
-            DataCardPersonnelStatuses = new HashSet<DataCard>();
+            DataCardPersonnelStatuses = new HashSet<DataCardPETS>();
             DataCardSrStatuses = new HashSet<DataCard>();
-            DataCardSustainmentAmmunitionStatuses = new HashSet<DataCard>();
-            DataCardSustainmentCombatRationsStatuses = new HashSet<DataCard>();
-            DataCardSustainmentOtherStatuses = new HashSet<DataCard>();
-            DataCardSustainmentPersonalEquipmentStatuses = new HashSet<DataCard>();
-            DataCardSustainmentPetrolStatuses = new HashSet<DataCard>();
-            DataCardSustainmentSparesStatuses = new HashSet<DataCard>();
-            DataCardSustainmentStatuses = new HashSet<DataCard>();
-            DataCardTrainingCollectiveTrainingStatuses = new HashSet<DataCard>();
-            DataCardTrainingIndividualTrainingStatuses = new HashSet<DataCard>();
-            DataCardTrainingStatuses = new HashSet<DataCard>();
+            DataCardSustainmentAmmunitionStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentCombatRationsStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentOtherStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentPersonalEquipmentStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentPetrolStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentSparesStatuses = new HashSet<DataCardPETS>();
+            DataCardSustainmentStatuses = new HashSet<DataCardPETS>();
+            DataCardTrainingCollectiveTrainingStatuses = new HashSet<DataCardPETS>();
+            DataCardTrainingIndividualTrainingStatuses = new HashSet<DataCardPETS>();
+            DataCardTrainingStatuses = new HashSet<DataCardPETS>();
             DatacardKpiOverallStatusAboves = new HashSet<DatacardKpi>();
             DatacardKpiOverallStatusBelows = new HashSet<DatacardKpi>();
             DummyDataCardEquipmentCombatVehicleStatuses = new HashSet<DummyDataCard>();
@@ -69,29 +69,29 @@ namespace SMARTV3.Models
         public virtual ICollection<ChangeLog> ChangeLogSrStatuses { get; set; }
         public virtual ICollection<ChangeLog> ChangeLogSustainmentStatuses { get; set; }
         public virtual ICollection<ChangeLog> ChangeLogTrainingStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentCombatVehicleStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentCommunicationsEquipmentStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentSpecialEquipmentStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentSupportVehicleStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardEquipmentWeaponsServiceRateStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentCombatVehicleStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentCommunicationsEquipmentStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentSpecialEquipmentStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentSupportVehicleStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardEquipmentWeaponsServiceRateStatuses { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistoryEquipmentStatuses { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistoryPersonnelStatuses { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistorySrStatuses { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistorySustainmentStatuses { get; set; }
         public virtual ICollection<DataCardHistory> DataCardHistoryTrainingStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardPersonnelStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardPersonnelStatuses { get; set; }
         public virtual ICollection<DataCard> DataCardSrStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentAmmunitionStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentCombatRationsStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentOtherStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentPersonalEquipmentStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentPetrolStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentSparesStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardSustainmentStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardTrainingCollectiveTrainingStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardTrainingIndividualTrainingStatuses { get; set; }
-        public virtual ICollection<DataCard> DataCardTrainingStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentAmmunitionStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentCombatRationsStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentOtherStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentPersonalEquipmentStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentPetrolStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentSparesStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardSustainmentStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardTrainingCollectiveTrainingStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardTrainingIndividualTrainingStatuses { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardTrainingStatuses { get; set; }
         public virtual ICollection<DatacardKpi> DatacardKpiOverallStatusAboves { get; set; }
         public virtual ICollection<DatacardKpi> DatacardKpiOverallStatusBelows { get; set; }
         public virtual ICollection<DummyDataCard> DummyDataCardEquipmentCombatVehicleStatuses { get; set; }

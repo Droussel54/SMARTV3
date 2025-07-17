@@ -1,4 +1,4 @@
-﻿@model SMARTV3.Models.DataCard
+﻿@model Tuple<SMARTV3.Models.DataCard, SMARTV3.Models.DataCardPETS>
 
 @using Microsoft.AspNetCore.Mvc.Localization
 @using SMARTV3.Helpers
@@ -13,7 +13,7 @@
     IEnumerable<PetsoverallStatus>? petsStatus = ViewData["petsStatus"] as IEnumerable<PetsoverallStatus>;
     IEnumerable<PetspercentStatus>? percentStatus = ViewData["percentStatus"] as IEnumerable<PetspercentStatus>;
     IEnumerable<DeployedStatus>? deployStatus = ViewData["deployStatus"] as IEnumerable<DeployedStatus>;
-    IEnumerable<CommandOverideStatus>? commandOverideStatus = ViewData["commandOverideStatus"] as IEnumerable<CommandOverideStatus>;
+    IEnumerable<CommandOverrideStatus>? commandOverrideStatus = ViewData["commandOverrideStatus"] as IEnumerable<CommandOverrideStatus>;
 
     CultureHelper cultureHelper = new CultureHelper();
     string lang = cultureHelper.GetCurrentCulture();
@@ -25,10 +25,10 @@
 </head>
 
 <form asp-action="Edit" name="EditDataCard" id="EditDataCard">
-    <input type="hidden" asp-for="Id" />
-    <input type="hidden" asp-for="ForceElementId" />
-    <input type="hidden" asp-for="DataCardComplete" />
-    <input type="hidden" asp-for="NoticeToMoveId" />
+    <input type="hidden" asp-for="Item1.Id" />
+    <input type="hidden" asp-for="Item1.ForceElementId" />
+    <input type="hidden" asp-for="Item1.DataCardComplete" />
+    <input type="hidden" asp-for="Item1.NoticeToMoveId" />
     <input type="hidden" name="sortOrder" value="@ViewData["sortOrder"]" />
     <input type="hidden" name="pageNumber" value="@ViewData["pageNumber"]" />
     <input type="hidden" name="selectedPageSize" value="@ViewData["selectedPageSize"]" />
@@ -44,7 +44,7 @@
     </div>
 
     <br /> <br />
-    <h5>@localizer["EditForceElementFElmDataCard"]</h5>
+    <h5>@localizer["EditItem1.ForceElementFElmDataCard"]</h5>
     <hr />
     <div class="row">
         <div class="col">
@@ -65,19 +65,19 @@
         </div>
         <div class="col"></div>
         <div class="col">
-            <button type="button" onclick="showModal(@Model.Id, 'Readiness')" class="btn btn-sm btn-secondary" style="float: right;">
+            <button type="button" onclick="showModal(@Model.Item1.Id, 'Readiness')" class="btn btn-sm btn-secondary" style="float: right;">
                 @localizer["AlertsBasedOnReadiness"]    
             </button>
         </div>
         <div class="col">
-            <button type="button" onclick="showModal(@Model.Id, 'Change')" class="btn btn-sm btn-secondary" style="float: right;">
+            <button type="button" onclick="showModal(@Model.Item1.Id, 'Change')" class="btn btn-sm btn-secondary" style="float: right;">
                 @localizer["AlertsForChanges"]
             </button>
         </div>
     </div>
 
     <br />
-    @if (Model.DataCardComplete == false)
+    @if (Model.Item1.DataCardComplete == false)
     {
         <div class="error">@localizer["Incomplete"]</div>
     }
@@ -91,73 +91,73 @@
     <div class="row tombstone">
         <div class="col">
             <span style="font-weight:bold">@localizer["FElmID"]</span>
-            <input asp-for="ForceElement!.ElementId" class="form-control" readonly/>
+            <input asp-for="Item1.ForceElement!.ElementId" class="form-control" readonly/>
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["FElmName"]</span>
-            <input asp-for="ForceElement!.ElementName" class="form-control" readonly/>
+            <input asp-for="Item1.ForceElement!.ElementName" class="form-control" readonly/>
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["Shortname"]</span>
-            <input asp-for="ForceElement!.Shortname" class="form-control" readonly />
+            <input asp-for="Item1.ForceElement!.Shortname" class="form-control" readonly />
         </div>
     </div>
    
     <div class="row tombstone">
         <div class="col">
             <span style="font-weight:bold">@localizer["OrganizationName"]</span>
-            <input asp-for="ForceElement!.Organization.OrganizationName" class="form-control" readonly/>
+            <input asp-for="Item1.ForceElement!.Organization.OrganizationName" class="form-control" readonly/>
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["Weighting"]</span>
-            <input value="@Model.ForceElement?.Weighting?.WeightValue?.ToString("##0.##", System.Globalization.CultureInfo.InvariantCulture)"
+            <input value="@Model.Item1.ForceElement?.Weighting?.WeightValue?.ToString("##0.##", System.Globalization.CultureInfo.InvariantCulture)"
                 class="form-control" readonly/>
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
             <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["DivFrm"]</span>
-            <input asp-for="Division" class="form-control" maxlength="256" />
+            <input asp-for="Item1.Division" class="form-control" maxlength="256" />
         </div>
         <div class="col">
             <span class="error">* &nbsp;</span><span style="font-weight:bold"> @localizer["BdeFltWg"]</span>
-            <input asp-for="Brigade" class="form-control" maxlength="256" />
+            <input asp-for="Item1.Brigade" class="form-control" maxlength="256" />
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
             <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["ParentUnit"]</span>
-            <input asp-for="Unit" class="form-control" maxlength="256" />
+            <input asp-for="Item1.Unit" class="form-control" maxlength="256" />
         </div>
         <div class="col">
             <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["SubUnitName"]</span>
-            <input asp-for="Subunit" class="form-control" maxlength="256" />
+            <input asp-for="Item1.Subunit" class="form-control" maxlength="256" />
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
-            <span style="font-weight:bold">@localizer["ForceElementDescription"]</span>
-            <input asp-for="ForceElementDesc" class="form-control" maxlength="500" />
+            <span style="font-weight:bold">@localizer["Item1.ForceElementDescription"]</span>
+            <input asp-for="Item1.ForceElementDesc" class="form-control" maxlength="500" />
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
             <span id="NatoLocationAstrix" class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["PeacetimeLocationName"]</span>
-            <input asp-for="NatoLocation" id="NatoLocation" class="form-control" />
+            <input asp-for="Item1.NatoLocation" id="NatoLocation" class="form-control" />
         </div>
         <div class="col">
             <span id="NatoCoordinatesAstrix" class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["PeacetimeLocationCoordinates"]</span>
-            <input asp-for="NatoCoordinates" class="form-control" />
+            <input asp-for="Item1.NatoCoordinates" class="form-control" />
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
             <span style="font-weight:bold">@localizer["HighReadinessFrom"]</span>
-            <input asp-for="ReadinessFromDate" class="form-control" type="date" />
+            <input asp-for="Item1.ReadinessFromDate" class="form-control" type="date" />
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["HighReadinessTo"]</span>
-            <input asp-for="ReadinessToDate" class="form-control" type="date" />
+            <input asp-for="Item1.ReadinessToDate" class="form-control" type="date" />
         </div>
     </div>
     <div class="row tombstone">
@@ -165,16 +165,16 @@
             <span style="font-weight:bold">@localizer["NoticeToMove"]</span>
             @if (lang == "en")
             {
-                <input asp-for="NoticeToMove!.NoticeToMoveName" class="form-control" type="text" disabled />                
+                <input asp-for="Item1.NoticeToMove!.NoticeToMoveName" class="form-control" type="text" disabled />                
             } else 
             {
-                <input asp-for="NoticeToMove!.NoticeToMoveNameFre" class="form-control" type="text" disabled/>       
+                <input asp-for="Item1.NoticeToMove!.NoticeToMoveNameFre" class="form-control" type="text" disabled/>       
             }
         </div>
         <div class="col" id="NtmdetailsCol">
 
                 <span style="font-weight:bold">@localizer["NTMDetails"]</span>
-                <input asp-for="Ntmdetails" class="form-control" readonly/>
+                <input asp-for="Item1.Ntmdetails" class="form-control" readonly/>
 
         </div>
     </div>
@@ -184,11 +184,11 @@
             <div style="overflow-y:scroll; height:100px;">
                 @if (conPlanList != null)
                 {
-                    @if (Model.Conplans != null)
+                    @if (Model.Item1.Conplans != null)
                     {
                         @foreach (SelectListItem? conPlan in conPlanList)
                         {
-                            bool found = Model.Conplans.Any(d => d.Id == int.Parse(conPlan.Value));
+                            bool found = Model.Item1.Conplans.Any(d => d.Id == int.Parse(conPlan.Value));
                     
                             if (found)
                             {
@@ -220,11 +220,11 @@
             <div style="overflow-y:scroll; height:100px;">
                 @if (operationtList != null)
                 {
-                    @if (Model.Operations != null)
+                    @if (Model.Item1.Operations != null)
                     {
                         @foreach (SelectListItem? operation in operationtList)
                         {
-                            bool found = Model.Operations.Any(d => d.Id == int.Parse(operation.Value));
+                            bool found = Model.Item1.Operations.Any(d => d.Id == int.Parse(operation.Value));
 
                             if (found)
                             {
@@ -263,14 +263,14 @@
             <table cellpadding="5">
                 <tr>
                     <td>
-                        <select style="width: auto;" id="DeployedStatusDrpDwn" asp-for="DeployedStatusId" onchange="setChicletColor(this,'DeployedStatusDisplay')" class="form-select">
+                        <select style="width: auto;" id="DeployedStatusDrpDwn" asp-for="Item1.DeployedStatusId" onchange="setChicletColor(this,'DeployedStatusDisplay')" class="form-select">
                             @if (deployStatus != null)
                             {
                                 @foreach (var obj in deployStatus)
                                 {
-                                    @if (Model.DeployedStatus != null && obj.Id == Model.DeployedStatus.Id)
+                                    @if (Model.Item1.DeployedStatus != null && obj.Id == Model.Item1.DeployedStatus.Id)
                                     {
-                                        <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
+                                        <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">
                                         @if (lang == "en")
                                         {
                                             @obj.StatusDisplayValue
@@ -283,7 +283,7 @@
                                     }
                                     else
                                     {
-                                        <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                                        <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                                         @if(lang =="en")
                                         {
                                             @obj.StatusDisplayValue
@@ -299,9 +299,9 @@
                         </select>
                     </td>
                     <td>
-                        @if (Model.DeployedStatus != null)
+                        @if (Model.Item1.DeployedStatus != null)
                         {
-                            <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.DeployedStatus.StausDisplayColour"></div>
+                            <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.Item1.DeployedStatus.StatusDisplayColour"></div>
                         }
                         else
                         {
@@ -312,23 +312,23 @@
             </table>
         </div>
         <div class="col">
-            <span hidden style="font-weight:bold">@localizer["eNRFNRI"]</span>  <input type="hidden" id="NatoActive" class="form-check-input" asp-for="NatoActive" />
+            <span hidden style="font-weight:bold">@localizer["eNRFNRI"]</span>  <input type="hidden" id="NatoActive" class="form-check-input" asp-for="Item1.NatoActive" />
         </div>
         <div class="col">
-            <span style="font-weight:bold">@localizer["NFM"]</span>  <input id="NFMActive" class="form-check-input" asp-for="NFMActive" />
+            <span style="font-weight:bold">@localizer["NFM"]</span>  <input id="NFMActive" class="form-check-input" asp-for="Item1.NFMActive" />
         </div>
         <div hidden class="col">
-            <span  style="font-weight:bold">@localizer["FwdToNato"]</span>  <input id="FwdNato" class="form-check-input" asp-for="FwdNato" />
+            <span  style="font-weight:bold">@localizer["FwdToNato"]</span>  <input id="FwdNato" class="form-check-input" asp-for="Item1.FwdNato" />
         </div>
         <div class="col">
-            <span style="font-weight:bold">@localizer["RDS"]</span>  <input id="Rds" class="form-check-input" asp-for="Rds" />
+            <span style="font-weight:bold">@localizer["RDS"]</span>  <input id="Rds" class="form-check-input" asp-for="Item1.Rds" />
         </div>
     </div>
     <div class="row tombstone">
         <div class="col">
             <div id="concurrencySection">
                 <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["Concurrency"]</span>
-                <input asp-for="ConcurrencyCommnets" id="ConcurrencyCommnets" class="form-control" maxlength="500" title="@localizer["ConcurrencyCommnets"]" />
+                <input asp-for="Item1.ConcurrencyComments" id="ConcurrencyComments" class="form-control" maxlength="500" title="@localizer["ConcurrencyComments"]" />
             </div>
         </div>
     </div>
@@ -341,84 +341,84 @@
         <div class="col">
             <span style="font-weight:bold">@localizer["SMaRTReadinessStatus"]</span>
             &nbsp;
-            <div id="SrStatusDisplay" class="rounddiv" style="background-color:@Model.SrStatus?.StatusDisplayColour"> </div>
-            <input asp-for="SrStatusId" hidden />
+            <div id="SrStatusDisplay" class="rounddiv" style="background-color:@Model.Item1.SrStatus?.StatusDisplayColour"> </div>
+            <input asp-for="Item1.SrStatusId" hidden />
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["CommandOverrideReadinessStatus"]</span>
-            <select id="CommandOverideStatusDrpDwn" asp-for="CommandOverideStatusId" onchange="changeCommandOverrideStatus(this,'CommandOverideStatusDisplay')"
+            <select id="CommandOverrideStatusDrpDwn" asp-for="Item1.CommandOverrideStatusId" onchange="changeCommandOverrideStatus(this,'CommandOverrideStatusDisplay')"
                 class="form-select" style="width: auto; display: inline-flex;">
                 <option></option>
-                @if (commandOverideStatus != null)
+                @if (commandOverrideStatus != null)
                 {
-                    @foreach (var obj in commandOverideStatus)
+                    @foreach (var obj in commandOverrideStatus)
                     {
-                        @if (Model.CommandOverideStatus != null)
+                        @if (Model.Item1.CommandOverrideStatus != null)
                         {
-                            @if (obj.Id == Model.CommandOverideStatus.Id)
+                            @if (obj.Id == Model.Item1.CommandOverrideStatus.Id)
                             {
-                                <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
+                                <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">
                                 @if(lang =="en")
                                 {
-                                    @obj.StatusDisplayvalue
+                                    @obj.StatusDisplayValue
                                 }
                                 else
                                 {
-                                    @obj.StatusDisplayvalueFre
+                                    @obj.StatusDisplayValueFre
                                 }
                                 </option>
                             }
                             else
                             {
-                                <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                                <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                                 @if (lang == "en")
                                 {
-                                    @obj.StatusDisplayvalue
+                                    @obj.StatusDisplayValue
                                 }
                                 else
                                 {
-                                    @obj.StatusDisplayvalueFre
+                                    @obj.StatusDisplayValueFre
                                 }
                                 </option>
                             }
                         }
                         else
                         {
-                            <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                            <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                             @if (lang == "en")
                             {
-                                @obj.StatusDisplayvalue
+                                @obj.StatusDisplayValue
                             }
                             else
                             {
-                                @obj.StatusDisplayvalueFre
+                                @obj.StatusDisplayValueFre
                             }
                             </option>
                         }
                     }
                 }
             </select>
-            @if (Model.CommandOverideStatus != null)
+            @if (Model.Item1.CommandOverrideStatus != null)
             {
-                <div id="CommandOverideStatusDisplay" class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour"> </div>
+                <div id="CommandOverrideStatusDisplay" class="rounddiv" style="background-color:@Model.Item1.CommandOverrideStatus.StatusDisplayColour"> </div>
             }
             else
             {
-                <div id="CommandOverideStatusDisplay" class="rounddiv"> </div>
+                <div id="CommandOverrideStatusDisplay" class="rounddiv"> </div>
             }
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["ValidityDTG"]</span>
-            @if (DateTime.Compare(Model.Validitydate.AddDays(30), DateTime.Now) > 0)
+            @if (DateTime.Compare(Model.Item1.Validitydate.AddDays(30), DateTime.Now) > 0)
             {
-                <td><span>@(Model.Validitydate.ToString("yyyy-MM-dd"))</span></td>
+                <td><span>@(Model.Item1.Validitydate.ToString("yyyy-MM-dd"))</span></td>
             }
             else
             {
                 <td>
                     <span style="font-weight:bold">
                         <font color="red">
-                            @(Model.Validitydate.ToString("yyyy-MM-dd"))
+                            @(Model.Item1.Validitydate.ToString("yyyy-MM-dd"))
                         </font>
                     </span>
                 </td>
@@ -429,11 +429,11 @@
         <div class="row">
             <div class="col">
                 <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["CommandOverrideReadinessStatusRemarks"]</span>
-                <input asp-for="CommandOverrideComments" class="form-control" maxlength="500" />
+                <input asp-for="Item1.CommandOverrideComments" class="form-control" maxlength="500" />
             </div>
             <div class="col">
                 <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["CommandOverrideReadinessAuthority"]</span>
-                <input asp-for="CommandOverrideAuthority" class="form-control" maxlength="100" />
+                <input asp-for="Item1.CommandOverrideAuthority" class="form-control" maxlength="100" />
             </div>
         </div>
     </div>
@@ -449,29 +449,29 @@
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["FunctionalCategory"]</span>
-                    <select asp-for="CategoryId" id="CategoryId" class="form-select" asp-items="ViewBag.CategoryId"> <option></option> </select>
+                    <select asp-for="Item1.CategoryId" id="CategoryId" class="form-select" asp-items="ViewBag.CategoryId"> <option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NATODesignation"]</span>
-                    <select asp-for="DesignationId" id="DesignationId" class="form-select" asp-items="ViewBag.DesignationId"><option></option> </select>
+                    <select asp-for="Item1.DesignationId" id="DesignationId" class="form-select" asp-items="ViewBag.DesignationId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span style="font-weight:bold">@localizer["AssetsDeclared"]</span>
-                    <input asp-for="NatoAssetsDeclared" id="NatoAssetsDeclared" min="0" class="form-control" />
+                    <input asp-for="Item1.NatoAssetsDeclared" id="NatoAssetsDeclared" min="0" class="form-control" />
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["Service"]</span>
-                    <select asp-for="ServiceId" id="ServiceId" class="form-select" asp-items="ViewBag.ServiceId"><option></option> </select>
+                    <select asp-for="Item1.ServiceId" id="ServiceId" class="form-select" asp-items="ViewBag.ServiceId"><option></option> </select>
                 </div>
             </div>
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["Echelon"]</span>
-                    <select asp-for="EchelonId" id="EchelonId" class="form-select" asp-items="ViewBag.EchelonId"><option></option> </select>
+                    <select asp-for="Item1.EchelonId" id="EchelonId" class="form-select" asp-items="ViewBag.EchelonId"><option></option> </select>
                 </div>
                 <div class="col">
                      <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["CapabilityCode"]</span>
-                     <select asp-for="CapabilityId" id="CapabilityId" class="form-select" asp-items="ViewBag.CapabilityId"><option></option> </select>
+                     <select asp-for="Item1.CapabilityId" id="CapabilityId" class="form-select" asp-items="ViewBag.CapabilityId"><option></option> </select>
                 </div>
                 <div class="col">
                 </div>
@@ -479,21 +479,21 @@
             <div class="row nato-row">
                 <div class="col">
                     <span style="font-weight:bold">@localizer["RequirementName"]</span>
-                    <input asp-for="NatoRequirementName" id="NatoRequirementName" class="form-control" />
+                    <input asp-for="Item1.NatoRequirementName" id="NatoRequirementName" class="form-control" />
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NationalName"]</span>
-                    <input asp-for="NatoNationalName" id="NatoNationalName" class="form-control" />
+                    <input asp-for="Item1.NatoNationalName" id="NatoNationalName" class="form-control" />
                 </div>
             </div>
             <div class="row nato-row">
                 <div class="col">
                     <span style="font-weight:bold">@localizer["MajorEquipmentRemarks"]</span>
-                    <input asp-for="NatoMajorEquipmentComments" class="form-control" maxlength="200" />
+                    <input asp-for="Item1.NatoMajorEquipmentComments" class="form-control" maxlength="200" />
                 </div>
                 <div class="col">
                     <span style="font-weight:bold">@localizer["Caveats"]</span>
-                    <input asp-for="NatoCavets" class="form-control" maxlength="200" />
+                    <input asp-for="Item1.NatoCavets" class="form-control" maxlength="200" />
                 </div>
             </div>
         </div>
@@ -504,17 +504,17 @@
             <div class="row nato-row">
                 <div class="col">
                      <span style="font-weight:bold">@localizer["NoticeToEffect"]</span>
-                     <input asp-for="NatoNoticeToEffect" id="NatoNoticeToEffect" min="0" max="999" class="form-control" />
+                     <input asp-for="Item1.NatoNoticeToEffect" id="NatoNoticeToEffect" min="0" max="999" class="form-control" />
                 </div>
                 <div class="col">
                     <span style="font-weight:bold">@localizer["FPH"]</span>
-                    <select asp-for="NatoFphyesNoBlank" id="NatoFphyesNoBlank" class="form-select" asp-items="ViewBag.NatoFPHYesNoBlankId"><option></option> </select>
+                    <select asp-for="Item1.NatoFphyesNoBlank" id="NatoFphyesNoBlank" class="form-select" asp-items="ViewBag.NatoFPHYesNoBlankId"><option></option> </select>
                 </div> 
             </div>
             <div class="row nato-row">
                 <div class="col">
                     <span style="font-weight:bold">@localizer["GeneralRemarks"]</span>
-                    <input asp-for="NatoGeneralComments" class="form-control" maxlength="500" />
+                    <input asp-for="Item1.NatoGeneralComments" class="form-control" maxlength="500" />
                 </div>
             </div>
         </div>
@@ -524,32 +524,32 @@
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["AFSTraining"]</span>
-                    <select asp-for="NatoAfstrainingPercentage" id="NatoAfstrainingPercentage" class="form-select" asp-items="ViewBag.AfsPercentageId"><option></option> </select>
+                    <select asp-for="Item1.NatoAfstrainingPercentage" id="NatoAfstrainingPercentage" class="form-select" asp-items="ViewBag.AfsPercentageId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["EvalCompleted"]</span>
-                    <select asp-for="NatoEvalCompleted" id="NatoEvalCompleted" class="form-select" asp-items="ViewBag.NatoEvalCompletedId"><option></option> </select>
+                    <select asp-for="Item1.NatoEvalCompleted" id="NatoEvalCompleted" class="form-select" asp-items="ViewBag.NatoEvalCompletedId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error" id="NatoPlannedEvalDateAstrix">* &nbsp;</span><span style="font-weight:bold">@localizer["PlannedEvalDate"]</span>
-                    <input asp-for="NatoPlannedEvalDate" id="NatoPlannedEvalDate" class="form-control" type="date" />
+                    <input asp-for="Item1.NatoPlannedEvalDate" id="NatoPlannedEvalDate" class="form-control" type="date" />
                 </div>
             </div>
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["CertProgramCoord"]</span>
-                    <select asp-for="NatoCertProgramCoord" id="NatoCertProgramCoord" class="form-select" asp-items="ViewBag.NatoCertProgramCoordId"><option></option> </select>
+                    <select asp-for="Item1.NatoCertProgramCoord" id="NatoCertProgramCoord" class="form-select" asp-items="ViewBag.NatoCertProgramCoordId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["CertCompleted"]</span>
-                    <select asp-for="NatoCertCompleted" id="NatoCertCompleted" class="form-select" asp-items="ViewBag.NatoCertCompletedId"><option></option> </select>
+                    <select asp-for="Item1.NatoCertCompleted" id="NatoCertCompleted" class="form-select" asp-items="ViewBag.NatoCertCompletedId"><option></option> </select>
                 </div>
                 <div class="col"></div>
             </div>
             <div class="row nato-row">
                 <div class="col">
                     <span style="font-weight:bold">@localizer["NationalTrainingRemarks"]</span>
-                    <input asp-for="NatoNationalTrainingRemarks" class="form-control" maxlength="500" />
+                    <input asp-for="Item1.NatoNationalTrainingRemarks" class="form-control" maxlength="500" />
                 </div>
             </div>
         </div>
@@ -559,21 +559,21 @@
             <div class="row nato-row">
                 <div class="col-3">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["StratLiftCapacity"]</span>
-                    <select asp-for="NatoStratLiftCapacityId" id="NatoStratLiftCapacityId" class="form-select" asp-items="ViewBag.NatoStratLiftCapacityId"><option></option> </select>
+                    <select asp-for="Item1.NatoStratLiftCapacityId" id="NatoStratLiftCapacityId" class="form-select" asp-items="ViewBag.NatoStratLiftCapacityId"><option></option> </select>
                 </div>   
                 <div class="col-9">
                     <span style="font-weight:bold">@localizer["StratLiftCapacityRemarks"]</span>
-                    <input asp-for="NatoStratLiftCapacityComments" class="form-control" maxlength="500" />
+                    <input asp-for="Item1.NatoStratLiftCapacityComments" class="form-control" maxlength="500" />
                 </div> 
             </div>
             <div class="row nato-row">
                 <div class="col-3">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NationalDeploy"]</span>
-                    <select asp-for="NatoNationalDeployId" id="NatoNationalDeployId" class="form-select" asp-items="ViewBag.NatoNationalDeployId"><option></option> </select>
+                    <select asp-for="Item1.NatoNationalDeployId" id="NatoNationalDeployId" class="form-select" asp-items="ViewBag.NatoNationalDeployId"><option></option> </select>
                 </div>
                 <div class="col-9">
                     <span style="font-weight:bold">@localizer["NationalDeployRemarks"]</span>
-                    <input asp-for="NatoNationalDeployComments" class="form-control" maxlength="500" />
+                    <input asp-for="Item1.NatoNationalDeployComments" class="form-control" maxlength="500" />
                 </div>
             </div>
         </div>
@@ -583,23 +583,23 @@
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["12Sdos"]</span>
-                     <select asp-for="Nato12Sdos" id="Nato12Sdos" class="form-select" asp-items="ViewBag.Nato12SdosId"><option></option> </select>
+                     <select asp-for="Item1.Nato12Sdos" id="Nato12Sdos" class="form-select" asp-items="ViewBag.Nato12SdosId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["18Sdos"]</span>
-                     <select asp-for="Nato18Sdos" id="Nato18Sdos" class="form-select" asp-items="ViewBag.Nato18SdosId"><option></option> </select>
+                     <select asp-for="Item1.Nato18Sdos" id="Nato18Sdos" class="form-select" asp-items="ViewBag.Nato18SdosId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["CurrentSdos"]</span>
-                     <input asp-for="NatoCurrentSdos" id="NatoCurrentSdos" min="0" max="30" class="form-control" />
+                     <input asp-for="Item1.NatoCurrentSdos" id="NatoCurrentSdos" min="0" max="30" class="form-control" />
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NationalSupplyPlan"]</span>
-                     <select asp-for="NatoNatSupplyPlan" id="NatoNatSupplyPlan" class="form-select" asp-items="ViewBag.NatoNatSupplyPlanId"><option></option> </select>
+                     <select asp-for="Item1.NatoNatSupplyPlan" id="NatoNatSupplyPlan" class="form-select" asp-items="ViewBag.NatoNatSupplyPlanId"><option></option> </select>
                 </div>
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NationalSupportElements"]</span>
-                     <select asp-for="NatoNatSupportElem" id="NatoNatSupportElem" class="form-select" asp-items="ViewBag.NatoNatSupportElemId"><option></option> </select>
+                     <select asp-for="Item1.NatoNatSupportElem" id="NatoNatSupportElem" class="form-select" asp-items="ViewBag.NatoNatSupportElemId"><option></option> </select>
                 </div>
             </div>
         </div>
@@ -609,7 +609,7 @@
             <div class="row nato-row">
                 <div class="col">
                     <span class="error">* &nbsp;</span><span style="font-weight:bold">@localizer["NationalAssessmentRemarks"]</span>
-                    <input asp-for="NatoNationalAssesmentComments" id="NatoNationalAssesmentComments" class="form-control" maxlength="500" />
+                    <input asp-for="Item1.NatoNationalAssesmentComments" id="NatoNationalAssesmentComments" class="form-control" maxlength="500" />
                 </div>
             </div>
         </div>
@@ -633,12 +633,12 @@
                                 <tr>
                                     <td> <span style="font-weight:bold">@localizer["PersonnelStatus"]</span></td>
                                     <td>
-                                        <select id="PersonnelStatusDrpDwn" asp-for="PersonnelStatusId" onchange="changePersonalStatus(this,'PersonnelStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="PersonnelStatusDrpDwn" asp-for="Item2.PersonnelStatusId" onchange="changePersonalStatus(this,'PersonnelStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.PersonnelStatusId)
+                                                    @if (obj.Id == Model.Item2.PersonnelStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -651,7 +651,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="PersonnelStatusDisplay" class="rounddiv" style="background-color:@Model.PersonnelStatus?.StatusDisplayColour"></div>
+                                        <div id="PersonnelStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.PersonnelStatus?.StatusDisplayColour"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -662,7 +662,7 @@
                             <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["DesignatedStrengthDeclared"]</span>
                         </td>
                         <td>
-                            <input asp-for="PersonnelDesignatedStrength" id="PersonnelDesignatedStrength" class="form-control" type="number" />
+                            <input asp-for="Item2.PersonnelDesignatedStrength" id="PersonnelDesignatedStrength" class="form-control" type="number" />
                         </td>
                         <td>&nbsp;</td>
                     </tr>
@@ -671,7 +671,7 @@
                             <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["ActualStrengthCurrent"]</span>
                         </td>
                         <td>
-                            <input asp-for="PersonnelActualStrength" id="PersonnelActualStrength" class="form-control" type="number" />
+                            <input asp-for="Item2.PersonnelActualStrength" id="PersonnelActualStrength" class="form-control" type="number" />
                         </td>
                         <td>&nbsp;</td>
                     </tr>
@@ -685,32 +685,32 @@
                             <table width="100%">
                                 <tr class="align-top">
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="PersonnelLob" /> <span style="font-weight:bold">@localizer["LOB"] </span>
+                                        <input class="form-check-input" asp-for="Item2.PersonnelLOB" /> <span style="font-weight:bold">@localizer["LOB"] </span>
                                     </td>
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="PersonnelAps" /> <span style="font-weight:bold">@localizer["APS"] </span>
+                                        <input class="form-check-input" asp-for="Item2.PersonnelAPS" /> <span style="font-weight:bold">@localizer["APS"] </span>
                                     </td>
                                     <td width="34%">
-                                        <input class="form-check-input" asp-for="PersonnelIt" id="PersonnelIt" /> <span style="font-weight:bold">@localizer["IT"] </span>
+                                        <input class="form-check-input" asp-for="Item2.PersonnelIT" id="PersonnelIt" /> <span style="font-weight:bold">@localizer["IT"] </span>
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="PersonnelMedical" id="PersonnelMedical" />  <span style="font-weight:bold">@localizer["Medical"] </span> &nbsp;
+                                        <input class="form-check-input" asp-for="Item2.PersonnelMedical" id="PersonnelMedical" />  <span style="font-weight:bold">@localizer["Medical"] </span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="PersonnelLightDuties" /> <span style="font-weight:bold">@localizer["LtDuties"]</span> &nbsp;
+                                        <input class="form-check-input" asp-for="Item2.PersonnelLightDuties" /> <span style="font-weight:bold">@localizer["LtDuties"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="PersonnelTradeInsufficienciesReadinessFactor" /> <span style="font-weight:bold">@localizer["TradeInsufficiencies"]</span> &nbsp;
+                                        <input class="form-check-input" asp-for="Item2.PersonnelTradeInsufficienciesReadinessFactor" /> <span style="font-weight:bold">@localizer["TradeInsufficiencies"]</span> &nbsp;
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="PersonnelDental" id="PersonnelDental" /> <span style="font-weight:bold">@localizer["Dental"] </span>&nbsp;
+                                        <input class="form-check-input" asp-for="Item2.PersonnelDental" id="PersonnelDental" /> <span style="font-weight:bold">@localizer["Dental"] </span>&nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="PersonnelFitness" id="PersonnelFitness" /> <span style="font-weight:bold">@localizer["Fitness"] </span>&nbsp;
+                                        <input class="form-check-input" asp-for="Item2.PersonnelFitness" id="PersonnelFitness" /> <span style="font-weight:bold">@localizer["Fitness"] </span>&nbsp;
                                     </td>
                                     <td>&nbsp;</td>
                                 </tr>
@@ -724,7 +724,7 @@
                     </tr>
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3">
-                            <input asp-for="PersonnelComments" id="PersonnelComments" class="form-control" />
+                            <input asp-for="Item2.PersonnelComments" id="PersonnelComments" class="form-control" />
                         </td>
                     </tr>
                 </table>
@@ -741,8 +741,8 @@
                         <div id="TrainingError" class="error"></div>
                         <td colspan="3" align="center">
                             <span style="font-weight:bold">@localizer["TrainingStatus"]</span> &nbsp;
-                            <input asp-for="TrainingStatusId" hidden />
-                            <div id="TrainingStatusDisplay" class="rounddiv" style="background-color:@Model.TrainingStatus?.StatusDisplayColour; text-align:left"></div>
+                            <input asp-for="Item2.TrainingStatusId" hidden />
+                            <div id="TrainingStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.TrainingStatus?.StatusDisplayColour; text-align:left"></div>
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -753,12 +753,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="TrainingCollectiveTrainingStatusDrpDwn" asp-for="TrainingCollectiveTrainingStatusId" onchange="changeTrainingStatus(this,'TrainingCollectiveTrainingStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="TrainingCollectiveTrainingStatusDrpDwn" asp-for="Item2.TrainingCollectiveTrainingStatusId" onchange="changeTrainingStatus(this,'TrainingCollectiveTrainingStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.TrainingCollectiveTrainingStatusId)
+                                                    @if (obj.Id == Model.Item2.TrainingCollectiveTrainingStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -771,7 +771,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="TrainingCollectiveTrainingStatusDisplay" class="rounddiv" style="background-color:@Model.TrainingCollectiveTrainingStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="TrainingCollectiveTrainingStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.TrainingCollectiveTrainingStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -785,12 +785,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="TrainingIndividualTrainingStatusDrpDwn" asp-for="TrainingIndividualTrainingStatusId" onchange="changeTrainingStatus(this,'TrainingIndividualTrainingStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="TrainingIndividualTrainingStatusDrpDwn" asp-for="Item2.TrainingIndividualTrainingStatusId" onchange="changeTrainingStatus(this,'TrainingIndividualTrainingStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.TrainingIndividualTrainingStatusId)
+                                                    @if (obj.Id == Model.Item2.TrainingIndividualTrainingStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -803,7 +803,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="TrainingIndividualTrainingStatusDisplay" class="rounddiv" style="background-color:@Model.TrainingIndividualTrainingStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="TrainingIndividualTrainingStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.TrainingIndividualTrainingStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -815,7 +815,7 @@
                             <span style="font-weight:bold">@localizer["CREVALOPREDDeclaration"]</span>  &nbsp;
                         </td>
                         <td width="33%">
-                            <select asp-for="TrainingCreval" id="TrainingCreval" class="form-select" asp-items="ViewBag.CREVALId"> <option></option> </select>
+                            <select asp-for="Item2.TrainingCREVAL" id="TrainingCreval" class="form-select" asp-items="ViewBag.CREVALId"> <option></option> </select>
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -823,7 +823,7 @@
                             <span style="font-weight:bold">@localizer["ProjectedCREVALOPREDDeclarationDate"]</span>  &nbsp;
                         </td>
                         <td>
-                            <input asp-for="TrainingProjectedCrevaldate" class="form-control" type="date" />
+                            <input asp-for="Item2.TrainingProjectedCREVALDate" class="form-control" type="date" />
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -831,7 +831,7 @@
                             <span style="font-weight:bold">@localizer["CREVALDate"]</span> &nbsp;
                         </td>
                         <td>
-                            <input asp-for="TrainingCrevaldate" class="form-control" type="date" />
+                            <input asp-for="Item2.TrainingCREVALDate" class="form-control" type="date" />
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -839,7 +839,7 @@
                             <span style="font-weight:bold">@localizer["SpecialtySkills"]</span> &nbsp;
                         </td>
                         <td>
-                            <select asp-for="TrainingSpecialtySkillsId" id="TrainingSpecialtySkills" class="form-select" asp-items="ViewBag.TrainingSpecialtySkillsId"> <option></option> </select>
+                            <select asp-for="Item2.TrainingSpecialtySkillsId" id="TrainingSpecialtySkills" class="form-select" asp-items="ViewBag.TrainingSpecialtySkillsId"> <option></option> </select>
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -852,57 +852,57 @@
                             <table width="100%">
                                 <tr class="align-top">
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="TrainingAmmoReadinessFactor" id="TrainingAmmoReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingAmmoReadinessFactor" id="TrainingAmmoReadinessFactor" />
                                         <span style="font-weight:bold"> @localizer["Ammo"]</span> &nbsp;
                                     </td>
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="TrainingWeaponsReadinessFactor" id="TrainingWeaponsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingWeaponsReadinessFactor" id="TrainingWeaponsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Weapons"]</span> &nbsp;
                                     </td>
                                     <td width="34%">
-                                        <input class="form-check-input" asp-for="TrainingSparePartssReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingSparePartssReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["SpParts"]</span> &nbsp;
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingFuelReadinessFactor" id="TrainingFuelReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingFuelReadinessFactor" id="TrainingFuelReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Fuel"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingRadiosReadinessFactor" id="TrainingRadiosReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingRadiosReadinessFactor" id="TrainingRadiosReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Radios"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingItreadinessFactor" id="TrainingItreadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingITReadinessFactor" id="TrainingItreadinessFactor" />
                                         <span style="font-weight:bold">@localizer["IT1"] </span> &nbsp;
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingRationsReadinessFactor" id="TrainingRationsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingRationsReadinessFactor" id="TrainingRationsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Rations"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingEquipmentReadinessFactor" id="TrainingEquipmentReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingEquipmentReadinessFactor" id="TrainingEquipmentReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Equipment"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingRangeAvailabilityReadinessFactor" id="TrainingRangeAvailabilityReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingRangeAvailabilityReadinessFactor" id="TrainingRangeAvailabilityReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["RangeAvailability"]</span> &nbsp;
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingCtreadinessFactor" id="TrainingCtreadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingCTReadinessFactor" id="TrainingCtreadinessFactor" />
                                         <span style="font-weight:bold">@localizer["CT"]</span> &nbsp;
                                     </td>
                                      <td>
-                                        <input class="form-check-input" asp-for="TrainingSpecialQuals" id="TrainingSpecialQuals" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingSpecialQuals" id="TrainingSpecialQuals" />
                                         <span style="font-weight:bold">@localizer["SpecialQuals"]</span> &nbsp;
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="TrainingTrgFleets" id="TrainingTrgFleets" />
+                                        <input class="form-check-input" asp-for="Item2.TrainingTrgFleets" id="TrainingTrgFleets" />
                                         <span style="font-weight:bold">@localizer["TrgFleetsEqptSets"]</span> &nbsp;
                                     </td>
                                 </tr>
@@ -916,7 +916,7 @@
                     </tr>
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3">
-                            <input asp-for="TrainingComments" id="TrainingComments" class="form-control" />
+                            <input asp-for="Item2.TrainingComments" id="TrainingComments" class="form-control" />
                         </td>
                     </tr>
                 </table>
@@ -934,8 +934,8 @@
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3" align="center">
                             <span style="font-weight:bold">@localizer["EquipmentStatus"]</span> &nbsp;
-                            <input asp-for="EquipmentStatusId" hidden />
-                            <div id="EquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentStatus?.StatusDisplayColour; text-align:left"></div>
+                            <input asp-for="Item2.EquipmentStatusId" hidden />
+                            <div id="EquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentStatus?.StatusDisplayColour; text-align:left"></div>
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -946,12 +946,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="EquipmentCombatVehicleStatusDrpDwn" asp-for="EquipmentCombatVehicleStatusId" onchange="changeEquipmentStatus(this,'EquipmentCombatVehicleStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="EquipmentCombatVehicleStatusDrpDwn" asp-for="Item2.EquipmentCombatVehicleStatusId" onchange="changeEquipmentStatus(this,'EquipmentCombatVehicleStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.EquipmentCombatVehicleStatusId)
+                                                    @if (obj.Id == Model.Item2.EquipmentCombatVehicleStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -964,7 +964,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="EquipmentCombatVehicleStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentCombatVehicleStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="EquipmentCombatVehicleStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentCombatVehicleStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -978,12 +978,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="EquipmentSupportVehicleStatusDrpDwn" asp-for="EquipmentSupportVehicleStatusId" onchange="changeEquipmentStatus(this,'EquipmentSupportVehicleStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="EquipmentSupportVehicleStatusDrpDwn" asp-for="Item2.EquipmentSupportVehicleStatusId" onchange="changeEquipmentStatus(this,'EquipmentSupportVehicleStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.EquipmentSupportVehicleStatusId)
+                                                    @if (obj.Id == Model.Item2.EquipmentSupportVehicleStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -996,7 +996,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="EquipmentSupportVehicleStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentSupportVehicleStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="EquipmentSupportVehicleStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentSupportVehicleStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1010,12 +1010,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="EquipmentWeaponsServiceRateStatusDrpDwn" asp-for="EquipmentWeaponsServiceRateStatusId" onchange="changeEquipmentStatus(this,'EquipmentWeaponsServiceRateStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="EquipmentWeaponsServiceRateStatusDrpDwn" asp-for="Item2.EquipmentWeaponsServiceRateStatusId" onchange="changeEquipmentStatus(this,'EquipmentWeaponsServiceRateStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.EquipmentWeaponsServiceRateStatusId)
+                                                    @if (obj.Id == Model.Item2.EquipmentWeaponsServiceRateStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1028,7 +1028,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="EquipmentWeaponsServiceRateStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentWeaponsServiceRateStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="EquipmentWeaponsServiceRateStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentWeaponsServiceRateStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1042,12 +1042,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="EquipmentCommunicationsEquipmentStatusDrpDwn" asp-for="EquipmentCommunicationsEquipmentStatusId" onchange="changeEquipmentStatus(this,'EquipmentCommunicationsEquipmentStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="EquipmentCommunicationsEquipmentStatusDrpDwn" asp-for="Item2.EquipmentCommunicationsEquipmentStatusId" onchange="changeEquipmentStatus(this,'EquipmentCommunicationsEquipmentStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.EquipmentCommunicationsEquipmentStatusId)
+                                                    @if (obj.Id == Model.Item2.EquipmentCommunicationsEquipmentStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1060,7 +1060,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="EquipmentCommunicationsEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentCommunicationsEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="EquipmentCommunicationsEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentCommunicationsEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1074,12 +1074,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="EquipmentSpecialEquipmentStatusDrpDwn" asp-for="EquipmentSpecialEquipmentStatusId" onchange="changeEquipmentStatus(this,'EquipmentSpecialEquipmentStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="EquipmentSpecialEquipmentStatusDrpDwn" asp-for="Item2.EquipmentSpecialEquipmentStatusId" onchange="changeEquipmentStatus(this,'EquipmentSpecialEquipmentStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.EquipmentSpecialEquipmentStatusId)
+                                                    @if (obj.Id == Model.Item2.EquipmentSpecialEquipmentStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1092,7 +1092,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="EquipmentSpecialEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.EquipmentSpecialEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="EquipmentSpecialEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.EquipmentSpecialEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1108,43 +1108,43 @@
                             <table width="100%">
                                 <tr class="align-top">
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="EquipmentVehicalsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentVehicalsReadinessFactor" />
                                         <span style="font-weight:bold"> @localizer["Vehicles"]</span>
                                     </td>
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="EquipmentSpecialEquimentReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentSpecialEquimentReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["SpEquipment"]</span>
                                     </td>
                                     <td width="34%">
-                                        <input class="form-check-input" asp-for="EquipmentWeaponsReadinessFactor" id="EquipmentWeaponsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentWeaponsReadinessFactor" id="EquipmentWeaponsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Weapons1"]</span>
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentTechniciansReadinessFactor" id="EquipmentTechniciansReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentTechniciansReadinessFactor" id="EquipmentTechniciansReadinessFactor" />
                                         <span style="font-weight:bold"> @localizer["Technicians"]</span>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentCommunicationsReadinessFactor" id="EquipmentCommunicationsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentCommunicationsReadinessFactor" id="EquipmentCommunicationsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Communications"]</span>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentSensorsReadinessFactor" id="EquipmentSensorsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentSensorsReadinessFactor" id="EquipmentSensorsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Sensors"]</span>
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentLifeEntensionDelays" id="EquipmentLifeEntensionDelays" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentLifeEntensionDelays" id="EquipmentLifeEntensionDelays" />
                                         <span style="font-weight:bold"> @localizer["LifeExtensionDelays"]</span>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentProtectionSuites" id="EquipmentProtectionSuites" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentProtectionSuites" id="EquipmentProtectionSuites" />
                                         <span style="font-weight:bold">@localizer["ProtectionSuites"]</span>
                                     </td>
                                     <td>
-                                        <input class="form-check-input" asp-for="EquipmentOther" id="EquipmentOther" />
+                                        <input class="form-check-input" asp-for="Item2.EquipmentOther" id="EquipmentOther" />
                                         <span style="font-weight:bold">@localizer["Other"]</span>
                                     </td>
                                 </tr>
@@ -1158,7 +1158,7 @@
                     </tr>
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3">
-                            <input asp-for="EquipmentComments" class="form-control" />
+                            <input asp-for="Item2.EquipmentComments" class="form-control" />
                         </td>
                     </tr>
                 </table>
@@ -1174,8 +1174,8 @@
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3" align="center">
                             <span style="font-weight:bold">@localizer["SustainmentStatus"]</span> &nbsp;
-                            <input asp-for="SustainmentStatusId" id="SustainmentStatusId" hidden />
-                            <div id="SustainmentStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentStatus?.StatusDisplayColour; text-align:left"></div>
+                            <input asp-for="Item2.SustainmentStatusId" id="SustainmentStatusId" hidden />
+                            <div id="SustainmentStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentStatus?.StatusDisplayColour; text-align:left"></div>
                         </td>
                     </tr>
                     <tr style="height:50px; vertical-align:top">
@@ -1186,12 +1186,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentCombatRationsStatusDrpDwn" asp-for="SustainmentCombatRationsStatusId" onchange="changeSustainmentStatus(this, 'SustainmentCombatRationsStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentCombatRationsStatusDrpDwn" asp-for="Item2.SustainmentCombatRationsStatusId" onchange="changeSustainmentStatus(this, 'SustainmentCombatRationsStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == Model.SustainmentCombatRationsStatusId)
+                                                    @if (obj.Id == Model.Item2.SustainmentCombatRationsStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1204,7 +1204,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentCombatRationsStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentCombatRationsStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentCombatRationsStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentCombatRationsStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1218,12 +1218,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentPersonalEquipmentStatusDrpDwn" asp-for="SustainmentPersonalEquipmentStatusId" onchange="changeSustainmentStatus(this,'SustainmentPersonalEquipmentStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentPersonalEquipmentStatusDrpDwn" asp-for="Item2.SustainmentPersonalEquipmentStatusId" onchange="changeSustainmentStatus(this,'SustainmentPersonalEquipmentStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (@obj.Id == @Model.SustainmentPersonalEquipmentStatusId)
+                                                    @if (@obj.Id == @Model.Item2.SustainmentPersonalEquipmentStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1236,7 +1236,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentPersonalEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentPersonalEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentPersonalEquipmentStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentPersonalEquipmentStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1250,12 +1250,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentPetrolStatusDrpDwn" asp-for="SustainmentPetrolStatusId" onchange="changeSustainmentStatus(this,'SustainmentPetrolStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentPetrolStatusDrpDwn" asp-for="Item2.SustainmentPetrolStatusId" onchange="changeSustainmentStatus(this,'SustainmentPetrolStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (@obj.Id == @Model.SustainmentPetrolStatusId)
+                                                    @if (@obj.Id == @Model.Item2.SustainmentPetrolStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1268,7 +1268,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentPetrolStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentPetrolStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentPetrolStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentPetrolStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1282,12 +1282,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentAmmunitionStatusDrpDwn" asp-for="SustainmentAmmunitionStatusId" onchange="changeSustainmentStatus(this,'SustainmentAmmunitionStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentAmmunitionStatusDrpDwn" asp-for="Item2.SustainmentAmmunitionStatusId" onchange="changeSustainmentStatus(this,'SustainmentAmmunitionStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (@obj.Id == @Model.SustainmentAmmunitionStatusId)
+                                                    @if (@obj.Id == @Model.Item2.SustainmentAmmunitionStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1300,7 +1300,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentAmmunitionStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentAmmunitionStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentAmmunitionStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentAmmunitionStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1314,12 +1314,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentSparesStatusDrpDwn" asp-for="SustainmentSparesStatusId" onchange="changeSustainmentStatus(this,'SustainmentSparesStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentSparesStatusDrpDwn" asp-for="Item2.SustainmentSparesStatusId" onchange="changeSustainmentStatus(this,'SustainmentSparesStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (@obj.Id == @Model.SustainmentSparesStatusId)
+                                                    @if (@obj.Id == @Model.Item2.SustainmentSparesStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1332,7 +1332,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentSparesStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentSparesStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentSparesStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentSparesStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1346,12 +1346,12 @@
                             <table cellpadding="3">
                                 <tr>
                                     <td>
-                                        <select id="SustainmentOtherStatusDrpDwn" asp-for="SustainmentOtherStatusId" onchange="changeSustainmentStatus(this,'SustainmentOtherStatusDisplay')" class="form-select status-dropdown">
+                                        <select id="SustainmentOtherStatusDrpDwn" asp-for="Item2.SustainmentOtherStatusId" onchange="changeSustainmentStatus(this,'SustainmentOtherStatusDisplay')" class="form-select status-dropdown">
                                             @if (percentStatus != null)
                                             {
                                                 @foreach (var obj in percentStatus)
                                                 {
-                                                    @if (obj.Id == @Model.SustainmentOtherStatusId)
+                                                    @if (obj.Id == @Model.Item2.SustainmentOtherStatusId)
                                                     {
                                                         <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">@obj.StatusDisplayValue</option>
                                                     }
@@ -1364,7 +1364,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <div id="SustainmentOtherStatusDisplay" class="rounddiv" style="background-color:@Model.SustainmentOtherStatus?.StatusDisplayColour; text-align:left"></div>
+                                        <div id="SustainmentOtherStatusDisplay" class="rounddiv" style="background-color:@Model.Item2.SustainmentOtherStatus?.StatusDisplayColour; text-align:left"></div>
                                     </td>
                                 </tr>
                             </table>
@@ -1380,35 +1380,35 @@
                             <table style="width: 100%;">
                                 <tr class="align-top">
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="SustainmentRationsReadinessFactor" id="SustainmentRationsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentRationsReadinessFactor" id="SustainmentRationsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["LowInventoryStock"]</span>
                                     </td>
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="SustainmentFuelReadinessFactor" id="SustainmentFuelReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentFuelReadinessFactor" id="SustainmentFuelReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Fuel"]</span>
                                     </td>
                                     <td width="34%">
-                                        <input class="form-check-input" asp-for="SustainmentUniformsReadinessFactor" id="SustainmentUniformsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentUniformsReadinessFactor" id="SustainmentUniformsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["InsufficientStorageFacilities"]</span>
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="SustainmentAmmunitionReadinessFactor" id="SustainmentAmmunitionReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentAmmunitionReadinessFactor" id="SustainmentAmmunitionReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["InsufficientLift"]</span>
                                     </td>
                                     <td width="33%">
-                                        <input class="form-check-input" asp-for="SustainmentPpereadinessFactor" id="SustainmentPpereadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentPPEReadinessFactor" id="SustainmentPpereadinessFactor" />
                                         <span style="font-weight:bold">@localizer["PPE"]</span>
                                     </td>
                                     <td width="34%">
-                                        <input class="form-check-input" asp-for="SustainmentSparePartsReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentSparePartsReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["IndustryDelays"]</span>
                                     </td>
                                 </tr>
                                 <tr class="align-top">
                                     <td colspan="2">
-                                        <input class="form-check-input" asp-for="SustainmentOtherReadinessFactor" id="SustainmentOtherReadinessFactor" />
+                                        <input class="form-check-input" asp-for="Item2.SustainmentOtherReadinessFactor" id="SustainmentOtherReadinessFactor" />
                                         <span style="font-weight:bold">@localizer["Other"]</span>
                                     </td>
                                     <td>&nbsp;</td>
@@ -1423,7 +1423,7 @@
                     </tr>
                     <tr style="height:50px; vertical-align:top">
                         <td colspan="3">
-                            <input asp-for="SustainmentComments" id="SustainmentComments" class="form-control" />
+                            <input asp-for="Item2.SustainmentComments" id="SustainmentComments" class="form-control" />
                         </td>
                     </tr>
                 </table>
@@ -1434,7 +1434,7 @@
     <table>
         <tr>
             <td>
-                <span style="font-weight:bold">@localizer["LastEditedBy"]</span> &nbsp; @Html.DisplayFor(model => model.LastEditUserNavigation!.UserName)
+                <span style="font-weight:bold">@localizer["LastEditedBy"]</span> &nbsp; @Html.DisplayFor(model => model.Item1.LastEditUserNavigation!.UserName)
             </td>
         </tr>
     </table>
@@ -1546,7 +1546,7 @@
 
         //Document load
         $(document).ready(function () {
-            var myvar1 = document.getElementById('CommandOverideStatusDrpDwn').value;
+            var myvar1 = document.getElementById('CommandOverrideStatusDrpDwn').value;
             if (myvar1 == "") {
                 $('#OverrideComments').hide();
             } else {
@@ -1558,7 +1558,7 @@
         $(document).ready(function () {
             setInputValidation("#Division");
             setInputValidation("#Unit");
-            setInputValidation("#ConcurrencyCommnets");
+            setInputValidation("#ConcurrencyComments");
             setInputValidation("#Brigade");
             setInputValidation("#Subunit");
             setInputValidation("#CategoryId");
@@ -1655,7 +1655,7 @@
             }
         });
 
-        $('#CommandOverideStatusDrpDwn').change(function () {
+        $('#CommandOverrideStatusDrpDwn').change(function () {
             if (this.value != "") {
                 $('#OverrideComments').show();
             } else {
@@ -1666,7 +1666,7 @@
         // Checks fields below and puts red border if missing
         $("#Division").change(function () { setInputValidation("#Division"); });
         $("#Unit").change(function () { setInputValidation("#Unit"); });
-        $("#ConcurrencyCommnets").change(function () { setInputValidation("#ConcurrencyCommnets"); });
+        $("#ConcurrencyComments").change(function () { setInputValidation("#ConcurrencyComments"); });
         $("#Brigade").change(function () { setInputValidation("#Brigade"); });
         $("#Subunit").change(function () { setInputValidation("#Subunit"); });
         $("#CategoryId").change(function () { setInputValidation("#CategoryId"); });
@@ -1731,7 +1731,7 @@
             if (conplanArray.length > 1 || operationArray.length > 1) {
                 $('#concurrencySection').show();
             } else {
-                $('#ConcurrencyCommnets').val("");
+                $('#ConcurrencyComments').val("");
                 $('#concurrencySection').hide();
             }
         }
@@ -1862,15 +1862,15 @@
             let brigade = $('#Brigade').val();
             let unit = $('#Unit').val();
             let subunit = $('#Subunit').val();
-            let concurrencyComments = $('#ConcurrencyCommnets').val();
-            let commandOverideStatus = $('#CommandOverideStatusDrpDwn').val();
+            let concurrencyComments = $('#ConcurrencyComments').val();
+            let commandOverrideStatus = $('#CommandOverrideStatusDrpDwn').val();
             let commandOverrideComments = $('#CommandOverrideComments').val();
             let commandOverrideAuthority = $('#CommandOverrideAuthority').val();
 
             if ($(concurrencySection).is(":visible") && $.trim(concurrencyComments) == '') {
                 return false;
             }
-            else if (commandOverideStatus != '' && ($.trim(commandOverrideComments) == '' || $.trim(commandOverrideAuthority) == '')) {
+            else if (commandOverrideStatus != '' && ($.trim(commandOverrideComments) == '' || $.trim(commandOverrideAuthority) == '')) {
                 return false;
             }
 
@@ -2360,11 +2360,11 @@
         }
 
         function clearCommandOverride() {
-            $("#CommandOverideStatusDrpDwn").prop("selectedIndex", 0).val();
+            $("#CommandOverrideStatusDrpDwn").prop("selectedIndex", 0).val();
             $('#CommandOverrideComments').val("");
             $('#CommandOverrideAuthority').val("");
             $('#OverrideComments').hide();
-            $('#CommandOverideStatusDisplay').css('background-color', 'white');
+            $('#CommandOverrideStatusDisplay').css('background-color', 'white');
         }
     </script>
 

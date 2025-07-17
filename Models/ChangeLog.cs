@@ -8,7 +8,7 @@ namespace SMARTV3.Models
         public int Id { get; set; }
         public int? ForceElementId { get; set; }
         public int? SrStatusId { get; set; }
-        public int? CommandOverideStatusId { get; set; }
+        public int? CommandOverrideStatusId { get; set; }
         public string? CommandOverrideAuthority { get; set; }
         public string? CommandOverrideComments { get; set; }
         public int? DeployedStatusId { get; set; }
@@ -29,7 +29,7 @@ namespace SMARTV3.Models
         public DateTime? ChangedDate { get; set; }
         public int? LastEditUser { get; set; }
 
-        public virtual CommandOverideStatus? CommandOverideStatus { get; set; }
+        public virtual CommandOverrideStatus? CommandOverrideStatus { get; set; }
         public virtual DeployedStatus? DeployedStatus { get; set; }
         public virtual PetsoverallStatus? EquipmentStatus { get; set; }
         public virtual ForceElement? ForceElement { get; set; }

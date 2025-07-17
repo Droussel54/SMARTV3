@@ -1,5 +1,5 @@
 ﻿using System.Globalization;
-
+using System.Threading.Tasks;
 using SMARTV3.Models;
 
 namespace SMARTV3.Helpers
@@ -52,276 +52,283 @@ namespace SMARTV3.Helpers
         private decimal notDeployedWeight = 0;
         private decimal totalWeight = 0;
 
-        public DatacardReadinessTableModel? CalculateDisplay(List<DataCard> dataCards)
+        public async Task<DatacardReadinessTableModel?> CalculateDisplay(List<DataCard> dataCards, List<DataCardPETS> dataCardPETS)
         {
             if (dataCards.Count == 0) return null;
             foreach (var datacard in dataCards)
             {
                 decimal weight = datacard.ForceElement?.Weighting?.WeightValue ?? 0;
-                if (datacard.DeployedStatus != null)
+
+                foreach (var pets in dataCardPETS)
                 {
-                    switch (datacard.DeployedStatus.Id)
+                    if (pets.DataCardId == datacard.Id)
                     {
-                        // 1 Deployed
-                        case 1:
-                            deployedCount++;
-                            deployedWeight += weight;
-                            break;
-                        // 2 Partially Deployed
-                        case 2:
-                            partiallyDeployedCount++;
-                            partiallyDeployedWeight += weight;
-                            break;
-                        // 3 High Alert
-                        case 3:
-                            highAlertCount++;
-                            highAlertWeight += weight;
-                            break;
-                        // 4 In Development
-                        case 4:
-                            inDevelopmentCount++;
-                            inDevelopmentWeight += weight;
-                            break;
-                        // 5 Force Generating
-                        case 5:
-                            forceGeneratingCount++;
-                            forceGeneratingWeight += weight;
-                            break;
-                        // 6 Forward To Nato
-                        case 6:
-                            forwardToNatoCount++;
-                            forwardToNatoWeight += weight;
-                            break;
-                        // 7 Not Employed
-                        case 7:
+                        if (datacard.DeployedStatus != null)
+                        {
+                            switch (datacard.DeployedStatus.Id)
+                            {
+                                // 1 Deployed
+                                case 1:
+                                    deployedCount++;
+                                    deployedWeight += weight;
+                                    break;
+                                // 2 Partially Deployed
+                                case 2:
+                                    partiallyDeployedCount++;
+                                    partiallyDeployedWeight += weight;
+                                    break;
+                                // 3 High Alert
+                                case 3:
+                                    highAlertCount++;
+                                    highAlertWeight += weight;
+                                    break;
+                                // 4 In Development
+                                case 4:
+                                    inDevelopmentCount++;
+                                    inDevelopmentWeight += weight;
+                                    break;
+                                // 5 Force Generating
+                                case 5:
+                                    forceGeneratingCount++;
+                                    forceGeneratingWeight += weight;
+                                    break;
+                                // 6 Forward To Nato
+                                case 6:
+                                    forwardToNatoCount++;
+                                    forwardToNatoWeight += weight;
+                                    break;
+                                // 7 Not Employed
+                                case 7:
+                                    notDeployedCount++;
+                                    notDeployedWeight += weight;
+                                    break;
+                            }
+                        }
+                        else
+                        {
                             notDeployedCount++;
                             notDeployedWeight += weight;
-                            break;
-                    }
-                }
-                else
-                {
-                    notDeployedCount++;
-                    notDeployedWeight += weight;
-                }
-                if (datacard.CommandOverideStatus != null)
-                {
-                    switch (datacard.CommandOverideStatus.Id)
-                    {
-                        // 1 Ready
-                        case 1:
-                            readyCount++;
-                            readyWeight += weight;
-                            break;
-                        // 2 Ready with Lims
-                        case 2:
-                            readyLimsCount++;
-                            readyLimsWeight += weight;
-                            switch (datacard.PersonnelStatusId)
+                        }
+                        if (datacard.CommandOverrideStatus != null)
+                        {
+                            switch (datacard.CommandOverrideStatus.Id)
                             {
-                                case 3:
-                                case 4:
-                                    readyLimsPersWeight += weight;
+                                // 1 Ready
+                                case 1:
+                                    readyCount++;
+                                    readyWeight += weight;
                                     break;
-                            }
-                            switch (datacard.EquipmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsEquipWeight += weight;
+                                // 2 Ready with Lims
+                                case 2:
+                                    readyLimsCount++;
+                                    readyLimsWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsSustWeight += weight;
+                                            break;
+                                    }
                                     break;
-                            }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsSustWeight += weight;
-                                    break;
-                            }
-                            break;
 
-                        case 3:
-                            combatIneffectiveCount++;
-                            combatIneffectiveWeight += weight;
-                            switch (datacard.PersonnelStatusId)
-                            {
                                 case 3:
+                                    combatIneffectiveCount++;
+                                    combatIneffectiveWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffSustWeight += weight;
+                                            break;
+                                    }
+                                    break;
+                                // 4 Not ready
                                 case 4:
-                                    combatIneffPersWeight += weight;
+                                    notReadyCount++;
+                                    notReadyWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadySustWeight += weight;
+                                            break;
+                                    }
                                     break;
                             }
-                            switch (datacard.EquipmentStatusId)
+                        }
+                        else
+                        {
+                            switch (datacard.SrStatus?.Id)
                             {
+                                // 1 Ready
+                                case 1:
+                                    readyCount++;
+                                    readyWeight += weight;
+                                    break;
+                                // 2 Ready with Lims
+                                case 2:
+                                    readyLimsCount++;
+                                    readyLimsWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            readyLimsSustWeight += weight;
+                                            break;
+                                    }
+                                    break;
+                                // 3 Combat Ineffective
                                 case 3:
+                                    combatIneffectiveCount++;
+                                    combatIneffectiveWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            combatIneffSustWeight += weight;
+                                            break;
+                                    }
+                                    break;
+                                // 4 Not ready
                                 case 4:
-                                    combatIneffEquipWeight += weight;
+                                    notReadyCount++;
+                                    notReadyWeight += weight;
+                                    switch (pets.PersonnelStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyPersWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.EquipmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyEquipWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.TrainingStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadyTrainWeight += weight;
+                                            break;
+                                    }
+                                    switch (pets.SustainmentStatusId)
+                                    {
+                                        case 3:
+                                        case 4:
+                                            notReadySustWeight += weight;
+                                            break;
+                                    }
                                     break;
                             }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffSustWeight += weight;
-                                    break;
-                            }
-                            break;
-                        // 4 Not ready
-                        case 4:
-                            notReadyCount++;
-                            notReadyWeight += weight;
-                            switch (datacard.PersonnelStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyPersWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.EquipmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyEquipWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadySustWeight += weight;
-                                    break;
-                            }
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (datacard.SrStatus?.Id)
-                    {
-                        // 1 Ready
-                        case 1:
-                            readyCount++;
-                            readyWeight += weight;
-                            break;
-                        // 2 Ready with Lims
-                        case 2:
-                            readyLimsCount++;
-                            readyLimsWeight += weight;
-                            switch (datacard.PersonnelStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsPersWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.EquipmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsEquipWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    readyLimsSustWeight += weight;
-                                    break;
-                            }
-                            break;
-                        // 3 Combat Ineffective
-                        case 3:
-                            combatIneffectiveCount++;
-                            combatIneffectiveWeight += weight;
-                            switch (datacard.PersonnelStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffPersWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.EquipmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffEquipWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    combatIneffSustWeight += weight;
-                                    break;
-                            }
-                            break;
-                        // 4 Not ready
-                        case 4:
-                            notReadyCount++;
-                            notReadyWeight += weight;
-                            switch (datacard.PersonnelStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyPersWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.EquipmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyEquipWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.TrainingStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadyTrainWeight += weight;
-                                    break;
-                            }
-                            switch (datacard.SustainmentStatusId)
-                            {
-                                case 3:
-                                case 4:
-                                    notReadySustWeight += weight;
-                                    break;
-                            }
-                            break;
+                        }
                     }
                 }
                 totalCount++;
@@ -386,9 +393,9 @@ namespace SMARTV3.Helpers
                     notDeployedCount++;
                     notDeployedWeight += weight;
                 }
-                if (dummyDataCard.CommandOverideStatus != null)
+                if (dummyDataCard.CommandOverrideStatus != null)
                 {
-                    switch (dummyDataCard.CommandOverideStatus.Id)
+                    switch (dummyDataCard.CommandOverrideStatus.Id)
                     {
                         // 1 Ready
                         case 1:

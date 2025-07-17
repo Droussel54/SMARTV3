@@ -1527,6 +1527,14 @@ namespace SMARTV3.Controllers
                 NoticeToMoveId = NoticeToMoveId,
                 Ntmdetails = Ntmdetails,
                 SrStatusId = 4,
+                LastEditUser = GetCurrentUser()?.Id,
+                LastEditDate = DateTime.Today
+            };
+
+            DataCardPETS dataCardPETS = new()
+            {
+                CapabilityId = 0, // Default value, can be updated later
+                DataCardId = dataCard.Id,
                 PersonnelStatusId = 4,
                 EquipmentStatusId = 4,
                 EquipmentCombatVehicleStatusId = 4,
@@ -1544,8 +1552,6 @@ namespace SMARTV3.Controllers
                 SustainmentAmmunitionStatusId = 4,
                 SustainmentSparesStatusId = 4,
                 SustainmentOtherStatusId = 4,
-                LastEditUser = GetCurrentUser()?.Id,
-                LastEditDate = DateTime.Today
             };
 
             _context.Add(dataCard);

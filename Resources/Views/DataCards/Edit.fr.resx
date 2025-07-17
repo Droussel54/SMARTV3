@@ -216,7 +216,7 @@
   <data name="Concurrency" xml:space="preserve">
     <value>Simultanéïté</value>
   </data>
-  <data name="ConcurrencyCommnets" xml:space="preserve">
+  <data name="ConcurrencyComments" xml:space="preserve">
     <value>Il est possible qu'un élément de la force soit associé à plus d'un CONPLAN et peut être partiellement déployé dans le cadre d'une opération. Dans ce cas, il peut y avoir un conflit potentiel de simultanïté des opérations de PSE qui constitue un risque potentiel qui doit être indiqué dans ce champ.</value>
   </data>
   <data name="ConcurrencyDetails" xml:space="preserve">

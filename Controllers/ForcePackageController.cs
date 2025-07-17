@@ -400,11 +400,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "commandOverride_asc":
-                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "commandOverride_desc":
-                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "personnel_asc":
@@ -502,6 +502,14 @@ namespace SMARTV3.Controllers
 
                     if (selectedforceElement == null) continue;
                     DataCard? dataCard = selectedforceElement.DataCards.First();
+                    // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
+                    DataCardPETS? dataCardPETS = _context.DataCardPETS.Include(d => d.Capability)
+                                                                        .Include(d => d.DataCard)
+                                                                        .Include(d => d.PersonnelStatus)
+                                                                        .Include(d => d.EquipmentStatus)
+                                                                        .Include(d => d.TrainingStatus)
+                                                                        .Include(d => d.SustainmentStatus)
+                                                                        .Where(d => d.DataCardId == dataCard.Id).FirstOrDefault();
                     if (dataCard == null) continue;
 
                     // Remove existing felm and recreate with new data
@@ -515,7 +523,7 @@ namespace SMARTV3.Controllers
                     _context.SaveChanges();
 
                     // Copy data
-                    DummyDataCard dummyDatacard = DatacardToDummy(forcePackage.Id, dataCard);
+                    DummyDataCard dummyDatacard = DatacardToDummy(forcePackage.Id, dataCard, dataCardPETS);
                     if (dummyDatacard == null) continue;
 
                     _context.DummyDataCards.Add(dummyDatacard);
@@ -766,9 +774,17 @@ namespace SMARTV3.Controllers
                                                                        .Where(f => f.Id == selectedForceElementIdInt)
                                                                        .AsNoTracking()
                                                                        .First().DataCards.First();
+                    // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
+                    DataCardPETS? selectedDataCardPETS = _context.DataCardPETS.Include(d => d.Capability)
+                                                                        .Include(d => d.DataCard)
+                                                                        .Include(d => d.PersonnelStatus)
+                                                                        .Include(d => d.EquipmentStatus)
+                                                                        .Include(d => d.TrainingStatus)
+                                                                        .Include(d => d.SustainmentStatus)
+                                                                        .Where(d => d.DataCardId == selectedDataCard.Id).FirstOrDefault();
 
                     if (selectedDataCard == null) continue;
-                    DummyDataCard dummyDatacard = DatacardToDummy(forcePackage.Id, selectedDataCard);
+                    DummyDataCard dummyDatacard = DatacardToDummy(forcePackage.Id, selectedDataCard, selectedDataCardPETS);
                     if (dummyDatacard == null) continue;
 
                     _context.DummyDataCards.Add(dummyDatacard);
@@ -1627,10 +1643,10 @@ namespace SMARTV3.Controllers
             ViewData["serializedForcePackageIds"] = serializedForcePackageIds;
             ViewData["deployedStatusListNonSelect"] = _context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
             ViewData["overallStatusList"] = _context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking().ToList();
-            ViewData["cmdOverrideStatusList"] = _context.CommandOverideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
+            ViewData["cmdOverrideStatusList"] = _context.CommandOverrideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
 
             PetsoverallStatus? notReadyStatus = ((List<PetsoverallStatus>)ViewData["overallStatusList"]).Find(s => s.Id == 4);
-            CommandOverideStatus? notReadyStatusCmd = ((List<CommandOverideStatus>)ViewData["cmdOverrideStatusList"]).Find(s => s.Id == 4);
+            CommandOverrideStatus? notReadyStatusCmd = ((List<CommandOverrideStatus>)ViewData["cmdOverrideStatusList"]).Find(s => s.Id == 4);
             if (compareModelId != null)
             {
                 ViewData["compareModelId"] = compareModelId;
@@ -1698,8 +1714,8 @@ namespace SMARTV3.Controllers
                             {
                                 tempFpSharedViewModel.OtherDummyForceElements.Remove(tempDummyFelm);
                                 tempDummyFelm.DummyDataCards.First().SrStatus = notReadyStatus; 
-                                if (tempDummyFelm.DummyDataCards.First().CommandOverideStatus != null) { 
-                                    tempDummyFelm.DummyDataCards.First().CommandOverideStatus = notReadyStatusCmd;
+                                if (tempDummyFelm.DummyDataCards.First().CommandOverrideStatus != null) { 
+                                    tempDummyFelm.DummyDataCards.First().CommandOverrideStatus = notReadyStatusCmd;
                                 }
                                 KeyValuePair<string, DummyForceElement> kvp = new(fPSharedViewModel.ForcePackageName, tempDummyFelm);
                                 tempFpSharedViewModel.SharedDummyForceElements.Add(kvp);

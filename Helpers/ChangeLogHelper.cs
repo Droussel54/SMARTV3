@@ -11,13 +11,13 @@ namespace SMARTV3.Helpers
             _context = context;
         }
 
-        public void AddChangeLogItem(DataCard dc)
+        public void AddChangeLogItem(DataCard dc, DataCardPETS dcPETS)
         {
             ChangeLog changeLog = new()
             {
                 ForceElementId = dc.ForceElementId,
                 SrStatusId = dc.SrStatusId,
-                CommandOverideStatusId = dc.CommandOverideStatusId,
+                CommandOverrideStatusId = dc.CommandOverrideStatusId,
                 CommandOverrideComments = dc.CommandOverrideComments,
                 NatoGeneralComments = dc.NatoGeneralComments,
                 NatoMajorEquipmentComments = dc.NatoMajorEquipmentComments,
@@ -25,14 +25,14 @@ namespace SMARTV3.Helpers
                 NatoStratLiftCapacityComments = dc.NatoStratLiftCapacityComments,
                 NatoNationalDeployComments = dc.NatoNationalDeployComments,
                 NatoNationalAssesmentComments = dc.NatoNationalAssesmentComments,
-                PersonnelStatusId = dc.PersonnelStatusId,
-                PersonnelComments = dc.PersonnelComments,
-                TrainingStatusId = dc.TrainingStatusId,
-                TrainingComments = dc.TrainingComments,
-                EquipmentStatusId = dc.EquipmentStatusId,
-                EquipmentComments = dc.EquipmentComments,
-                SustainmentStatusId = dc.SustainmentStatusId,
-                SustainmentComments = dc.SustainmentComments,
+                PersonnelStatusId = dcPETS.PersonnelStatusId,
+                PersonnelComments = dcPETS.PersonnelComments,
+                TrainingStatusId = dcPETS.TrainingStatusId,
+                TrainingComments = dcPETS.TrainingComments,
+                EquipmentStatusId = dcPETS.EquipmentStatusId,
+                EquipmentComments = dcPETS.EquipmentComments,
+                SustainmentStatusId = dcPETS.SustainmentStatusId,
+                SustainmentComments = dcPETS.SustainmentComments,
                 ChangedDate = DateTime.Now,
                 LastEditUser = null
             };

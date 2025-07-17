@@ -3,14 +3,16 @@ using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis.VisualBasic.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 using Newtonsoft.Json;
 
 using SMARTV3.Helpers;
 using SMARTV3.Models;
+using SMARTV3.Models.ViewModels;
 using SMARTV3.Security;
-
+using System.Reflection.Metadata.Ecma335;
 using static Constants;
 using static SMARTV3.Helpers.PaginationHelper;
 using static SMARTV3.Security.UserRoleProvider;
@@ -122,7 +124,7 @@ namespace SMARTV3.Controllers
             return user;
         }
 
-        private void SetViewData(int selectedPageSize, int pageNumber, string? selectedOrganization, string? selectedConPlan, string? selectedOperation, string? selectedNato, string? selectedStatus, string? selectedDeployedStatus, string? sortOrder, int selectedOverallStatus, DataCard? dataCard, PETS? PETS)
+        private void SetViewData(int selectedPageSize, int pageNumber, string? selectedOrganization, string? selectedConPlan, string? selectedOperation, string? selectedNato, string? selectedStatus, string? selectedDeployedStatus, string? sortOrder, int selectedOverallStatus, DataCard? dataCard, DataCardPETS? dataCardPETS)
         {
             ViewData["selectedPageSize"] = selectedPageSize;
             ViewData["pageNumber"] = pageNumber;
@@ -153,34 +155,34 @@ namespace SMARTV3.Controllers
 
             if (dataCard != null)
             {
-                ViewData["CommandOverideStatusId"] = new SelectList(_context.CommandOverideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.CommandOverrideStatusId);
+                ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverrideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.CommandOverrideStatusId);
                 ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.DeployedStatusId);
-                ViewData["EquipmentCombatVehicleStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentCombatVehicleStatusId);
-                ViewData["EquipmentCommunicationsEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentCommunicationsEquipmentStatusId);
-                ViewData["EquipmentSpecialEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentSpecialEquipmentStatusId);
-                ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentStatusId);
-                ViewData["EquipmentSupportVehicleStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentSupportVehicleStatusId);
-                ViewData["EquipmentWeaponsServiceRateStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.EquipmentWeaponsServiceRateStatusId);
+                ViewData["EquipmentCombatVehicleStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentCombatVehicleStatusId);
+                ViewData["EquipmentCommunicationsEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentCommunicationsEquipmentStatusId);
+                ViewData["EquipmentSpecialEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentSpecialEquipmentStatusId);
+                ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentStatusId);
+                ViewData["EquipmentSupportVehicleStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentSupportVehicleStatusId);
+                ViewData["EquipmentWeaponsServiceRateStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.EquipmentWeaponsServiceRateStatusId);
                 ViewData["ForceElementId"] = new SelectList(_context.ForceElements.Where(d => d.Archived == false).AsNoTracking(), "Id", "Id", dataCard.ForceElementId);
                 ViewData["LastEditUser"] = new SelectList(_context.Users.AsNoTracking(), "Id", "Id", dataCard.LastEditUser);
-                ViewData["PersonnelStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.PersonnelStatusId);
+                ViewData["PersonnelStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.PersonnelStatusId);
                 ViewData["SrStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCard.SrStatusId);
-                ViewData["SustainmentAmmunitionStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentAmmunitionStatusId);
-                ViewData["SustainmentCombatRationsStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentCombatRationsStatusId);
-                ViewData["SustainmentPersonalEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentPersonalEquipmentStatusId);
-                ViewData["SustainmentPetrolStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentPetrolStatusId);
-                ViewData["SustainmentSparesStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentSparesStatusId);
-                ViewData["SustainmentOtherStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentOtherStatusId);
-                ViewData["SustainmentStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.SustainmentStatusId);
-                ViewData["TrainingCollectiveTrainingStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.TrainingCollectiveTrainingStatusId);
-                ViewData["TrainingIndividualTrainingStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.TrainingIndividualTrainingStatusId);
-                ViewData["TrainingStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", PETS.TrainingStatusId);
+                ViewData["SustainmentAmmunitionStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentAmmunitionStatusId);
+                ViewData["SustainmentCombatRationsStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentCombatRationsStatusId);
+                ViewData["SustainmentPersonalEquipmentStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentPersonalEquipmentStatusId);
+                ViewData["SustainmentPetrolStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentPetrolStatusId);
+                ViewData["SustainmentSparesStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentSparesStatusId);
+                ViewData["SustainmentOtherStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentOtherStatusId);
+                ViewData["SustainmentStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.SustainmentStatusId);
+                ViewData["TrainingCollectiveTrainingStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.TrainingCollectiveTrainingStatusId);
+                ViewData["TrainingIndividualTrainingStatusId"] = new SelectList(_context.PetspercentStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.TrainingIndividualTrainingStatusId);
+                ViewData["TrainingStatusId"] = new SelectList(_context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "Id", dataCardPETS.TrainingStatusId);
                 ViewData["petsStatus"] = _context.PetsoverallStatuses.Where(d => d.Archived == false).AsNoTracking();
                 ViewData["percentStatus"] = _context.PetspercentStatuses.Where(d => d.Archived == false).AsNoTracking();
                 ViewData["deployStatus"] = _context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking();
-                ViewData["commandOverideStatus"] = _context.CommandOverideStatuses.Where(d => d.Archived == false).AsNoTracking();
-                ViewData["AfsPercentageId"] = new SelectList(_context.AfsTrainingPercentages.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "StatusDisplayValue", dataCard.NatoAFSTrainingPercentage);
-                ViewData["NatoFPHYesNoBlankId"] = new SelectList(_context.YesNoBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.NatoFPHYesNoBlank);
+                ViewData["commandOverrideStatus"] = _context.CommandOverrideStatuses.Where(d => d.Archived == false).AsNoTracking();
+                ViewData["AfsPercentageId"] = new SelectList(_context.AfsTrainingPercentages.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking(), "Id", "StatusDisplayValue", dataCard.NatoAfstrainingPercentage);
+                ViewData["NatoFPHYesNoBlankId"] = new SelectList(_context.YesNoBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.NatoFphyesNoBlank);
                 ViewData["Nato12SdosId"] = new SelectList(_context.YesNoNaBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.Nato12Sdos);
                 ViewData["Nato18SdosId"] = new SelectList(_context.YesNoNaBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.Nato18Sdos);
                 ViewData["NatoNatSupplyPlanId"] = new SelectList(_context.YesNoNaBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.NatoNatSupplyPlan);
@@ -189,9 +191,9 @@ namespace SMARTV3.Controllers
                 ViewData["NatoCertProgramCoordId"] = new SelectList(_context.YesNoNaBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.NatoCertProgramCoord);
                 ViewData["NatoCertCompletedId"] = new SelectList(_context.YesNoNaBlanks.OrderBy(x => x.Order).AsNoTracking(), "Id", lang == "en" ? "Value" : "ValueFre", dataCard.NatoCertCompleted);
 
-                ViewData["CREVALId"] = new SelectList(_context.Crevals.AsNoTracking(), "Id", lang == "en" ? "CrevalName" : "CrevalNameFre", PETS.TrainingCREVAL);
+                ViewData["CREVALId"] = new SelectList(_context.Crevals.AsNoTracking(), "Id", lang == "en" ? "CrevalName" : "CrevalNameFre", dataCardPETS.TrainingCREVAL);
                 ViewData["CapabilityId"] = new SelectList(_context.Capabilities.Where(d => d.Archived == false).Where(d => d.Archived == false).AsNoTracking(), "Id", "CapabilityName", dataCard.CapabilityId);
-                ViewData["TrainingSpecialtySkillsId"] = new SelectList(_context.SpecialtySkills.AsNoTracking(), "Id", lang == "en" ? "SpecialtySkillName" : "SpecialtySkillNameFre", PETS.TrainingSpecialtySkillsId);
+                ViewData["TrainingSpecialtySkillsId"] = new SelectList(_context.SpecialtySkills.AsNoTracking(), "Id", lang == "en" ? "SpecialtySkillName" : "SpecialtySkillNameFre", dataCardPETS.TrainingSpecialtySkills);
                 ViewData["CategoryId"] = new SelectList(_context.Categories.OrderBy(x => x.Ordered).Where(d => d.Archived == false).AsNoTracking(), "Id", lang == "en" ? "CategoryName" : "CategoryNameFre", dataCard.CategoryId);
                 ViewData["DesignationId"] = new SelectList(_context.Designations.OrderBy(x => x.Ordered).Where(d => d.Archived == false).AsNoTracking(), "Id", lang == "en" ? "DesignationName" : "DesignationNameFre", dataCard.DesignationId);
                 ViewData["EchelonId"] = new SelectList(_context.Echelons.OrderBy(x => x.Ordered).Where(d => d.Archived == false).AsNoTracking(), "Id", lang == "en" ? "EchelonName" : "EchelonNameFre", dataCard.EchelonId);
@@ -203,51 +205,58 @@ namespace SMARTV3.Controllers
         private IQueryable<DataCard> GetDataCardQueryWIncludes()
         {
             return _context.DataCards.Include(d => d.Capability)
-                                     .Include(d => d.Category)
-                                     .Include(d => d.CommandOverideStatus)
-                                     .Include(d => d.Conplans)
-                                     .Include(d => d.DeployedStatus)
-                                     .Include(d => d.Designation)
-                                     .Include(d => d.Echelon)
-                                     /*.Include(d => d.EquipmentCombatVehicleStatus)
-                                     .Include(d => d.EquipmentCommunicationsEquipmentStatus)
-                                     .Include(d => d.EquipmentSpecialEquipmentStatus)
-                                     .Include(d => d.EquipmentStatus)
-                                     .Include(d => d.EquipmentSupportVehicleStatus)
-                                     .Include(d => d.EquipmentWeaponsServiceRateStatus)*/
-                                     .Include(d => d.ForceElement)
-                                            .ThenInclude(e => e!.Weighting)
-                                     .Include(d => d.ForceElement)
-                                            .ThenInclude(e => e!.Organization)
-                                     .Include(d => d.LastEditUserNavigation)
-                                     .Include(d => d.Nato12SdosNavigation)
-                                     .Include(d => d.Nato18SdosNavigation)
-                                     .Include(d => d.NatoAfstrainingPercentageNavigation)
-                                     .Include(d => d.NatoEvalCompletedNavigation)
-                                     .Include(d => d.NatoCertProgramCoordNavigation)
-                                     .Include(d => d.NatoCertCompletedNavigation)
-                                     .Include(d => d.NatoFphyesNoBlankNavigation)
-                                     .Include(d => d.NatoStratLiftCapacityNavigation)
-                                     .Include(d => d.NatoNationalDeployNavigation)
-                                     .Include(d => d.NatoNatSupplyPlanNavigation)
-                                     .Include(d => d.NatoNatSupportElemNavigation)
-                                     .Include(d => d.NoticeToMove)
-                                     .Include(d => d.Operations)
-                                     //.Include(d => d.PersonnelStatus)
-                                     .Include(d => d.Service)
-                                     .Include(d => d.SrStatus)
-                                     /*.Include(d => d.SustainmentAmmunitionStatus)
-                                     .Include(d => d.SustainmentCombatRationsStatus)
-                                     .Include(d => d.SustainmentPersonalEquipmentStatus)
-                                     .Include(d => d.SustainmentPetrolStatus)
-                                     .Include(d => d.SustainmentSparesStatus)
-                                     .Include(d => d.SustainmentOtherStatus)
-                                     .Include(d => d.SustainmentStatus)
-                                     .Include(d => d.TrainingCollectiveTrainingStatus)
-                                     .Include(d => d.TrainingIndividualTrainingStatus)
-                                     .Include(d => d.TrainingStatus)
-                                     .Include(d => d.TrainingSpecialtySkills)
-                                     .Include(d => d.TrainingCrevalNavigation)*/;
+                                    .Include(d => d.Category)
+                                    .Include(d => d.CommandOverrideStatus)
+                                    .Include(d => d.Conplans)
+                                    .Include(d => d.DeployedStatus)
+                                    .Include(d => d.Designation)
+                                    .Include(d => d.Echelon)
+                                    .Include(d => d.ForceElement)
+                                        .ThenInclude(e => e!.Weighting)
+                                    .Include(d => d.ForceElement)
+                                        .ThenInclude(e => e!.Organization)
+                                    .Include(d => d.LastEditUserNavigation)
+                                    .Include(d => d.Nato12SdosNavigation)
+                                    .Include(d => d.Nato18SdosNavigation)
+                                    .Include(d => d.NatoAfstrainingPercentageNavigation)
+                                    .Include(d => d.NatoEvalCompletedNavigation)
+                                    .Include(d => d.NatoCertProgramCoordNavigation)
+                                    .Include(d => d.NatoCertCompletedNavigation)
+                                    .Include(d => d.NatoFphyesNoBlankNavigation)
+                                    .Include(d => d.NatoStratLiftCapacityNavigation)
+                                    .Include(d => d.NatoNationalDeployNavigation)
+                                    .Include(d => d.NatoNatSupplyPlanNavigation)
+                                    .Include(d => d.NatoNatSupportElemNavigation)
+                                    .Include(d => d.NoticeToMove)
+                                    .Include(d => d.Operations)
+                                    .Include(d => d.Service)
+                                    .Include(d => d.SrStatus)
+                                    .Include(d => d.DataCardPETS);
+        }
+
+        private IQueryable<DataCardPETS> GetDataCardPETSQueryWIncludes()
+        {
+            return _context.DataCardPETS.Include(d => d.Capability)
+                                        .Include(d => d.DataCard)
+                                        .Include(d => d.EquipmentCombatVehicleStatus)
+                                        .Include(d => d.EquipmentCommunicationsEquipmentStatus)
+                                        .Include(d => d.EquipmentSpecialEquipmentStatus)
+                                        .Include(d => d.EquipmentStatus)
+                                        .Include(d => d.EquipmentSupportVehicleStatus)
+                                        .Include(d => d.EquipmentWeaponsServiceRateStatus)
+                                        .Include(d => d.PersonnelStatus)
+                                        .Include(d => d.SustainmentAmmunitionStatus)
+                                        .Include(d => d.SustainmentCombatRationsStatus)
+                                        .Include(d => d.SustainmentPersonalEquipmentStatus)
+                                        .Include(d => d.SustainmentPetrolStatus)
+                                        .Include(d => d.SustainmentSparesStatus)
+                                        .Include(d => d.SustainmentOtherStatus)
+                                        .Include(d => d.SustainmentStatus)
+                                        .Include(d => d.TrainingCollectiveTrainingStatus)
+                                        .Include(d => d.TrainingIndividualTrainingStatus)
+                                        .Include(d => d.TrainingStatus)
+                                        .Include(d => d.TrainingSpecialtySkills)
+                                        .Include(d => d.TrainingCREVALNavigation);
         }
 
         public async Task<IActionResult> Index(string? selectedOrganization, string? selectedConPlan, string? selectedOperation, string? selectedNato, string? selectedStatus, string? selectedDeployedStatus, string? selectedPageSize, int? pageNumber, string? sortOrder, int selectedOverallStatus)
@@ -255,13 +264,14 @@ namespace SMARTV3.Controllers
             lang = cultureHelper.GetCurrentCulture();
 
             IQueryable<DataCard> dataCards = GetDataCardQueryWIncludes().Where(a => a.ForceElement!.Archived != true);
+            IQueryable<DataCardPETS> dataCardPETS = GetDataCardPETSQueryWIncludes().Where(a => a.DataCard!.ForceElement!.Archived != true);
 
             if (string.IsNullOrEmpty(selectedPageSize))
             {
                 selectedPageSize = "10";
             }
 
-            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, null);
+            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, null, null);
             ViewData["itemsPerPage"] = GetItemsPerPageList(selectedPageSize);
 
             ViewData["organizationList"] = new SelectList(_context.Organizations.Where(d => d.Archived == false).OrderBy(d => d.Ordered), "Id", lang == "en" ? "OrganizationName" : "OrganizationNameFre");
@@ -292,7 +302,7 @@ namespace SMARTV3.Controllers
             }
             if (selectedOverallStatus != 0)
             {
-               // dataCards = dataCards.Where(f => (f.CommandOverideStatusId != null && f.CommandOverideStatusId == selectedOverallStatus) || (f.CommandOverideStatusId == null && f.SrStatusId == selectedOverallStatus));
+                dataCards = dataCards.Where(f => (f.CommandOverrideStatusId != null && f.CommandOverrideStatusId == selectedOverallStatus) || (f.CommandOverrideStatusId == null && f.SrStatusId == selectedOverallStatus));
             }
             if (selectedStatus == "False" || selectedStatus == "True")
             {
@@ -304,7 +314,7 @@ namespace SMARTV3.Controllers
             }
 
             DatacardReadinessTableCalculator DRTCalculator = new();
-            ViewData["dataCardDisplayModel"] = DRTCalculator.CalculateDisplay(dataCards.ToList());
+            ViewData["dataCardDisplayModel"] = DRTCalculator.CalculateDisplay(dataCards.ToList(), dataCardPETS.ToList());
 
             switch (sortOrder)
             {
@@ -341,11 +351,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "commandOverrideReadinessStatus_asc":
-                    //dataCards = dataCards.OrderBy(d => d.CommandOverideStatusId);
+                    dataCards = dataCards.OrderBy(d => d.CommandOverrideStatusId);
                     break;
 
                 case "commandOverrideReadinessStatus_desc":
-                    //dataCards = dataCards.OrderByDescending(d => d.CommandOverideStatusId);
+                    dataCards = dataCards.OrderByDescending(d => d.CommandOverrideStatusId);
                     break;
 
                 case "deployed_asc":
@@ -460,7 +470,7 @@ namespace SMARTV3.Controllers
                 selectedPageSize = "10";
             }
 
-            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, null);
+            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, null, null);
             ViewData["UserCanEdit"] = CanUserEditDatacard(dataCard.ForceElement.OrganizationId);
             ViewData["NtmOtherID"] = _context.NoticeToMoves.Where(c => c.NoticeToMoveName == "Other").FirstOrDefault()?.Id;
 
@@ -485,6 +495,8 @@ namespace SMARTV3.Controllers
             ViewData["CurrentUserID"] = GetCurrentUser()!.Id;
 
             DataCard? dataCard = await GetDataCardQueryWIncludes().FirstOrDefaultAsync(m => m.Id == id);
+            // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
+            DataCardPETS? dataCardPETS = await GetDataCardPETSQueryWIncludes().FirstOrDefaultAsync(m => m.DataCardId == id);
 
             if (dataCard == null)
             {
@@ -501,7 +513,7 @@ namespace SMARTV3.Controllers
                 selectedPageSize = "10";
             }
 
-            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, dataCard);
+            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, dataCard, dataCardPETS);
 
             return View(dataCard);
         }
@@ -510,21 +522,7 @@ namespace SMARTV3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAuthorize(Roles = Admin + "," + SuperUser + "," + FGPlanner + "," + ReportingUser)]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DataCardComplete,ForceElementId,Division,Brigade,Unit,Subunit,ForceElementDesc,SrStatusId," +
-            "CommandOverideStatusId,CommandOverrideAuthority,CommandOverrideComments,ReadinessFromDate,ReadinessToDate,Validitydate,DeployedStatusId,DesignationId,NatoAssetsDeclared,ServiceId,EchelonId," +
-            "CapabilityId,CategoryId,NoticeToMoveId,Ntmdetails,NatoNoticeToEffect,NatoActive,FwdNato,NFMActive,Rds,NatoLocation,NatoCoordinates,NatoMajorEquipmentComments,NatoCavets,NatoGeneralComments,NatoRequirementName,NatoNationalName," +
-            "NatoStratLiftCapacityId,NatoStratLiftCapacity,NatoStratLiftCapacityComments,NatoNationalDeployId,NatoNationalDeploy,NatoNationalDeployComments,NatoFphyesNoBlank,NatoAfstrainingPercentage," +
-            "NatoEvalCompleted,NatoPlannedEvalDate,NatoCertProgramCoord,NatoCertCompleted,NatoNationalTrainingRemarks,NatoNationalAssesmentComments," +
-            "Nato12Sdos,Nato18Sdos,NatoCurrentSdos,NatoNatSupplyPlan,NatoNatSupportElem,PersonnelStatusId,PersonnelDesignatedStrength,PersonnelActualStrength,PersonnelLob,PersonnelMedical,PersonnelDental,PersonnelAps,PersonnelLightDuties," +
-            "PersonnelTradeInsufficienciesReadinessFactor,PersonnelFitness,PersonnelIt,PersonnelComments,EquipmentStatusId,EquipmentCombatVehicleStatusId,EquipmentSupportVehicleStatusId,EquipmentWeaponsServiceRateStatusId," +
-            "EquipmentCommunicationsEquipmentStatusId,EquipmentSpecialEquipmentStatusId,EquipmentVehicalsReadinessFactor,EquipmentWeaponsReadinessFactor," +
-            "EquipmentCommunicationsReadinessFactor,EquipmentSensorsReadinessFactor,EquipmentSpecialEquimentReadinessFactor,EquipmentTechniciansReadinessFactor,EquipmentLifeEntensionDelays,EquipmentProtectionSuites,EquipmentOther,EquipmentComments,TrainingStatusId," +
-            "TrainingProjectedCrevaldate,TrainingCreval,TrainingSpecialtySkillsId,TrainingCrevaldate,TrainingAmmoReadinessFactor,TrainingFuelReadinessFactor,TrainingRationsReadinessFactor," +
-            "TrainingWeaponsReadinessFactor,TrainingRadiosReadinessFactor,TrainingEquipmentReadinessFactor,TrainingSparePartssReadinessFactor,TrainingItreadinessFactor," +
-            "TrainingRangeAvailabilityReadinessFactor,TrainingCtreadinessFactor,TrainingSpecialQuals,TrainingTrgFleets,TrainingComments,TrainingCollectiveTrainingStatusId,TrainingIndividualTrainingStatusId,SustainmentStatusId," +
-            "SustainmentCombatRationsStatusId,SustainmentPersonalEquipmentStatusId,SustainmentPetrolStatusId,SustainmentAmmunitionStatusId,SustainmentSparesStatusId, SustainmentOtherStatusId," +
-            "SustainmentRationsReadinessFactor,SustainmentUniformsReadinessFactor,SustainmentPpereadinessFactor,SustainmentFuelReadinessFactor,SustainmentAmmunitionReadinessFactor," +
-            "SustainmentSparePartsReadinessFactor,SustainmentOtherReadinessFactor,SustainmentComments,LastEditUser,LastEditDate,Concurrency,ConcurrencyCommnets")] DataCard dataCard, IFormCollection formCollection,
+        public async Task<IActionResult> Edit(int id, DataCard dataCard, DataCardPETS dataCardPETS, IFormCollection formCollection,
              string? selectedOrganization, string? selectedConPlan, string? selectedOperation, string? selectedNato, string? selectedStatus, string? selectedDeployedStatus, string? selectedPageSize, int? pageNumber, string? sortOrder, int selectedOverallStatus)
         {
             if (id != dataCard.Id)
@@ -555,7 +553,7 @@ namespace SMARTV3.Controllers
                     {
                         ForceElementId = dataCard.ForceElementId,
                         SrStatusId = dataCard.SrStatusId,
-                       // CommandOverideStatusId = dataCard.CommandOverideStatusId,
+                        CommandOverrideStatusId = dataCard.CommandOverrideStatusId,
                         CommandOverrideComments = dataCard.CommandOverrideComments,
                         NatoGeneralComments = dataCard.NatoGeneralComments,
                         NatoMajorEquipmentComments = dataCard.NatoMajorEquipmentComments,
@@ -563,14 +561,14 @@ namespace SMARTV3.Controllers
                         NatoStratLiftCapacityComments = dataCard.NatoStratLiftCapacityComments,
                         NatoNationalDeployComments = dataCard.NatoNationalDeployComments,
                         NatoNationalAssesmentComments = dataCard.NatoNationalAssesmentComments,
-                       /* PersonnelStatusId = dataCard.PersonnelStatusId,
-                        PersonnelComments = dataCard.PersonnelComments,
-                        TrainingStatusId = dataCard.TrainingStatusId,
-                        TrainingComments = dataCard.TrainingComments,
-                        EquipmentStatusId = dataCard.EquipmentStatusId,
-                        EquipmentComments = dataCard.EquipmentComments,
-                        SustainmentStatusId = dataCard.SustainmentStatusId,
-                        SustainmentComments = dataCard.SustainmentComments,*/
+                        PersonnelStatusId = dataCardPETS.PersonnelStatusId,
+                        PersonnelComments = dataCardPETS.PersonnelComments,
+                        TrainingStatusId = dataCardPETS.TrainingStatusId,
+                        TrainingComments = dataCardPETS.TrainingComments,
+                        EquipmentStatusId = dataCardPETS.EquipmentStatusId,
+                        EquipmentComments = dataCardPETS.EquipmentComments,
+                        SustainmentStatusId = dataCardPETS.SustainmentStatusId,
+                        SustainmentComments = dataCardPETS.SustainmentComments,
                         DeployedStatusId = dataCard.DeployedStatusId,
                         ChangedDate = DateTime.Now
                     };
@@ -636,7 +634,7 @@ namespace SMARTV3.Controllers
                         dataCard.NatoStratLiftCapacityId = null;
                     }
 
-                   /* if (dataCard.CommandOverideStatusId == null)
+                    if (dataCard.CommandOverrideStatusId == null)
                     {
                         dataCard.CommandOverrideComments = null;
                         dataCard.CommandOverrideAuthority = null;
@@ -652,7 +650,7 @@ namespace SMARTV3.Controllers
                     else
                     {
                         dataCard.Concurrency = false;
-                        dataCard.ConcurrencyCommnets = null;
+                        dataCard.ConcurrencyComments = null;
                     }
 
                     _context.Update(dataCard);
@@ -660,6 +658,8 @@ namespace SMARTV3.Controllers
 
                     // Get the datcard to update
                     DataCard? updateDataCard = await GetDataCardQueryWIncludes().FirstOrDefaultAsync(m => m.Id == id);
+                    // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId) - Need to add updating working here
+                    DataCardPETS? updateDataCardPETS = await GetDataCardPETSQueryWIncludes().FirstOrDefaultAsync(m => m.DataCardId == id);
 
                     if (updateDataCard != null)
                     {
@@ -772,7 +772,7 @@ namespace SMARTV3.Controllers
                 selectedPageSize = "10";
             }
 
-            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, dataCard);
+            SetViewData(Int32.Parse(selectedPageSize), pageNumber ?? 1, selectedOrganization, selectedConPlan, selectedOperation, selectedNato, selectedStatus, selectedDeployedStatus, sortOrder, selectedOverallStatus, dataCard, dataCardPETS);
 
             ViewData["ConplanNaID"] = _context.Conplans.Where(c => c.ConplanName == "N/A").FirstOrDefault()?.Id;
             ViewData["OperationNaID"] = _context.Operations.Where(c => c.OperationName == "N/A").FirstOrDefault()?.Id;

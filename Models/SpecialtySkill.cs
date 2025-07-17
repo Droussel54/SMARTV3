@@ -7,7 +7,7 @@ namespace SMARTV3.Models
     {
         public SpecialtySkill()
         {
-            DataCards = new HashSet<DataCard>();
+            DataCardPETS = new HashSet<DataCardPETS>();
             DummyDataCards = new HashSet<DummyDataCard>();
         }
 
@@ -15,7 +15,7 @@ namespace SMARTV3.Models
         public string SpecialtySkillName { get; set; } = null!;
         public string SpecialtySkillNameFre { get; set; } = null!;
 
-        public virtual ICollection<DataCard> DataCards { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardPETS { get; set; }
         public virtual ICollection<DummyDataCard> DummyDataCards { get; set; }
     }
 }

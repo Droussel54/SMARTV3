@@ -619,7 +619,7 @@
                                     <td>
                                         @if (dummyDataCard.CommandOverrideStatus != null)
                                         {
-                                            <div class="rounddiv" style="background-color:@dummyDataCard.CommandOverrideStatus.StausDisplayColour"> </div>
+                                            <div class="rounddiv" style="background-color:@dummyDataCard.CommandOverrideStatus.StatusDisplayColour"> </div>
                                         }
                                         else
                                         {
@@ -641,7 +641,7 @@
                                     <td>
                                         @if (dummyDataCard.DeployedStatus != null)
                                         {
-                                            <div class="rounddiv" style="background-color:@dummyDataCard.DeployedStatus.StausDisplayColour"> </div>
+                                            <div class="rounddiv" style="background-color:@dummyDataCard.DeployedStatus.StatusDisplayColour"> </div>
                                         }
                                         else
                                         {
@@ -871,7 +871,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["Deployed"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Deployed")?.StausDisplayColour "> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Deployed")?.StatusDisplayColour "> </div></td>
                         <td>@DRTModel.DeployedCount</td>
                         <td>@DRTModel.DeployedWeightSum</td>
                         <td>@DRTModel.DeployedPercentage %</td>
@@ -879,7 +879,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["PartiallyDeployed"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Partially Deployed")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Partially Deployed")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.PartiallyDeployedCount</td>
                         <td>@DRTModel.PartiallyDeployedWeightSum</td>
                         <td>@DRTModel.PartiallyDeployedPercentage %</td>
@@ -887,7 +887,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["ForwardToNato"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Forward to NATO")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Forward to NATO")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.ForwardToNatoCount</td>
                         <td>@DRTModel.ForwardToNatoWeightSum</td>
                         <td>@DRTModel.ForwardToNatoPercentage %</td>
@@ -895,7 +895,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["HighAlertImmediateReadiness"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "High Alert/Immediate Reachback")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "High Alert/Immediate Reachback")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.HighAlertCount</td>
                         <td>@DRTModel.HighAlertWeightSum</td>
                         <td>@DRTModel.HighAlertPercentage %</td>
@@ -903,7 +903,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["ForceGenerating"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Force Generating")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Force Generating")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.ForceGeneratingCount</td>
                         <td>@DRTModel.ForceGeneratingWeightSum</td>
                         <td>@DRTModel.ForceGeneratingPercentage %</td>
@@ -911,7 +911,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["InDevelopment"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "In Development")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "In Development")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.InDevelopmentCount</td>
                         <td>@DRTModel.InDevelopmentWeightSum</td>
                         <td>@DRTModel.InDevelopmentPercentage %</td>
@@ -919,7 +919,7 @@
                     </tr>
                     <tr>
                         <td>@localizer["NotDeployed"]</td>
-                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Not Employed")?.StausDisplayColour"> </div></td>
+                        <td><div class="rounddiv" style="background-color:@deployedStatusListNonSelect?.Find(s => s.StatusDisplayValue == "Not Employed")?.StatusDisplayColour"> </div></td>
                         <td>@DRTModel.NotDeployedCount</td>
                         <td>@DRTModel.NotDeployedWeightSum</td>
                         <td>@DRTModel.NotDeployedPercentage %</td>

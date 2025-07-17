@@ -231,7 +231,7 @@
                                     {
                                         @if (Model.DeployedStatus != null && obj.Id == Model.DeployedStatus.Id)
                                         {
-                                            <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
+                                            <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">
                                                 @if (lang == "en")
                                                 {
                                                     @obj.StatusDisplayValue
@@ -244,7 +244,7 @@
                                         }
                                         else
                                         {
-                                            <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                                            <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                                                 @if (lang == "en")
                                                 {
                                                     @obj.StatusDisplayValue
@@ -263,7 +263,7 @@
                         <td>
                             @if (Model.DeployedStatus != null)
                             {
-                                <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.DeployedStatus.StausDisplayColour"></div>
+                                <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.DeployedStatus.StatusDisplayColour"></div>
                             }
                             else
                             {

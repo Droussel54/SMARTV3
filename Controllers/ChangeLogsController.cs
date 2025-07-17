@@ -148,7 +148,7 @@ namespace SMARTV3.Controllers
 
             SetViewData(Int32.Parse(selectedPageSize), elementIdFilter, elementNameFilter, startDateFilter, endDateFilter, pageNumber ?? 1, sortOrder, changeUser ?? "");
 
-            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverideStatuses, "Id", "Id");
+            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverrideStatuses, "Id", "Id");
             ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses, "Id", "Id");
             ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses, "Id", "Id");
             ViewData["ForceElementId"] = new SelectList(_context.ForceElements, "Id", "Id");
@@ -182,7 +182,7 @@ namespace SMARTV3.Controllers
 
             SetViewData(Int32.Parse(selectedPageSize), elementIdFilter, elementNameFilter, startDateFilter, endDateFilter, pageNumber ?? 1, sortOrder, changeUser ?? "");
 
-            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
+            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverrideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
             ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses, "Id", "Id", changeLog.DeployedStatusId);
             ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses, "Id", "Id", changeLog.EquipmentStatusId);
             ViewData["ForceElementId"] = new SelectList(_context.ForceElements, "Id", "Id", changeLog.ForceElementId);
@@ -214,7 +214,7 @@ namespace SMARTV3.Controllers
 
             SetViewData(Int32.Parse(selectedPageSize), elementIdFilter, elementNameFilter, startDateFilter, endDateFilter, pageNumber ?? 1, sortOrder ?? "", changeUser ?? "");
 
-            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
+            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverrideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
             ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses, "Id", "Id", changeLog.DeployedStatusId);
             ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses, "Id", "Id", changeLog.EquipmentStatusId);
             ViewData["ForceElementId"] = new SelectList(_context.ForceElements, "Id", "Id", changeLog.ForceElementId);
@@ -264,7 +264,7 @@ namespace SMARTV3.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
+            ViewData["CommandOverrideStatusId"] = new SelectList(_context.CommandOverrideStatuses, "Id", "Id", changeLog.CommandOverrideStatusId);
             ViewData["DeployedStatusId"] = new SelectList(_context.DeployedStatuses, "Id", "Id", changeLog.DeployedStatusId);
             ViewData["EquipmentStatusId"] = new SelectList(_context.PetsoverallStatuses, "Id", "Id", changeLog.EquipmentStatusId);
             ViewData["ForceElementId"] = new SelectList(_context.ForceElements, "Id", "Id", changeLog.ForceElementId);

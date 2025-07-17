@@ -243,7 +243,7 @@ public static class Constants
 
     public const string combiWeightQuery2 = @") and dfe.IsTiedToRealFelm = 1
                                             and (ddc.SrStatusId = 1 or ddc.SrStatusId = 2)
-                                            and (ddc.CommandOverideStatusId is null or ddc.CommandOverideStatusId = 1 or ddc.CommandOverideStatusId = 2)
+                                            and (ddc.CommandOverrideStatusId is null or ddc.CommandOverrideStatusId = 1 or ddc.CommandOverrideStatusId = 2)
                                             group by dfe.ForceElementId, w.WeightValue
                                             ) as total;";
 
@@ -285,7 +285,7 @@ public static class Constants
                                             join PETSOverallStatuses sstatus
                                             on sstatus.Id = ddc.SustainmentStatusId
                                             left join PETSOverallStatuses cmdoverstatus
-                                            on cmdoverstatus.Id = ddc.CommandOverideStatusId
+                                            on cmdoverstatus.Id = ddc.CommandOverrideStatusId
                                             left join DeployedStatuses deploy
                                             on ddc.DeployedStatusId = deploy.Id
                                             where dfe.IsTiedToRealFelm = 1 

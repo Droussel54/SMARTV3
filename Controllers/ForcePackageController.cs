@@ -400,11 +400,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "commandOverride_asc":
-                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderBy(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "commandOverride_desc":
-                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverideStatusId);
+                    dummyForceElements = dummyForceElements.OrderByDescending(d => d.DummyDataCards.First().CommandOverrideStatusId);
                     break;
 
                 case "personnel_asc":
@@ -1627,10 +1627,10 @@ namespace SMARTV3.Controllers
             ViewData["serializedForcePackageIds"] = serializedForcePackageIds;
             ViewData["deployedStatusListNonSelect"] = _context.DeployedStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
             ViewData["overallStatusList"] = _context.PetsoverallStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).AsNoTracking().ToList();
-            ViewData["cmdOverrideStatusList"] = _context.CommandOverideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
+            ViewData["cmdOverrideStatusList"] = _context.CommandOverrideStatuses.Where(d => d.Archived == false).OrderBy(d => d.Ordering).ToList();
 
             PetsoverallStatus? notReadyStatus = ((List<PetsoverallStatus>)ViewData["overallStatusList"]).Find(s => s.Id == 4);
-            CommandOverideStatus? notReadyStatusCmd = ((List<CommandOverideStatus>)ViewData["cmdOverrideStatusList"]).Find(s => s.Id == 4);
+            CommandOverrideStatus? notReadyStatusCmd = ((List<CommandOverrideStatus>)ViewData["cmdOverrideStatusList"]).Find(s => s.Id == 4);
             if (compareModelId != null)
             {
                 ViewData["compareModelId"] = compareModelId;
@@ -1698,8 +1698,8 @@ namespace SMARTV3.Controllers
                             {
                                 tempFpSharedViewModel.OtherDummyForceElements.Remove(tempDummyFelm);
                                 tempDummyFelm.DummyDataCards.First().SrStatus = notReadyStatus; 
-                                if (tempDummyFelm.DummyDataCards.First().CommandOverideStatus != null) { 
-                                    tempDummyFelm.DummyDataCards.First().CommandOverideStatus = notReadyStatusCmd;
+                                if (tempDummyFelm.DummyDataCards.First().CommandOverrideStatus != null) { 
+                                    tempDummyFelm.DummyDataCards.First().CommandOverrideStatus = notReadyStatusCmd;
                                 }
                                 KeyValuePair<string, DummyForceElement> kvp = new(fPSharedViewModel.ForcePackageName, tempDummyFelm);
                                 tempFpSharedViewModel.SharedDummyForceElements.Add(kvp);

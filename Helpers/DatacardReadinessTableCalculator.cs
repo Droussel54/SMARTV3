@@ -104,9 +104,9 @@ namespace SMARTV3.Helpers
                     notDeployedCount++;
                     notDeployedWeight += weight;
                 }
-                if (datacard.CommandOverideStatus != null)
+                if (datacard.CommandOverrideStatus != null)
                 {
-                    switch (datacard.CommandOverideStatus.Id)
+                    switch (datacard.CommandOverrideStatus.Id)
                     {
                         // 1 Ready
                         case 1:
@@ -386,9 +386,9 @@ namespace SMARTV3.Helpers
                     notDeployedCount++;
                     notDeployedWeight += weight;
                 }
-                if (dummyDataCard.CommandOverideStatus != null)
+                if (dummyDataCard.CommandOverrideStatus != null)
                 {
-                    switch (dummyDataCard.CommandOverideStatus.Id)
+                    switch (dummyDataCard.CommandOverrideStatus.Id)
                     {
                         // 1 Ready
                         case 1:

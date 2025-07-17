@@ -44,7 +44,7 @@ namespace SMARTV3.Helpers
                                                        .ThenInclude(d => d.SrStatus)
                                          .Include(p => p.DummyForceElements)
                                                 .ThenInclude(d => d.DummyDataCards)
-                                                       .ThenInclude(d => d.CommandOverideStatus)
+                                                       .ThenInclude(d => d.CommandOverrideStatus)
                                          .Include(p => p.DummyForceElements)
                                                 .ThenInclude(d => d.DummyDataCards)
                                                        .ThenInclude(d => d.PersonnelStatus)
@@ -73,7 +73,7 @@ namespace SMARTV3.Helpers
                                               .Include(d => d.DummyDataCards)
                                                  .ThenInclude(dataCard => dataCard.Category)
                                               .Include(d => d.DummyDataCards)
-                                                  .ThenInclude(dataCard => dataCard.CommandOverideStatus)
+                                                  .ThenInclude(dataCard => dataCard.CommandOverrideStatus)
                                               .Include(d => d.DummyDataCards)
                                                   .ThenInclude(dataCard => dataCard.DeployedStatus)
                                               .Include(d => d.DummyDataCards)
@@ -191,7 +191,7 @@ namespace SMARTV3.Helpers
                 Unit = dataCard.Unit,
                 Subunit = dataCard.Subunit,
                 SrStatusId = dataCard.SrStatusId,
-                CommandOverideStatusId = dataCard.CommandOverideStatusId,
+                CommandOverrideStatusId = dataCard.CommandOverrideStatusId,
                 CommandOverrideAuthority = dataCard.CommandOverrideAuthority,
                 CommandOverrideComments = dataCard.CommandOverrideComments,
                 ReadinessFromDate = dataCard.ReadinessFromDate,
@@ -284,14 +284,14 @@ namespace SMARTV3.Helpers
                 LastEditUser = dataCard.LastEditUser,
                 LastEditDate = dataCard.LastEditDate,
                 Concurrency = dataCard.Concurrency,
-                ConcurrencyCommnets = dataCard.ConcurrencyCommnets,
+                ConcurrencyComments = dataCard.ConcurrencyComments,
                 NatoAssetsDeclared = dataCard.NatoAssetsDeclared,
                 Rds = dataCard.Rds,
                 EquipmentSensorsReadinessFactor = dataCard.EquipmentSensorsReadinessFactor,
                 PersonnelTradeInsufficienciesReadinessFactor = dataCard.PersonnelTradeInsufficienciesReadinessFactor,
                 Capability = dataCard.Capability,
                 Category = dataCard.Category,
-                CommandOverideStatus = dataCard.CommandOverideStatus,
+                CommandOverrideStatus = dataCard.CommandOverrideStatus,
                 DeployedStatus = dataCard.DeployedStatus,
                 Designation = dataCard.Designation,
                 Echelon = dataCard.Echelon,
@@ -353,7 +353,7 @@ namespace SMARTV3.Helpers
                 Unit = dummyDataCardToCopy.Unit,
                 Subunit = dummyDataCardToCopy.Subunit,
                 SrStatusId = dummyDataCardToCopy.SrStatusId,
-                CommandOverideStatusId = dummyDataCardToCopy.CommandOverideStatusId,
+                CommandOverrideStatusId = dummyDataCardToCopy.CommandOverrideStatusId,
                 CommandOverrideAuthority = dummyDataCardToCopy.CommandOverrideAuthority,
                 CommandOverrideComments = dummyDataCardToCopy.CommandOverrideComments,
                 ReadinessFromDate = dummyDataCardToCopy.ReadinessFromDate,
@@ -446,7 +446,7 @@ namespace SMARTV3.Helpers
                 LastEditUser = dummyDataCardToCopy.LastEditUser,
                 LastEditDate = dummyDataCardToCopy.LastEditDate,
                 Concurrency = dummyDataCardToCopy.Concurrency,
-                ConcurrencyCommnets = dummyDataCardToCopy.ConcurrencyCommnets,
+                ConcurrencyComments = dummyDataCardToCopy.ConcurrencyComments,
                 NatoAssetsDeclared = dummyDataCardToCopy.NatoAssetsDeclared,
                 Rds = dummyDataCardToCopy.Rds,
                 DummyForceElement = new()

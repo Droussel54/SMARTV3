@@ -13,7 +13,7 @@
     IEnumerable<PetsoverallStatus>? petsStatus = ViewData["petsStatus"] as IEnumerable<PetsoverallStatus>;
     IEnumerable<PetspercentStatus>? percentStatus = ViewData["percentStatus"] as IEnumerable<PetspercentStatus>;
     IEnumerable<DeployedStatus>? deployStatus = ViewData["deployStatus"] as IEnumerable<DeployedStatus>;
-    IEnumerable<CommandOverideStatus>? commandOverideStatus = ViewData["commandOverideStatus"] as IEnumerable<CommandOverideStatus>;
+    IEnumerable<CommandOverrideStatus>? commandOverrideStatus = ViewData["commandOverrideStatus"] as IEnumerable<CommandOverrideStatus>;
 
     CultureHelper cultureHelper = new CultureHelper();
     string lang = cultureHelper.GetCurrentCulture();
@@ -270,7 +270,7 @@
                                 {
                                     @if (Model.DeployedStatus != null && obj.Id == Model.DeployedStatus.Id)
                                     {
-                                        <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
+                                        <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">
                                         @if (lang == "en")
                                         {
                                             @obj.StatusDisplayValue
@@ -283,7 +283,7 @@
                                     }
                                     else
                                     {
-                                        <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                                        <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                                         @if(lang =="en")
                                         {
                                             @obj.StatusDisplayValue
@@ -301,7 +301,7 @@
                     <td>
                         @if (Model.DeployedStatus != null)
                         {
-                            <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.DeployedStatus.StausDisplayColour"></div>
+                            <div id="DeployedStatusDisplay" class="rounddiv" style="background-color:@Model.DeployedStatus.StatusDisplayColour"></div>
                         }
                         else
                         {
@@ -328,7 +328,7 @@
         <div class="col">
             <div id="concurrencySection">
                 <span class="error">* &nbsp;</span> <span style="font-weight:bold">@localizer["Concurrency"]</span>
-                <input asp-for="ConcurrencyCommnets" id="ConcurrencyCommnets" class="form-control" maxlength="500" title="@localizer["ConcurrencyCommnets"]" />
+                <input asp-for="ConcurrencyComments" id="ConcurrencyComments" class="form-control" maxlength="500" title="@localizer["ConcurrencyComments"]" />
             </div>
         </div>
     </div>
@@ -346,18 +346,18 @@
         </div>
         <div class="col">
             <span style="font-weight:bold">@localizer["CommandOverrideReadinessStatus"]</span>
-            <select id="CommandOverideStatusDrpDwn" asp-for="CommandOverideStatusId" onchange="changeCommandOverrideStatus(this,'CommandOverideStatusDisplay')"
+            <select id="CommandOverrideStatusDrpDwn" asp-for="CommandOverrideStatusId" onchange="changeCommandOverrideStatus(this,'CommandOverrideStatusDisplay')"
                 class="form-select" style="width: auto; display: inline-flex;">
                 <option></option>
-                @if (commandOverideStatus != null)
+                @if (commandOverrideStatus != null)
                 {
-                    @foreach (var obj in commandOverideStatus)
+                    @foreach (var obj in commandOverrideStatus)
                     {
-                        @if (Model.CommandOverideStatus != null)
+                        @if (Model.CommandOverrideStatus != null)
                         {
-                            @if (obj.Id == Model.CommandOverideStatus.Id)
+                            @if (obj.Id == Model.CommandOverrideStatus.Id)
                             {
-                                <option value="@obj.Id" selected style="background-color:@obj.StausDisplayColour">
+                                <option value="@obj.Id" selected style="background-color:@obj.StatusDisplayColour">
                                 @if(lang =="en")
                                 {
                                     @obj.StatusDisplayvalue
@@ -370,7 +370,7 @@
                             }
                             else
                             {
-                                <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                                <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                                 @if (lang == "en")
                                 {
                                     @obj.StatusDisplayvalue
@@ -384,7 +384,7 @@
                         }
                         else
                         {
-                            <option value="@obj.Id" style="background-color:@obj.StausDisplayColour">
+                            <option value="@obj.Id" style="background-color:@obj.StatusDisplayColour">
                             @if (lang == "en")
                             {
                                 @obj.StatusDisplayvalue
@@ -398,13 +398,13 @@
                     }
                 }
             </select>
-            @if (Model.CommandOverideStatus != null)
+            @if (Model.CommandOverrideStatus != null)
             {
-                <div id="CommandOverideStatusDisplay" class="rounddiv" style="background-color:@Model.CommandOverideStatus.StausDisplayColour"> </div>
+                <div id="CommandOverrideStatusDisplay" class="rounddiv" style="background-color:@Model.CommandOverrideStatus.StatusDisplayColour"> </div>
             }
             else
             {
-                <div id="CommandOverideStatusDisplay" class="rounddiv"> </div>
+                <div id="CommandOverrideStatusDisplay" class="rounddiv"> </div>
             }
         </div>
         <div class="col">
@@ -1546,7 +1546,7 @@
 
         //Document load
         $(document).ready(function () {
-            var myvar1 = document.getElementById('CommandOverideStatusDrpDwn').value;
+            var myvar1 = document.getElementById('CommandOverrideStatusDrpDwn').value;
             if (myvar1 == "") {
                 $('#OverrideComments').hide();
             } else {
@@ -1558,7 +1558,7 @@
         $(document).ready(function () {
             setInputValidation("#Division");
             setInputValidation("#Unit");
-            setInputValidation("#ConcurrencyCommnets");
+            setInputValidation("#ConcurrencyComments");
             setInputValidation("#Brigade");
             setInputValidation("#Subunit");
             setInputValidation("#CategoryId");
@@ -1655,7 +1655,7 @@
             }
         });
 
-        $('#CommandOverideStatusDrpDwn').change(function () {
+        $('#CommandOverrideStatusDrpDwn').change(function () {
             if (this.value != "") {
                 $('#OverrideComments').show();
             } else {
@@ -1666,7 +1666,7 @@
         // Checks fields below and puts red border if missing
         $("#Division").change(function () { setInputValidation("#Division"); });
         $("#Unit").change(function () { setInputValidation("#Unit"); });
-        $("#ConcurrencyCommnets").change(function () { setInputValidation("#ConcurrencyCommnets"); });
+        $("#ConcurrencyComments").change(function () { setInputValidation("#ConcurrencyComments"); });
         $("#Brigade").change(function () { setInputValidation("#Brigade"); });
         $("#Subunit").change(function () { setInputValidation("#Subunit"); });
         $("#CategoryId").change(function () { setInputValidation("#CategoryId"); });
@@ -1731,7 +1731,7 @@
             if (conplanArray.length > 1 || operationArray.length > 1) {
                 $('#concurrencySection').show();
             } else {
-                $('#ConcurrencyCommnets').val("");
+                $('#ConcurrencyComments').val("");
                 $('#concurrencySection').hide();
             }
         }
@@ -1862,15 +1862,15 @@
             let brigade = $('#Brigade').val();
             let unit = $('#Unit').val();
             let subunit = $('#Subunit').val();
-            let concurrencyComments = $('#ConcurrencyCommnets').val();
-            let commandOverideStatus = $('#CommandOverideStatusDrpDwn').val();
+            let concurrencyComments = $('#ConcurrencyComments').val();
+            let commandOverrideStatus = $('#CommandOverrideStatusDrpDwn').val();
             let commandOverrideComments = $('#CommandOverrideComments').val();
             let commandOverrideAuthority = $('#CommandOverrideAuthority').val();
 
             if ($(concurrencySection).is(":visible") && $.trim(concurrencyComments) == '') {
                 return false;
             }
-            else if (commandOverideStatus != '' && ($.trim(commandOverrideComments) == '' || $.trim(commandOverrideAuthority) == '')) {
+            else if (commandOverrideStatus != '' && ($.trim(commandOverrideComments) == '' || $.trim(commandOverrideAuthority) == '')) {
                 return false;
             }
 
@@ -2360,11 +2360,11 @@
         }
 
         function clearCommandOverride() {
-            $("#CommandOverideStatusDrpDwn").prop("selectedIndex", 0).val();
+            $("#CommandOverrideStatusDrpDwn").prop("selectedIndex", 0).val();
             $('#CommandOverrideComments').val("");
             $('#CommandOverrideAuthority').val("");
             $('#OverrideComments').hide();
-            $('#CommandOverideStatusDisplay').css('background-color', 'white');
+            $('#CommandOverrideStatusDisplay').css('background-color', 'white');
         }
     </script>
 

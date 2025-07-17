@@ -98,9 +98,6 @@ namespace SMARTV3.Models
         public virtual YesNoNaBlank? Nato18SdosNavigation { get; set; }
         public virtual User? LastEditUserNavigation { get; set; }
 
-        // Navigation Properties for related entities
-        public virtual PetsoverallStatus? PetsoverallStatus { get; set; } // PETS Navigation Property
-
         // Collections
         public virtual ICollection<DatacardKpi> DatacardKpis { get; set; } = new HashSet<DatacardKpi>();
         public virtual ICollection<Conplan> Conplans { get; set; } = new HashSet<Conplan>();

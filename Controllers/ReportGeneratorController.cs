@@ -635,22 +635,35 @@ namespace SMARTV3.Controllers
             if (!forceElements.Any()) return false;
             foreach (ForceElement felm in forceElements)
             {
-                DataCard? dataCard = null;
-                IQueryable<DataCard>? dataCardQuery = null;
+                DataCard? dataCard = null; 
+                IQueryable<DataCard>? dataCardQuery = null; 
+                
+                DataCardPETS? dataCardPETS = null;
+                IQueryable<DataCardPETS>? dataCardPETSQuery = null;
+
                 if (currentReportType == NRI)
                 {
                     dataCardQuery = _context.DataCards
                         .Where(d => d.ForceElementId == felm.Id && d.Designation!.DesignationName == nriDeclared);
+
+                    dataCardPETSQuery = _context.DataCardPETS
+                        .Where(d => d.DataCard.ForceElementId == felm.Id && d.DataCard.Designation!.DesignationName == nriDeclared);
                 }
                 else if (currentReportType == eNRF)
                 {
                     dataCardQuery = _context.DataCards.Where(d => d.ForceElementId == felm.Id &&
                     (d.Designation!.DesignationName == NRF || d.Designation.DesignationName == nrfDesignated || d.Designation.DesignationName == nrfEarmarked));
+
+                    dataCardPETSQuery = _context.DataCardPETS.Where(d => d.DataCard.ForceElementId == felm.Id &&
+                    (d.DataCard.Designation!.DesignationName == NRF || d.DataCard.Designation.DesignationName == nrfDesignated || d.DataCard.Designation.DesignationName == nrfEarmarked));
                 }
                 else if (currentReportType == NFM)
                 {
                     dataCardQuery = _context.DataCards.Where(d => d.ForceElementId == felm.Id &&
                     (d.Designation!.DesignationName == NFM || d.Designation.DesignationName == nfmTier1 || d.Designation.DesignationName == nfmTier2 || d.Designation.DesignationName == nfmTier3 || d.Designation.DesignationName == arfDesignated));
+                    
+                    dataCardPETSQuery = _context.DataCardPETS.Where(d => d.DataCard.ForceElementId == felm.Id &&
+                    (d.DataCard.Designation!.DesignationName == NFM || d.DataCard.Designation.DesignationName == nfmTier1 || d.DataCard.Designation.DesignationName == nfmTier2 || d.DataCard.Designation.DesignationName == nfmTier3 || d.DataCard.Designation.DesignationName == arfDesignated));
                 }
 
                 if (dataCardQuery != null)
@@ -662,12 +675,6 @@ namespace SMARTV3.Controllers
                                             .Include(d => d.DeployedStatus)
                                             .Include(d => d.Designation)
                                             .Include(d => d.Echelon)
-                                            .Include(d => d.EquipmentCombatVehicleStatus)
-                                            .Include(d => d.EquipmentCommunicationsEquipmentStatus)
-                                            .Include(d => d.EquipmentSpecialEquipmentStatus)
-                                            .Include(d => d.EquipmentStatus)
-                                            .Include(d => d.EquipmentSupportVehicleStatus)
-                                            .Include(d => d.EquipmentWeaponsServiceRateStatus)
                                             .Include(d => d.ForceElement)
                                                    .ThenInclude(e => e!.Weighting)
                                             .Include(d => d.ForceElement)
@@ -686,25 +693,35 @@ namespace SMARTV3.Controllers
                                             .Include(d => d.NatoNatSupportElemNavigation)
                                             .Include(d => d.NoticeToMove)
                                             .Include(d => d.Operations)
-                                            .Include(d => d.PersonnelStatus)
                                             .Include(d => d.Service)
                                             .Include(d => d.SrStatus)
-                                            .Include(d => d.SustainmentAmmunitionStatus)
-                                            .Include(d => d.SustainmentCombatRationsStatus)
-                                            .Include(d => d.SustainmentPersonalEquipmentStatus)
-                                            .Include(d => d.SustainmentPetrolStatus)
-                                            .Include(d => d.SustainmentSparesStatus)
-                                            .Include(d => d.SustainmentOtherStatus)
-                                            .Include(d => d.SustainmentStatus)
-                                            .Include(d => d.TrainingCollectiveTrainingStatus)
-                                            .Include(d => d.TrainingIndividualTrainingStatus)
-                                            .Include(d => d.TrainingStatus)
-                                            .Include(d => d.TrainingSpecialtySkills)
-                                            .Include(d => d.TrainingCrevalNavigation)
                                             .FirstOrDefault();
                 }
 
+                // TODO: Adjust this statement code. Might not be right or missing some properties.
+                if (dataCardPETSQuery != null)
+                {
+                    dataCardPETS = dataCardPETSQuery.Include(d => d.Capability)
+                                                    .Include(d => d.DataCard)
+                                                    .Include(d => d.EquipmentCombatVehicleStatus)
+                                                    .Include(d => d.EquipmentCommunicationsEquipmentStatus)
+                                                    .Include(d => d.EquipmentSpecialEquipmentStatus)
+                                                    .Include(d => d.EquipmentStatus)
+                                                    .Include(d => d.EquipmentSupportVehicleStatus)
+                                                    .Include(d => d.EquipmentWeaponsServiceRateStatus)
+                                                    .Include(d => d.PersonnelStatus)
+                                                    .Include(d => d.SustainmentAmmunitionStatus)
+                                                    .Include(d => d.SustainmentCombatRationsStatus)
+                                                    .Include(d => d.SustainmentPersonalEquipmentStatus)
+                                                    .Include(d => d.SustainmentPetrolStatus)
+                                                    .Include(d => d.SustainmentSparesStatus)
+                                                    .Include(d => d.SustainmentOtherStatus)
+                                                    .Include(d => d.SustainmentStatus)
+                                                    .FirstOrDefault();
+                }
+
                 if (dataCard == null) continue;
+                if (dataCardPETS == null) continue;
 
                 string ntmName = "";
                 NoticeToMove? ntm = _context.NoticeToMoves.Where(d => d.Id == dataCard.NoticeToMoveId).FirstOrDefault();
@@ -742,11 +759,11 @@ namespace SMARTV3.Controllers
                         28 => reportPOC?.Name,
                         29 => reportPOC?.Phone,
                         30 => reportPOC?.Email,
-                        32 => dataCard.PersonnelDesignatedStrength,
-                        33 => dataCard.PersonnelActualStrength,
+                        32 => dataCardPETS.PersonnelDesignatedStrength,
+                        33 => dataCardPETS.PersonnelActualStrength,
                         34 => ntmName,
                         35 => dataCard.NatoNoticeToEffect,
-                        36 => dataCard.EquipmentStatus?.StatusDisplayValue,
+                        36 => dataCardPETS.EquipmentStatus?.StatusDisplayValue,
                         37 => dataCard.NatoFphyesNoBlankNavigation?.Value,
                         38 => dataCard.NatoGeneralComments,
                         39 => dataCard.NatoAfstrainingPercentageNavigation?.StatusDisplayValue,
@@ -772,10 +789,10 @@ namespace SMARTV3.Controllers
                     // Set background color if cell value is valid
                     if (column == 36)
                     {
-                        if (dataCard.EquipmentStatus != null)
+                        if (dataCardPETS.EquipmentStatus != null)
                         {
                             contentWS.Cell(currentExcelRow, column).Style.Fill.BackgroundColor =
-                                XLColor.FromName(dataCard.EquipmentStatus.Id == PetsOverallGreenId ? "Green" : dataCard.EquipmentStatus.StatusDisplayColour);
+                                XLColor.FromName(dataCardPETS.EquipmentStatus.Id == PetsOverallGreenId ? "Green" : dataCardPETS.EquipmentStatus.StatusDisplayColour);
                         }
                     }
                     else if (column == 39)

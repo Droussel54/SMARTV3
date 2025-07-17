@@ -7,7 +7,7 @@ namespace SMARTV3.Models
     {
         public Creval()
         {
-            DataCards = new HashSet<DataCard>();
+            DataCardPETS = new HashSet<DataCardPETS>();
             DummyDataCards = new HashSet<DummyDataCard>();
         }
 
@@ -15,7 +15,7 @@ namespace SMARTV3.Models
         public string? CrevalName { get; set; }
         public string? CrevalNameFre { get; set; }
 
-        public virtual ICollection<DataCard> DataCards { get; set; }
+        public virtual ICollection<DataCardPETS> DataCardPETS { get; set; }
         public virtual ICollection<DummyDataCard> DummyDataCards { get; set; }
     }
 }

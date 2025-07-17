@@ -1,6 +1,7 @@
 ﻿#nullable disable
 
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 namespace SMARTV3.Models
 {
@@ -20,7 +21,7 @@ namespace SMARTV3.Models
         public virtual DbSet<Category> Categories { get; set; } = null!;
         public virtual DbSet<CategoryArchiveComment> CategoryArchiveComments { get; set; } = null!;
         public virtual DbSet<ChangeLog> ChangeLogs { get; set; } = null!;
-        public virtual DbSet<CommandOverrideStatus> CommandOverideStatuses { get; set; } = null!;
+        public virtual DbSet<CommandOverrideStatus> CommandOverrideStatuses { get; set; } = null!;
         public virtual DbSet<Conplan> Conplans { get; set; } = null!;
         public virtual DbSet<ConplanArchiveComment> ConplanArchiveComments { get; set; } = null!;
         public virtual DbSet<Creval> Crevals { get; set; } = null!;
@@ -275,7 +276,7 @@ namespace SMARTV3.Models
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.ChangeLogs)
                     .HasForeignKey(d => d.CommandOverrideStatusId)
-                    .HasConstraintName("FK_ChangeLog_CommandOverideStatuses");
+                    .HasConstraintName("FK_ChangeLog_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.ChangeLogs)
@@ -322,15 +323,15 @@ namespace SMARTV3.Models
             {
                 entity.Property(e => e.Id).ValueGeneratedNever();
 
-                entity.Property(e => e.StatusDisplayvalue)
+                entity.Property(e => e.StatusDisplayValue)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StatusDisplayvalueFre)
+                entity.Property(e => e.StatusDisplayValueFre)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StausDisplayColour)
+                entity.Property(e => e.StatusDisplayColour)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -382,381 +383,6 @@ namespace SMARTV3.Models
                     .IsUnicode(false);
             });
 
-            // OLD DataCard Entity Configuration
-            /*
-            modelBuilder.Entity<DataCard>(entity =>
-            {
-                entity.ToTable("DataCard");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.Brigade)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CommandOverrideAuthority)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.CommandOverrideComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ConcurrencyComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.DataCardComplete).HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.Division)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.EquipmentComments).IsUnicode(false);
-
-                entity.Property(e => e.LastEditDate).HasColumnType("date");
-
-                entity.Property(e => e.NatoAfstraining).HasColumnName("NatoAFSTraining");
-
-                entity.Property(e => e.NatoAfstrainingPercentage)
-                    .HasColumnName("NatoAFSTrainingPercentage")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.NatoCavets)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoCoordinates)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoFph).HasColumnName("NatoFPH");
-
-                entity.Property(e => e.NatoFphyesNoBlank)
-                    .HasColumnName("NatoFPHYesNoBlank")
-                    .HasDefaultValueSql("((2))");
-
-                entity.Property(e => e.NatoGeneralComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoLocation)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoMajorEquipmentComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoNatSupplyPlan).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.NatoNatSupportElem).HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.NatoNationalAssesmentComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoNationalDeployComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoNationalName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoNationalTrainingRemarks).IsUnicode(false);
-
-                entity.Property(e => e.NatoPlannedEvalDate).HasColumnType("date");
-
-                entity.Property(e => e.NatoRequirementName)
-                    .HasMaxLength(200)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NatoStratLiftCapacityComments)
-                    .HasMaxLength(500)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Ntmdetails)
-                    .IsUnicode(false)
-                    .HasColumnName("NTMDetails");
-
-                entity.Property(e => e.PersonnelAps).HasColumnName("PersonnelAPS");
-
-                entity.Property(e => e.PersonnelComments).IsUnicode(false);
-
-                entity.Property(e => e.PersonnelIt).HasColumnName("PersonnelIT");
-
-                entity.Property(e => e.PersonnelLob).HasColumnName("PersonnelLOB");
-
-                entity.Property(e => e.Rds).HasColumnName("RDS");
-
-                entity.Property(e => e.ReadinessFromDate).HasColumnType("date");
-
-                entity.Property(e => e.ReadinessToDate).HasColumnType("date");
-
-                entity.Property(e => e.Subunit)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.SustainmentComments).IsUnicode(false);
-
-                entity.Property(e => e.SustainmentPpereadinessFactor).HasColumnName("SustainmentPPEReadinessFactor");
-
-                entity.Property(e => e.TrainingComments).IsUnicode(false);
-
-                entity.Property(e => e.TrainingCreval).HasColumnName("TrainingCREVAL");
-
-                entity.Property(e => e.TrainingCrevaldate)
-                    .HasColumnType("date")
-                    .HasColumnName("TrainingCREVALDate");
-
-                entity.Property(e => e.TrainingCtreadinessFactor).HasColumnName("TrainingCTReadinessFactor");
-
-                entity.Property(e => e.TrainingItreadinessFactor).HasColumnName("TrainingITReadinessFactor");
-
-                entity.Property(e => e.TrainingProjectedCrevaldate)
-                    .HasColumnType("date")
-                    .HasColumnName("TrainingProjectedCREVALDate");
-
-                entity.Property(e => e.Unit)
-                    .HasMaxLength(256)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Validitydate).HasColumnType("date");
-
-                entity.HasOne(d => d.Capability)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.CapabilityId)
-                    .HasConstraintName("FK_DataCard_Capabilities");
-
-                entity.HasOne(d => d.Category)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK_DataCard_Categories");
-
-                entity.HasOne(d => d.CommandOverrideStatus)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.CommandOverrideStatusId)
-                    .HasConstraintName("FK_DataCard_CommandOverideStatuses");
-
-                entity.HasOne(d => d.DeployedStatus)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.DeployedStatusId)
-                    .HasConstraintName("FK_DataCard_DeployedStatuses");
-
-                entity.HasOne(d => d.Designation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.DesignationId)
-                    .HasConstraintName("FK_DataCard_Designations");
-
-                entity.HasOne(d => d.Echelon)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.EchelonId)
-                    .HasConstraintName("FK_DataCard_Echelons");
-
-                entity.HasOne(d => d.EquipmentCombatVehicleStatus)
-                    .WithMany(p => p.DataCardEquipmentCombatVehicleStatuses)
-                    .HasForeignKey(d => d.EquipmentCombatVehicleStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses5");
-
-                entity.HasOne(d => d.EquipmentCommunicationsEquipmentStatus)
-                    .WithMany(p => p.DataCardEquipmentCommunicationsEquipmentStatuses)
-                    .HasForeignKey(d => d.EquipmentCommunicationsEquipmentStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses10");
-
-                entity.HasOne(d => d.EquipmentSpecialEquipmentStatus)
-                    .WithMany(p => p.DataCardEquipmentSpecialEquipmentStatuses)
-                    .HasForeignKey(d => d.EquipmentSpecialEquipmentStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses11");
-
-                entity.HasOne(d => d.EquipmentStatus)
-                    .WithMany(p => p.DataCardEquipmentStatuses)
-                    .HasForeignKey(d => d.EquipmentStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses2");
-
-                entity.HasOne(d => d.EquipmentSupportVehicleStatus)
-                    .WithMany(p => p.DataCardEquipmentSupportVehicleStatuses)
-                    .HasForeignKey(d => d.EquipmentSupportVehicleStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses6");
-
-                entity.HasOne(d => d.EquipmentWeaponsServiceRateStatus)
-                    .WithMany(p => p.DataCardEquipmentWeaponsServiceRateStatuses)
-                    .HasForeignKey(d => d.EquipmentWeaponsServiceRateStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses9");
-
-                entity.HasOne(d => d.ForceElement)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.ForceElementId)
-                    .HasConstraintName("FK_DataCard_ForceElements");
-
-                entity.HasOne(d => d.LastEditUserNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.LastEditUser)
-                    .HasConstraintName("FK_DataCard_Users");
-
-                entity.HasOne(d => d.Nato12SdosNavigation)
-                    .WithMany(p => p.DataCardNato12SdosNavigations)
-                    .HasForeignKey(d => d.Nato12Sdos)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank2");
-
-                entity.HasOne(d => d.Nato18SdosNavigation)
-                    .WithMany(p => p.DataCardNato18SdosNavigations)
-                    .HasForeignKey(d => d.Nato18Sdos)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank3");
-
-                entity.HasOne(d => d.NatoAfstrainingPercentageNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.NatoAfstrainingPercentage)
-                    .HasConstraintName("FK_DataCard_AfsTrainingPercentage");
-
-                entity.HasOne(d => d.NatoCertCompletedNavigation)
-                    .WithMany(p => p.DataCardNatoCertCompletedNavigations)
-                    .HasForeignKey(d => d.NatoCertCompleted)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank6");
-
-                entity.HasOne(d => d.NatoCertProgramCoordNavigation)
-                    .WithMany(p => p.DataCardNatoCertProgramCoordNavigations)
-                    .HasForeignKey(d => d.NatoCertProgramCoord)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank5");
-
-                entity.HasOne(d => d.NatoEvalCompletedNavigation)
-                    .WithMany(p => p.DataCardNatoEvalCompletedNavigations)
-                    .HasForeignKey(d => d.NatoEvalCompleted)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank4");
-
-                entity.HasOne(d => d.NatoFphyesNoBlankNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.NatoFphyesNoBlank)
-                    .HasConstraintName("FK_DataCard_YesNoBlank");
-
-                entity.HasOne(d => d.NatoNatSupplyPlanNavigation)
-                    .WithMany(p => p.DataCardNatoNatSupplyPlanNavigations)
-                    .HasForeignKey(d => d.NatoNatSupplyPlan)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank");
-
-                entity.HasOne(d => d.NatoNatSupportElemNavigation)
-                    .WithMany(p => p.DataCardNatoNatSupportElemNavigations)
-                    .HasForeignKey(d => d.NatoNatSupportElem)
-                    .HasConstraintName("FK_DataCard_YesNoNaBlank1");
-
-                entity.HasOne(d => d.NatoNationalDeployNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.NatoNationalDeployId)
-                    .HasConstraintName("FK_DataCard_NatoNationalDeploy");
-
-                entity.HasOne(d => d.NatoStratLiftCapacityNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.NatoStratLiftCapacityId)
-                    .HasConstraintName("FK_DataCard_NatoStratLiftCapacity");
-
-                entity.HasOne(d => d.NoticeToMove)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.NoticeToMoveId)
-                    .HasConstraintName("FK_DataCard_NoticeToMove");
-
-                entity.HasOne(d => d.PersonnelStatus)
-                    .WithMany(p => p.DataCardPersonnelStatuses)
-                    .HasForeignKey(d => d.PersonnelStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses1");
-
-                entity.HasOne(d => d.Service)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.ServiceId)
-                    .HasConstraintName("FK_DataCard_Services");
-
-                entity.HasOne(d => d.SrStatus)
-                    .WithMany(p => p.DataCardSrStatuses)
-                    .HasForeignKey(d => d.SrStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses");
-
-                entity.HasOne(d => d.SustainmentAmmunitionStatus)
-                    .WithMany(p => p.DataCardSustainmentAmmunitionStatuses)
-                    .HasForeignKey(d => d.SustainmentAmmunitionStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses7");
-
-                entity.HasOne(d => d.SustainmentCombatRationsStatus)
-                    .WithMany(p => p.DataCardSustainmentCombatRationsStatuses)
-                    .HasForeignKey(d => d.SustainmentCombatRationsStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses14");
-
-                entity.HasOne(d => d.SustainmentOtherStatus)
-                    .WithMany(p => p.DataCardSustainmentOtherStatuses)
-                    .HasForeignKey(d => d.SustainmentOtherStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses17");
-
-                entity.HasOne(d => d.SustainmentPersonalEquipmentStatus)
-                    .WithMany(p => p.DataCardSustainmentPersonalEquipmentStatuses)
-                    .HasForeignKey(d => d.SustainmentPersonalEquipmentStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses15");
-
-                entity.HasOne(d => d.SustainmentPetrolStatus)
-                    .WithMany(p => p.DataCardSustainmentPetrolStatuses)
-                    .HasForeignKey(d => d.SustainmentPetrolStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses16");
-
-                entity.HasOne(d => d.SustainmentSparesStatus)
-                    .WithMany(p => p.DataCardSustainmentSparesStatuses)
-                    .HasForeignKey(d => d.SustainmentSparesStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses8");
-
-                entity.HasOne(d => d.SustainmentStatus)
-                    .WithMany(p => p.DataCardSustainmentStatuses)
-                    .HasForeignKey(d => d.SustainmentStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses4");
-
-                entity.HasOne(d => d.TrainingCollectiveTrainingStatus)
-                    .WithMany(p => p.DataCardTrainingCollectiveTrainingStatuses)
-                    .HasForeignKey(d => d.TrainingCollectiveTrainingStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses12");
-
-                entity.HasOne(d => d.TrainingCrevalNavigation)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.TrainingCreval)
-                    .HasConstraintName("FK_DataCard_Creval");
-
-                entity.HasOne(d => d.TrainingIndividualTrainingStatus)
-                    .WithMany(p => p.DataCardTrainingIndividualTrainingStatuses)
-                    .HasForeignKey(d => d.TrainingIndividualTrainingStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses13");
-
-                entity.HasOne(d => d.TrainingSpecialtySkills)
-                    .WithMany(p => p.DataCards)
-                    .HasForeignKey(d => d.TrainingSpecialtySkillsId)
-                    .HasConstraintName("FK_DataCard_SpecialtySkills");
-
-                entity.HasOne(d => d.TrainingStatus)
-                    .WithMany(p => p.DataCardTrainingStatuses)
-                    .HasForeignKey(d => d.TrainingStatusId)
-                    .HasConstraintName("FK_DataCard_PETSOverallStatuses3");
-
-                entity.HasMany(d => d.Conplans)
-                    .WithMany(p => p.DataCards)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "DataCardConplan",
-                        l => l.HasOne<Conplan>().WithMany().HasForeignKey("ConplanId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_DataCardConplan_Conplans1"),
-                        r => r.HasOne<DataCard>().WithMany().HasForeignKey("DataCardId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_DataCardConplan_DataCard"),
-                        j =>
-                        {
-                            j.HasKey("DataCardId", "ConplanId").HasName("PK_felm_data_card_conplan");
-
-                            j.ToTable("DataCardConplan");
-                        });
-
-                entity.HasMany(d => d.Operations)
-                    .WithMany(p => p.DataCards)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "DataCardOperation",
-                        l => l.HasOne<Operation>().WithMany().HasForeignKey("OperationId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_DataCardOperations_Operations"),
-                        r => r.HasOne<DataCard>().WithMany().HasForeignKey("DataCardId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_DataCardOperations_DataCard"),
-                        j =>
-                        {
-                            j.HasKey("DataCardId", "OperationId").HasName("PK_felm_data_card_operation_1");
-
-                            j.ToTable("DataCardOperations");
-                        });
-            });
-            */
-
             modelBuilder.Entity<DataCard>(entity =>
             {
                 entity.ToTable("DataCards");
@@ -771,32 +397,35 @@ namespace SMARTV3.Models
                 entity.Property(e => e.Validitydate).HasColumnType("date");
                 entity.Property(e => e.NatoRequirementName).HasMaxLength(200).IsUnicode(false);
                 entity.Property(e => e.NatoNationalName).HasMaxLength(100).IsUnicode(false);
+                entity.Property(e => e.Ntmdetails).HasMaxLength(500).IsUnicode(false);
+                entity.Property(e => e.CommandOverrideComments).HasMaxLength(1000).IsUnicode(false);
+                entity.Property(e => e.ConcurrencyComments).HasMaxLength(1000).IsUnicode(false);
 
                 // Foreign key relationships
-                entity.HasOne(e => e.ForceElement).WithMany().HasForeignKey(e => e.ForceElementId);
-                entity.HasOne(e => e.Designation).WithMany().HasForeignKey(e => e.DesignationId);
-                entity.HasOne(e => e.Service).WithMany().HasForeignKey(e => e.ServiceId);
-                entity.HasOne(e => e.Capability).WithMany().HasForeignKey(e => e.CapabilityId);
-                entity.HasOne(e => e.Category).WithMany().HasForeignKey(e => e.CategoryId);
-                entity.HasOne(e => e.Echelon).WithMany().HasForeignKey(e => e.EchelonId);
-                entity.HasOne(e => e.SrStatus).WithMany().HasForeignKey(e => e.SrStatusId);
-                entity.HasOne(e => e.CommandOverrideStatus).WithMany().HasForeignKey(e => e.CommandOverrideStatusId);
-                entity.HasOne(e => e.DeployedStatus).WithMany().HasForeignKey(e => e.DeployedStatusId);
-                entity.HasOne(e => e.NoticeToMove).WithMany().HasForeignKey(e => e.NoticeToMoveId);
-                entity.HasOne(e => e.LastEditUserNavigation).WithMany().HasForeignKey(e => e.LastEditUser);
+                entity.HasOne(e => e.ForceElement).WithMany(e => e.DataCards).HasForeignKey(e => e.ForceElementId).HasConstraintName("FK_DataCards_ForceElements");
+                entity.HasOne(e => e.Designation).WithMany(e => e.DataCards).HasForeignKey(e => e.DesignationId).HasConstraintName("FK_DataCards_Designations");
+                entity.HasOne(e => e.Service).WithMany(e => e.DataCards).HasForeignKey(e => e.ServiceId).HasConstraintName("FK_DataCards_Services");
+                entity.HasOne(e => e.Capability).WithMany(e => e.DataCards).HasForeignKey(e => e.CapabilityId).HasConstraintName("FK_DataCards_Capabilities");
+                entity.HasOne(e => e.Category).WithMany(e => e.DataCards).HasForeignKey(e => e.CategoryId).HasConstraintName("FK_DataCards_Categories");
+                entity.HasOne(e => e.Echelon).WithMany(e => e.DataCards).HasForeignKey(e => e.EchelonId).HasConstraintName("FK_DataCards_Echelons");
+                entity.HasOne(e => e.SrStatus).WithMany(e => e.DataCardSrStatuses).HasForeignKey(e => e.SrStatusId).HasConstraintName("FK_DataCards_PETSOverallStatuses");
+                entity.HasOne(e => e.CommandOverrideStatus).WithMany(e => e.DataCards).HasForeignKey(e => e.CommandOverrideStatusId).HasConstraintName("FK_DataCards_CommandOverrideStatuses");
+                entity.HasOne(e => e.DeployedStatus).WithMany(e => e.DataCards).HasForeignKey(e => e.DeployedStatusId).HasConstraintName("FK_DataCard_DeployedStatuses");
+                entity.HasOne(e => e.NoticeToMove).WithMany(e => e.DataCards).HasForeignKey(e => e.NoticeToMoveId).HasConstraintName("FK_DataCard_NoticeToMove");
+                entity.HasOne(e => e.LastEditUserNavigation).WithMany(e => e.DataCards).HasForeignKey(e => e.LastEditUser).HasConstraintName("FK_DataCard_Users");
 
                 // NATO & Yes/No/Blank foreign keys
-                entity.HasOne(e => e.NatoStratLiftCapacityNavigation).WithMany().HasForeignKey(e => e.NatoStratLiftCapacityId);
-                entity.HasOne(e => e.NatoNationalDeployNavigation).WithMany().HasForeignKey(e => e.NatoNationalDeployId);
-                entity.HasOne(e => e.NatoFphyesNoBlankNavigation).WithMany().HasForeignKey(e => e.NatoFphyesNoBlank);
-                entity.HasOne(e => e.NatoAfstrainingPercentageNavigation).WithMany().HasForeignKey(e => e.NatoAfstrainingPercentage);
-                entity.HasOne(e => e.NatoCertProgramCoordNavigation).WithMany().HasForeignKey(e => e.NatoCertProgramCoord);
-                entity.HasOne(e => e.NatoEvalCompletedNavigation).WithMany().HasForeignKey(e => e.NatoEvalCompleted);
-                entity.HasOne(e => e.NatoCertCompletedNavigation).WithMany().HasForeignKey(e => e.NatoCertCompleted);
-                entity.HasOne(e => e.NatoNatSupplyPlanNavigation).WithMany().HasForeignKey(e => e.NatoNatSupplyPlan);
-                entity.HasOne(e => e.NatoNatSupportElemNavigation).WithMany().HasForeignKey(e => e.NatoNatSupportElem);
-                entity.HasOne(e => e.Nato12SdosNavigation).WithMany().HasForeignKey(e => e.Nato12Sdos);
-                entity.HasOne(e => e.Nato18SdosNavigation).WithMany().HasForeignKey(e => e.Nato18Sdos);
+                entity.HasOne(e => e.NatoStratLiftCapacityNavigation).WithMany(e => e.DataCards).HasForeignKey(e => e.NatoStratLiftCapacityId).HasConstraintName("FK_DataCard_NatoStratLiftCapacity");
+                entity.HasOne(e => e.NatoNationalDeployNavigation).WithMany(e => e.DataCards).HasForeignKey(e => e.NatoNationalDeployId).HasConstraintName("FK_DataCard_NatoNationalDeploy");
+                entity.HasOne(e => e.NatoFphyesNoBlankNavigation).WithMany(e => e.DataCards).HasForeignKey(e => e.NatoFphyesNoBlank).HasConstraintName("FK_DataCard_YesNoBlank");
+                entity.HasOne(e => e.NatoAfstrainingPercentageNavigation).WithMany(e => e.DataCards).HasForeignKey(e => e.NatoAfstrainingPercentage).HasConstraintName("FK_DataCard_AfsTrainingPercentage");
+                entity.HasOne(e => e.NatoCertProgramCoordNavigation).WithMany(e => e.DataCardNatoCertProgramCoordNavigations).HasForeignKey(e => e.NatoCertProgramCoord).HasConstraintName("FK_DataCard_YesNoNaBlank5");
+                entity.HasOne(e => e.NatoEvalCompletedNavigation).WithMany(e => e.DataCardNatoEvalCompletedNavigations).HasForeignKey(e => e.NatoEvalCompleted).HasConstraintName("FK_DataCard_YesNoNaBlank4");
+                entity.HasOne(e => e.NatoCertCompletedNavigation).WithMany(e => e.DataCardNatoCertCompletedNavigations).HasForeignKey(e => e.NatoCertCompleted).HasConstraintName("FK_DataCard_YesNoNaBlank6");
+                entity.HasOne(e => e.NatoNatSupplyPlanNavigation).WithMany(e => e.DataCardNatoNatSupplyPlanNavigations).HasForeignKey(e => e.NatoNatSupplyPlan).HasConstraintName("FK_DataCard_YesNoNaBlank");
+                entity.HasOne(e => e.NatoNatSupportElemNavigation).WithMany(e => e.DataCardNatoNatSupportElemNavigations).HasForeignKey(e => e.NatoNatSupportElem).HasConstraintName("FK_DataCard_YesNoNaBlank1");
+                entity.HasOne(e => e.Nato12SdosNavigation).WithMany(e => e.DataCardNato12SdosNavigations).HasForeignKey(e => e.Nato12Sdos).HasConstraintName("FK_DataCard_YesNoNaBlank2");
+                entity.HasOne(e => e.Nato18SdosNavigation).WithMany(e => e.DataCardNato18SdosNavigations).HasForeignKey(e => e.Nato18Sdos).HasConstraintName("FK_DataCard_YesNoNaBlank3");
 
                 // Collections
                 entity.HasMany(e => e.Conplans)
@@ -831,37 +460,37 @@ namespace SMARTV3.Models
                 // Composite key: junction between DataCards and Capability
                 entity.HasKey(e => new { e.CapabilityId, e.DataCardId });
 
-                entity.HasOne(e => e.Capability).WithMany().HasForeignKey(e => e.CapabilityId);
-                entity.HasOne(e => e.DataCard).WithMany().HasForeignKey(e => e.DataCardId);
+                //entity.HasOne(e => e.Capability).WithMany(e => e.DataCardPETS).HasForeignKey(e => e.CapabilityId).HasConstraintName("FK_DataCardsPETS_Capabilities");
+                //entity.HasOne(e => e.DataCard).WithMany().HasForeignKey(e => e.DataCardId);
 
                 // Field formats
                 entity.Property(e => e.PersonnelComments).IsUnicode(false);
                 entity.Property(e => e.EquipmentComments).IsUnicode(false);
                 entity.Property(e => e.TrainingComments).IsUnicode(false);
                 entity.Property(e => e.SustainmentComments).IsUnicode(false);
-                entity.Property(e => e.TrainingProjectedCREVALDate).HasColumnType("date");
-                entity.Property(e => e.TrainingCREVALDate).HasColumnType("date");
+                entity.Property(e => e.TrainingProjectedCREVALDate).HasColumnType("date").HasColumnName("TrainingProjectedCREVALDate");
+                entity.Property(e => e.TrainingCREVALDate).HasColumnType("date").HasColumnName("TrainingCREVALDate");
 
                 // Foreign keys
-                entity.HasOne(e => e.PersonnelStatus).WithMany().HasForeignKey(e => e.PersonnelStatusId);
-                entity.HasOne(e => e.EquipmentStatus).WithMany().HasForeignKey(e => e.EquipmentStatusId);
-                entity.HasOne(e => e.EquipmentCombatVehicleStatus).WithMany().HasForeignKey(e => e.EquipmentCombatVehicleStatusId);
-                entity.HasOne(e => e.EquipmentSupportVehicleStatus).WithMany().HasForeignKey(e => e.EquipmentSupportVehicleStatusId);
-                entity.HasOne(e => e.EquipmentWeaponsServiceRateStatus).WithMany().HasForeignKey(e => e.EquipmentWeaponsServiceRateStatusId);
-                entity.HasOne(e => e.EquipmentCommunicationsEquipmentStatus).WithMany().HasForeignKey(e => e.EquipmentCommunicationsEquipmentStatusId);
-                entity.HasOne(e => e.EquipmentSpecialEquipmentStatus).WithMany().HasForeignKey(e => e.EquipmentSpecialEquipmentStatusId);
-                entity.HasOne(e => e.TrainingStatus).WithMany().HasForeignKey(e => e.TrainingStatusId);
-                entity.HasOne(e => e.TrainingCREVALNavigation).WithMany().HasForeignKey(e => e.TrainingCREVAL);
-                entity.HasOne(e => e.TrainingCollectiveTrainingStatus).WithMany().HasForeignKey(e => e.TrainingCollectiveTrainingStatusId);
-                entity.HasOne(e => e.TrainingIndividualTrainingStatus).WithMany().HasForeignKey(e => e.TrainingIndividualTrainingStatusId);
-                entity.HasOne(e => e.TrainingSpecialtySkills).WithMany().HasForeignKey(e => e.TrainingSpecialtySkillsId);
-                entity.HasOne(e => e.SustainmentStatus).WithMany().HasForeignKey(e => e.SustainmentStatusId);
-                entity.HasOne(e => e.SustainmentCombatRationsStatus).WithMany().HasForeignKey(e => e.SustainmentCombatRationsStatusId);
-                entity.HasOne(e => e.SustainmentPersonalEquipmentStatus).WithMany().HasForeignKey(e => e.SustainmentPersonalEquipmentStatusId);
-                entity.HasOne(e => e.SustainmentPetrolStatus).WithMany().HasForeignKey(e => e.SustainmentPetrolStatusId);
-                entity.HasOne(e => e.SustainmentAmmunitionStatus).WithMany().HasForeignKey(e => e.SustainmentAmmunitionStatusId);
-                entity.HasOne(e => e.SustainmentOtherStatus).WithMany().HasForeignKey(e => e.SustainmentOtherStatusId);
-                entity.HasOne(e => e.SustainmentSparesStatus).WithMany().HasForeignKey(e => e.SustainmentSparesStatusId);
+                entity.HasOne(e => e.PersonnelStatus).WithMany(e => e.DataCardPersonnelStatuses).HasForeignKey(e => e.PersonnelStatusId).HasConstraintName("FK_DataCardPETS_PETSOverallStatuses1");
+                entity.HasOne(e => e.EquipmentStatus).WithMany(e => e.DataCardEquipmentStatuses).HasForeignKey(e => e.EquipmentStatusId).HasConstraintName("FK_DataCardPETS_PETSOverallStatuses2");
+                entity.HasOne(e => e.EquipmentCombatVehicleStatus).WithMany(e => e.DataCardEquipmentCombatVehicleStatuses).HasForeignKey(e => e.EquipmentCombatVehicleStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses5");
+                entity.HasOne(e => e.EquipmentSupportVehicleStatus).WithMany(e => e.DataCardEquipmentSupportVehicleStatuses).HasForeignKey(e => e.EquipmentSupportVehicleStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses6");
+                entity.HasOne(e => e.EquipmentWeaponsServiceRateStatus).WithMany(e => e.DataCardEquipmentWeaponsServiceRateStatuses).HasForeignKey(e => e.EquipmentWeaponsServiceRateStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses9");
+                entity.HasOne(e => e.EquipmentCommunicationsEquipmentStatus).WithMany(e => e.DataCardEquipmentCommunicationsEquipmentStatuses).HasForeignKey(e => e.EquipmentCommunicationsEquipmentStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses10");
+                entity.HasOne(e => e.EquipmentSpecialEquipmentStatus).WithMany(e => e.DataCardEquipmentSpecialEquipmentStatuses).HasForeignKey(e => e.EquipmentSpecialEquipmentStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses11");
+                entity.HasOne(e => e.TrainingStatus).WithMany(e => e.DataCardTrainingStatuses).HasForeignKey(e => e.TrainingStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses3");
+                entity.HasOne(e => e.TrainingCREVALNavigation).WithMany(e => e.DataCardPETS).HasForeignKey(e => e.TrainingCREVAL).HasConstraintName("FK_DataCardsPETS_Creval");
+                entity.HasOne(e => e.TrainingCollectiveTrainingStatus).WithMany(e => e.DataCardTrainingCollectiveTrainingStatuses).HasForeignKey(e => e.TrainingCollectiveTrainingStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses12");
+                entity.HasOne(e => e.TrainingIndividualTrainingStatus).WithMany(e => e.DataCardTrainingIndividualTrainingStatuses).HasForeignKey(e => e.TrainingIndividualTrainingStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses13");
+                entity.HasOne(e => e.TrainingSpecialtySkills).WithMany(e => e.DataCardPETS).HasForeignKey(e => e.TrainingSpecialtySkillsId).HasConstraintName("FK_DataCardsPETS_SpecialtySkills");
+                entity.HasOne(e => e.SustainmentStatus).WithMany(e => e.DataCardSustainmentStatuses).HasForeignKey(e => e.SustainmentStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses4");
+                entity.HasOne(e => e.SustainmentCombatRationsStatus).WithMany(e => e.DataCardSustainmentCombatRationsStatuses).HasForeignKey(e => e.SustainmentCombatRationsStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses14");
+                entity.HasOne(e => e.SustainmentPersonalEquipmentStatus).WithMany(e => e.DataCardSustainmentPersonalEquipmentStatuses).HasForeignKey(e => e.SustainmentPersonalEquipmentStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses15");
+                entity.HasOne(e => e.SustainmentPetrolStatus).WithMany(e => e.DataCardSustainmentPetrolStatuses).HasForeignKey(e => e.SustainmentPetrolStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses16");
+                entity.HasOne(e => e.SustainmentAmmunitionStatus).WithMany(e => e.DataCardSustainmentAmmunitionStatuses).HasForeignKey(e => e.SustainmentAmmunitionStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses7");
+                entity.HasOne(e => e.SustainmentOtherStatus).WithMany(e => e.DataCardSustainmentOtherStatuses).HasForeignKey(e => e.SustainmentOtherStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses17");
+                entity.HasOne(e => e.SustainmentSparesStatus).WithMany(e => e.DataCardSustainmentSparesStatuses).HasForeignKey(e => e.SustainmentSparesStatusId).HasConstraintName("FK_DataCardsPETS_PETSOverallStatuses8");
             });
 
             modelBuilder.Entity<DataCardConplanHistory>(entity =>
@@ -1029,7 +658,7 @@ namespace SMARTV3.Models
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DataCardHistories)
                     .HasForeignKey(d => d.CommandOverrideStatusId)
-                    .HasConstraintName("FK_DataCardHistory_CommandOverideStatuses");
+                    .HasConstraintName("FK_DataCardHistory_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.DataCardHistories)
@@ -1213,7 +842,7 @@ namespace SMARTV3.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.StausDisplayColour)
+                entity.Property(e => e.StatusDisplayColour)
                     .HasMaxLength(50)
                     .IsUnicode(false);
             });
@@ -1367,7 +996,7 @@ namespace SMARTV3.Models
                 entity.HasOne(d => d.CommandOverrideStatus)
                     .WithMany(p => p.DummyDataCards)
                     .HasForeignKey(d => d.CommandOverrideStatusId)
-                    .HasConstraintName("FK_DummyDataCard_CommandOverideStatuses");
+                    .HasConstraintName("FK_DummyDataCard_CommandOverrideStatuses");
 
                 entity.HasOne(d => d.DeployedStatus)
                     .WithMany(p => p.DummyDataCards)

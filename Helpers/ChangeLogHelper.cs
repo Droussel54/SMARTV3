@@ -17,7 +17,7 @@ namespace SMARTV3.Helpers
             {
                 ForceElementId = dc.ForceElementId,
                 SrStatusId = dc.SrStatusId,
-                CommandOverideStatusId = dc.CommandOverideStatusId,
+                CommandOverrideStatusId = dc.CommandOverrideStatusId,
                 CommandOverrideComments = dc.CommandOverrideComments,
                 NatoGeneralComments = dc.NatoGeneralComments,
                 NatoMajorEquipmentComments = dc.NatoMajorEquipmentComments,

@@ -367,11 +367,11 @@ namespace SMARTV3.Controllers
                     break;
 
                 case "validityDate_asc":
-                    //dataCards = dataCards.OrderBy(d => d.Validitydate);
+                    dataCards = dataCards.OrderBy(d => d.Validitydate);
                     break;
 
                 case "validityDate_desc":
-                    //dataCards = dataCards.OrderByDescending(d => d.Validitydate);
+                    dataCards = dataCards.OrderByDescending(d => d.Validitydate);
                     break;
             }
 
@@ -639,7 +639,7 @@ namespace SMARTV3.Controllers
                         dataCard.CommandOverrideComments = null;
                         dataCard.CommandOverrideAuthority = null;
                     }
-                   */
+                   
                     int ops = formCollection["Operation"].Count;
                     int cons = formCollection["Conplan"].Count;
 
@@ -659,7 +659,9 @@ namespace SMARTV3.Controllers
                     // Get the datcard to update
                     DataCard? updateDataCard = await GetDataCardQueryWIncludes().FirstOrDefaultAsync(m => m.Id == id);
                     // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId) - Need to add updating working here
-                    DataCardPETS? updateDataCardPETS = await GetDataCardPETSQueryWIncludes().FirstOrDefaultAsync(m => m.DataCardId == id);
+                    // Is this what you were looking for?
+                    DataCardPETS? updateDataCardPETS = await GetDataCardPETSQueryWIncludes()
+                        .FirstOrDefaultAsync(m => m.DataCardId == id && m.CapabilityId == dataCardPETS.CapabilityId);
 
                     if (updateDataCard != null)
                     {

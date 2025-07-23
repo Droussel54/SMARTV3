@@ -88,10 +88,9 @@ namespace SMARTV3.Models
         public virtual Service? Service { get; set; }
         public virtual Echelon? Echelon { get; set; }
         public virtual PetsoverallStatus? SrStatus { get; set; }
-        public virtual CommandOverideStatus? CommandOverrideStatus { get; set; }
+        public virtual CommandOverrideStatus? CommandOverrideStatus { get; set; }
         public virtual DeployedStatus? DeployedStatus { get; set; }
         public virtual NoticeToMove? NoticeToMove { get; set; }
-        public virtual CommandOverideStatus? CommandOverideStatus { get; set; }
         public virtual User? LastEditUserNavigation { get; set; }
         public virtual YesNoNaBlank? Nato12SdosNavigation { get; set; }
         public virtual YesNoNaBlank? Nato18SdosNavigation { get; set; }

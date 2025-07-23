@@ -501,15 +501,20 @@ namespace SMARTV3.Controllers
                                                                                .FirstOrDefault();
 
                     if (selectedforceElement == null) continue;
+                  
                     DataCard? dataCard = selectedforceElement.DataCards.First();
+                    if (dataCard == null) continue;
+
                     // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
-                    DataCardPETS? dataCardPETS = _context.DataCardPETS.Include(d => d.Capability)
-                                                                        .Include(d => d.DataCard)
-                                                                        .Include(d => d.PersonnelStatus)
-                                                                        .Include(d => d.EquipmentStatus)
-                                                                        .Include(d => d.TrainingStatus)
-                                                                        .Include(d => d.SustainmentStatus)
-                                                                        .Where(d => d.DataCardId == dataCard.Id).FirstOrDefault();
+                    // DONE
+                    var dataCardPETS = _context.DataCardPETS
+                          .Include(p => p.DataCard)
+                          .Include(p => p.Capability)
+                          .Include(p => p.PersonnelStatus)
+                          .Include(p => p.EquipmentStatus)
+                          .Include(p => p.TrainingStatus)
+                          .Include(p => p.SustainmentStatus)
+                          .FirstOrDefault(p => p.DataCardId == dataCard.Id && p.CapabilityId == dataCard.CapabilityId);
                     if (dataCard == null) continue;
 
                     // Remove existing felm and recreate with new data
@@ -774,14 +779,19 @@ namespace SMARTV3.Controllers
                                                                        .Where(f => f.Id == selectedForceElementIdInt)
                                                                        .AsNoTracking()
                                                                        .First().DataCards.First();
+
+                    int dataCardId = selectedDataCard.Id;
+                    int? capabilityId = selectedDataCard.CapabilityId;
                     // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
-                    DataCardPETS? selectedDataCardPETS = _context.DataCardPETS.Include(d => d.Capability)
-                                                                        .Include(d => d.DataCard)
-                                                                        .Include(d => d.PersonnelStatus)
-                                                                        .Include(d => d.EquipmentStatus)
-                                                                        .Include(d => d.TrainingStatus)
-                                                                        .Include(d => d.SustainmentStatus)
-                                                                        .Where(d => d.DataCardId == selectedDataCard.Id).FirstOrDefault();
+                    DataCardPETS? selectedDataCardPETS = _context.DataCardPETS
+                         .Include(p => p.Capability)
+                         .Include(p => p.DataCard)
+                         .Include(p => p.PersonnelStatus)
+                         .Include(p => p.EquipmentStatus)
+                         .Include(p => p.TrainingStatus)
+                         .Include(p => p.SustainmentStatus)
+                         .FirstOrDefault(p => p.DataCardId == dataCardId && p.CapabilityId == capabilityId);
+
 
                     if (selectedDataCard == null) continue;
                     DummyDataCard dummyDatacard = DatacardToDummy(forcePackage.Id, selectedDataCard, selectedDataCardPETS);

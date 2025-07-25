@@ -496,7 +496,7 @@ namespace SMARTV3.Controllers
 
             DataCard? dataCard = await GetDataCardQueryWIncludes().FirstOrDefaultAsync(m => m.Id == id);
             // TODO: This query needs to get the PRIMARY KEY (CapbilityId + DataCardId)
-            DataCardPETS? dataCardPETS = await GetDataCardPETSQueryWIncludes().FirstOrDefaultAsync(m => m.DataCardId == id);
+            DataCardPETS? dataCardPETS = await GetDataCardPETSQueryWIncludes().FirstOrDefaultAsync(m => m.DataCardId == id && m.CapabilityId == dataCard.CapabilityId);
 
             if (dataCard == null)
             {

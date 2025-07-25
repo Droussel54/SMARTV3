@@ -699,24 +699,28 @@ namespace SMARTV3.Controllers
                 }
 
                 // TODO: Adjust this statement code. Might not be right or missing some properties.
+                // Added designation and force element
                 if (dataCardPETSQuery != null)
                 {
-                    dataCardPETS = dataCardPETSQuery.Include(d => d.Capability)
+                    dataCardPETS = dataCardPETSQuery.Include(d => d.DataCard)
+                                                        .ThenInclude(dc => dc.Designation)
                                                     .Include(d => d.DataCard)
+                                                        .ThenInclude(dc => dc.ForceElement)
+                                                    .Include(d => d.Capability)
+                                                    .Include(d => d.EquipmentStatus)
                                                     .Include(d => d.EquipmentCombatVehicleStatus)
                                                     .Include(d => d.EquipmentCommunicationsEquipmentStatus)
                                                     .Include(d => d.EquipmentSpecialEquipmentStatus)
-                                                    .Include(d => d.EquipmentStatus)
                                                     .Include(d => d.EquipmentSupportVehicleStatus)
                                                     .Include(d => d.EquipmentWeaponsServiceRateStatus)
                                                     .Include(d => d.PersonnelStatus)
+                                                    .Include(d => d.SustainmentStatus)
                                                     .Include(d => d.SustainmentAmmunitionStatus)
                                                     .Include(d => d.SustainmentCombatRationsStatus)
                                                     .Include(d => d.SustainmentPersonalEquipmentStatus)
                                                     .Include(d => d.SustainmentPetrolStatus)
                                                     .Include(d => d.SustainmentSparesStatus)
                                                     .Include(d => d.SustainmentOtherStatus)
-                                                    .Include(d => d.SustainmentStatus)
                                                     .FirstOrDefault();
                 }
 
